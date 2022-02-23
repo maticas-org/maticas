@@ -1,2 +1,2 @@
-#Sensor de variables ambientales
+# Sensor de variables ambientales
 
