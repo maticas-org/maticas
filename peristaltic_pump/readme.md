@@ -1,2 +1,2 @@
-#Controlador de bomba peristaltica
+# Controlador de bomba peristaltica
 
