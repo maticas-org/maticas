@@ -16,6 +16,9 @@ regulación del ph.
 
 * ***pump\_controller***, es la carpeta de código para controlar la bomba que circula en agua por todo el sistema.
 
+* ***hive_conection***, carpeta con código para conectarse al broker mqtt con hive.
+
+* ***certs_from_mozilla.py***, script para crear archivo de certificados.
 
 
 
