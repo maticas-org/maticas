@@ -1,0 +1,42 @@
+CREATE TABLE temperatura_agua(
+	timestamp timestamp not null,
+	temperatura_agua decimal,
+	PRIMARY KEY (timestamp)
+);
+
+CREATE TABLE temperatura_ambiental(
+	timestamp timestamp not null,
+	temperatura_ambiental decimal,
+	PRIMARY KEY (timestamp)
+);
+
+CREATE TABLE electroconductividad(
+	timestamp timestamp not null,
+	electroconductividad decimal,
+	PRIMARY KEY (timestamp)
+);
+
+CREATE TABLE ph(
+	timestamp timestamp not null,
+	 ph decimal,
+	PRIMARY KEY (timestamp)
+);
+
+CREATE TABLE humedad(
+	timestamp timestamp not null,
+	humedad decimal,
+	PRIMARY KEY (timestamp)
+);
+
+CREATE TABLE presion_atmosferica(
+	timestamp timestamp not null,
+	presion_atmosferica decimal,
+	PRIMARY KEY (timestamp)
+);
+
+
+CREATE TABLE lux(
+	timestamp timestamp not null,
+	lux decimal,
+	PRIMARY KEY (timestamp)
+);
