@@ -1,60 +1,166 @@
+#include <ESP8266WiFi.h>
+#include <PubSubClient.h>
+#include <time.h>
+#include <TZ.h>
+#include <FS.h>
+#include <LittleFS.h>
+#include <CertStoreBearSSL.h>
 
-/*
-  ElCheapo Arduino EC-PPM measurments
-  This scrip uses a common USA two prong plug and a 47Kohm Resistor to measure the EC/PPM of a Aquaponics/Hydroponics Sytem.
-  You could modift this code to Measure other liquids if you change the resitor and values at the top of the code.
 
-  This Program will give you a temperature based feed controller. See Read me in download file for more info.
+// Update these with values suitable for your network.
+const char* ssid = "Movistarfibra";
+const char* password = "Contraseña de la red wifi";
+const char* mqtt_server = "http://367b0404af444e90a3cf6e47443a0a6b.s1.eu.hivemq.cloud/";
 
-  28/8/2015  Michael Ratcliffe  Mike@MichaelRatcliffe.com
+// A single, global CertStore which can be used by all connections.
+// Needs to stay live the entire time any of the WiFiClientBearSSLs
+// are present.
+BearSSL::CertStore certStore;
 
-          This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+WiFiClientSecure espClient;
+PubSubClient * client;
+unsigned long lastMsg = 0;
+#define MSG_BUFFER_SIZE (500)
+char msg[MSG_BUFFER_SIZE];
+int value = 0;
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+void setup_wifi() {
+  
+  delay(10);
+  // We start by connecting to a WiFi network
+  Serial.println();
+  Serial.print("Connecting to ");
+  Serial.println(ssid);
+
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(ssid, password);
+
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+
+  randomSeed(micros());
+
+  Serial.println("");
+  Serial.println("WiFi connected");
+  Serial.println("IP address: ");
+  Serial.println(WiFi.localIP());
+}
+
+
+void setDateTime() {
+  // You can use your own timezone, but the exact time is not used at all.
+  // Only the date is needed for validating the certificates.
+  configTime(TZ_Europe_Berlin, "pool.ntp.org", "time.nist.gov");
+
+  Serial.print("Waiting for NTP time sync: ");
+  time_t now = time(nullptr);
+  while (now < 8 * 3600 * 2) {
+    delay(100);
+    Serial.print(".");
+    now = time(nullptr);
+  }
+  Serial.println();
+
+  struct tm timeinfo;
+  gmtime_r(&now, &timeinfo);
+  Serial.printf("%s %s", tzname[0], asctime(&timeinfo));
+}
+
+
+void callback(char* topic, byte* payload, unsigned int length) {
+  Serial.print("Message arrived [");
+  Serial.print(topic);
+  Serial.print("] ");
+  
+  for (int i = 0; i < length; i++) {
+    Serial.print((char)payload[i]);
+  }
+  Serial.println();
+
+  // Switch on the LED if the first character is present
+  if ((char)payload[0] != NULL) {
+    digitalWrite(LED_BUILTIN, LOW); // Turn the LED on (Note that LOW is the voltage level
+    // but actually the LED is on; this is because
+    // it is active low on the ESP-01)
+    delay(500);
+    digitalWrite(LED_BUILTIN, HIGH); // Turn the LED off by making the voltage HIGH
+  } else {
+    digitalWrite(LED_BUILTIN, HIGH); // Turn the LED off by making the voltage HIGH
+  }
+  
+}
+
+
+void reconnect() {
+  
+  // Loop until we’re reconnected
+  while (!client->connected()) {
     
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    Serial.print("Attempting MQTT connection…");
+    String clientId = "SensorEC";
+    
+    // Attempt to connect
+    // Insert your password
+    if (client->connect(clientId.c_str(), "numbre de usuario", "contraseña")) {
+      Serial.println("connected");
 
-    Parts:
+      // Once connected, publish an announcement…
+      //client->publish("testTopic", "hello world");
+      // … and resubscribe
+      //client->subscribe("testTopic");
+    
+    } else {
+      Serial.print("failed, rc = ");
+      Serial.print(client->state());
+      Serial.println(" try again in 5 seconds");
+      // Wait 5 seconds before retrying
+      delay(5000);
+    
+    }
+  }
+  
+}
 
-    -Arduino - Uno/Mega
-    -Standard American two prong plug
-    -1 kohm resistor
-    -DS18B20 Waterproof Temperature Sensor
- 
-    Limitations:
-    -
-    -
- 
-    See www.MichaelRatcliffe.com/Projects for a Pinout and user guide or consult the Zip you got this code from
-*/
 
+void setup_connection() {
+  delay(500);
+  // When opening the Serial Monitor, select 9600 Baud
+  Serial.begin(9600);
+  delay(500);
 
-//************************** Libraries Needed To Compile The Script [See Read me In Download] ***************//
+  LittleFS.begin();
+  setup_wifi();
+  setDateTime();
 
-// Both below Library are custom ones [ SEE READ ME In Downloaded Zip If You Dont Know how To install] Use them or add a pull up resistor to the temp probe
+  pinMode(LED_BUILTIN, OUTPUT); // Initialize the LED_BUILTIN pin as an output
 
- 
+  // you can use the insecure mode, when you want to avoid the certificates
+  //espclient->setInsecure();
 
+  int numCerts = certStore.initCertStore(LittleFS, PSTR("/certs.idx"), PSTR("/certs.ar"));
+  Serial.printf("Number of CA certs read: %d\n", numCerts);
+  if (numCerts == 0) {
+    Serial.printf("No certs found. Did you run certs-from-mozilla.py and upload the LittleFS directory before running?\n");
+    return; // Can't connect to anything w/o certs!
+  }
+
+  BearSSL::WiFiClientSecure *bear = new BearSSL::WiFiClientSecure();
+  // Integrate the cert store with this connection
+  bear->setCertStore(&certStore);
+
+  client = new PubSubClient(*bear);
+
+  client->setServer(mqtt_server, 8883);
+  client->setCallback(callback);
+}
 
 #include <OneWire.h>
-
 #include <DallasTemperature.h>
 
-//************************* User Defined Variables ********************************************************//
-
-//##################################################################################
-
-//-----------  Do not Replace R1 with a resistor lower than 300 ohms    ------------
-
-//##################################################################################
-
+char *topics[] = {"Esp8266!D4ta/10370001/RC","Esp8266!D4ta/10370001/EC",
+                  "Esp8266!D4ta/10370001/ppm","Esp8266!D4ta/10370001/temp"};
 
 int R1= 1000;
 int Ra=25; //Resistance of powering Pins
@@ -62,50 +168,22 @@ int ECPin= A0;
 int ECGround=4;
 int ECPower =5;
 
- 
-
- 
-
 //*********** Converting to ppm [Learn to use EC it is much better**************//
-
 // Hana      [USA]        PPMconverion:  0.5
-
 // Eutech    [EU]          PPMconversion:  0.64
-
 //Tranchen  [Australia]  PPMconversion:  0.7
-
-// Why didnt anyone standardise this?
-
- 
-
- 
 
 float PPMconversion=0.7;
 
- 
-
- 
 
 //*************Compensating for temperature ************************************//
-
 //The value below will change depending on what chemical solution we are measuring
-
 //0.019 is generaly considered the standard for plant nutrients [google "Temperature compensation EC" for more info
-
 float TemperatureCoef = 0.019; //this changes depending on what chemical we are measuring
 
- 
-
- 
-
- 
-
- 
 
 //********************** Cell Constant For Ec Measurements *********************//
-
 //Mine was around 2.9 with plugs being a standard size they should all be around the same
-
 //But If you get bad readings you can use the calibration script and fluid to get a better estimate for K
 
 float K=2.88;
@@ -177,11 +255,20 @@ void setup()
 
 //************************************* Main Loop - Runs Forever ***************************************************************//
 //Moved Heavy Work To subroutines so you can call them from main loop without cluttering the main loop
-void loop()
-{
-GetEC();          //Calls Code to Go into GetEC() Loop [Below Main Loop] dont call this more that 1/5 hhz [once every five seconds] or you will polarise the water
-PrintReadings();  // Cals Print routine [below main loop]
-delay(5000);
+void loop(){
+  GetEC();          //Calls Code to Go into GetEC() Loop [Below Main Loop] dont call this more that 1/5 hhz [once every five seconds] or you will polarise the water
+  PrintReadings();  // Cals Print routine [below main loop]
+  delay(5000);
+  if (!client->connected()) {
+    reconnect();
+  }
+  client->loop();
+
+  unsigned long now = millis();
+  if (now - lastMsg > 10000) {
+    lastMsg = now;
+    sendata();
+  }
 }
 
 //************************************** End Of Main Loop **********************************************************************//
@@ -189,40 +276,24 @@ delay(5000);
 //************ This Loop Is called From Main Loop************************//
 
 void GetEC(){
-
-//*********Reading Temperature Of Solution *******************//
-
-sensors.requestTemperatures();// Send the command to get temperatures
-
-Temperature=sensors.getTempCByIndex(0); //Stores Value in Variable
-
+  //*********Reading Temperature Of Solution *******************//
+  sensors.requestTemperatures();// Send the command to get temperatures
+  Temperature=sensors.getTempCByIndex(0); //Stores Value in Variable
+  //************Estimates Resistance of Liquid ****************//
  
-
-//************Estimates Resistance of Liquid ****************//
-
-digitalWrite(ECPower,HIGH);
-
-raw= analogRead(ECPin);
-
-digitalWrite(ECPower,LOW);
-
-//***************** Converts to EC **************************//
-
-Vdrop= (Vin*raw)/1024.0;
-
-Rc=(Vdrop*R1)/(Vin-Vdrop);
-
-Rc=Rc-Ra; //acounting for Digital Pin Resitance
-
-EC = 1000/(Rc*K);
-
- 
-
- 
+  digitalWrite(ECPower,HIGH);
+  raw= analogRead(ECPin);
+  digitalWrite(ECPower,LOW);
+  
+  //***************** Converts to EC **************************//
+  Vdrop= (Vin*raw)/1024.0;
+  Rc=(Vdrop*R1)/(Vin-Vdrop);
+  Rc=Rc-Ra; //acounting for Digital Pin Resitance
+  EC = 1000/(Rc*K);
 
 //*************Compensating For Temperaure********************//
-EC25  =  EC/ (1+ TemperatureCoef*(Temperature-25.0));
-ppm=(EC25)*(PPMconversion*1000);
+  EC25  =  EC/ (1+ TemperatureCoef*(Temperature-25.0));
+  ppm=(EC25)*(PPMconversion*1000);
 
 ;}
 
@@ -230,47 +301,34 @@ ppm=(EC25)*(PPMconversion*1000);
 //***This Loop Is called From Main Loop- Prints to serial usefull info ***//
 
 void PrintReadings(){
+  Serial.print("Rc: ");
+  Serial.print(Rc);
+  Serial.print(" EC: ");
+  Serial.print(EC25);
+  Serial.print(" Simens  ");
+  Serial.print(ppm);
+  Serial.print(" ppm  ");
+  Serial.print(Temperature);
+  Serial.println(" *C ");
+};
 
-Serial.print("Rc: ");
+#define MSG_BUFFER_SIZE_2 (800)
+char topic[MSG_BUFFER_SIZE_2];
 
-Serial.print(Rc);
+void sendata() {
+  double measurement[5] = {Rc, EC25, ppm, Temperature};
 
-Serial.print(" EC: ");
+  for(int i = 0; i < 4; i++){
+   snprintf(msg, MSG_BUFFER_SIZE, "%10.2f", measurement[i]);
+   snprintf(topic, MSG_BUFFER_SIZE_2, "%s", topics[i]);
+  }
 
-Serial.print(EC25);
+  Serial.println();
+  Serial.print(topic);
+  Serial.print("/");
+  Serial.print(msg);
+  Serial.println();
 
-Serial.print(" Simens  ");
-
-Serial.print(ppm);
-
-Serial.print(" ppm  ");
-
-Serial.print(Temperature);
-
-Serial.println(" *C ");
-
- 
-
- 
-
-/*
-
-//********** Usued for Debugging ************
-
-Serial.print("Vdrop: ");
-
-Serial.println(Vdrop);
-
-Serial.print("Rc: ");
-
-Serial.println(Rc);
-
-Serial.print(EC);
-
-Serial.println("Siemens");
-
-//********** end of Debugging Prints *********
-
-*/
+  client->publish(topic, msg);
 
 };
