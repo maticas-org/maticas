@@ -14,28 +14,36 @@ conn = db_connection(db_host =  db_host,
 conn.create_tables()
 
 #######################################################
+print(
 conn.read_data(timestamp_start = '2020-01-01 00:00:00',
                timestamp_end   = '2029-01-01 00:00:00',
                type_ = 'hum',
                verbose = True)
+)
 
 #######################################################
+print(
 conn.read_data(timestamp_start = '2020-01-01 00:00:00',
                timestamp_end   = '2029-01-01 00:00:00',
                type_ = 'temp',
                verbose = True)
+)
 
 #######################################################
+print(
 conn.read_data(timestamp_start = '2020-01-01 00:00:00',
                timestamp_end   = '2029-01-01 00:00:00',
                type_ = 'lux',
                verbose = True)
+)
 
 #######################################################
+print(
 conn.read_data(timestamp_start = '2020-01-01 00:00:00',
                timestamp_end   = '2029-01-01 00:00:00',
                type_ = 'pressure',
                verbose = True)
+)
 
 
 

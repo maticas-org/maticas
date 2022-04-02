@@ -174,7 +174,7 @@ class db_connection:
         table_name = self.types_dict[type_][0]
         variable_name = self.types_dict[type_][1]
 
-        query = "select {} from {} \
+        query = "select time, {} from {} \
         where time between '{}' and '{}'".format(variable_name, table_name,
                                                  timestamp_start, timestamp_end)
         if verbose:
@@ -182,7 +182,8 @@ class db_connection:
 
         #hace la query y la guarda en un dataframe para fácil uso
         data = pd.read_sql(query, self.conn)
-        print(data)
+        return data
+        
 
 
 
