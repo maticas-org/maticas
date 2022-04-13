@@ -48,8 +48,12 @@ class mqtt_broker_connection_write():
         #-----------------------------------------------------------------------------
         #             'alias'         |  'tema para ese alias' 
         #-----------------------------------------------------------------------------
-        self.topics_dict = { 'light':    'Esp8266!D4ta/10370005/lights',
-                            'pump':     'Esp8266!D4ta/10370006/pump'
+        self.topics_dict = {    'light':    'Esp8266!D4ta/10370005/lights',
+                                'pump':     'Esp8266!D4ta/10370006/pump',
+                                'ec_a':     'Esp8266!D4ta/10370007/pump/ec/a',
+                                'ec_b':     'Esp8266!D4ta/10370007/pump/ec/b',
+                                'ph_acid':  'Esp8266!D4ta/10370007/pump/ph/acid',
+                                'ph_basic': 'Esp8266!D4ta/10370007/pump/ph/basic'
                            }
 
 
