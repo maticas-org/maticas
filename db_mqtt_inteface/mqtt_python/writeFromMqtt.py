@@ -7,6 +7,14 @@ from paho import mqtt
 
 class mqtt_broker_connection_write():
 
+    """
+        Clase para conectarse al broker mqtt y enviar mensajes a los actuadores, 
+        a saber: 
+        1. Luces
+        2. Bomba de agua
+        3. Bombas de agua que controlan Ph y Nivel de nutriente
+    """
+
 
     def __init__(self,
                  mqtt_broker: str,
