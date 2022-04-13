@@ -9,6 +9,14 @@ from paho import mqtt
 
 class mqtt_broker_connection():
 
+    """
+        Clase que recibe los mensajes de del broker 
+        MQTT y los muestra, el código de esta clase 
+        es la base para el usado en 'maticas/db_mqtt_inteface/main_db_mqtt.py'
+        que básicamente recibe mensajes del broker mqtt y los guarda en la base
+        de datos de postgres.
+    """
+
     def __init__(self,
                  mqtt_broker: str,
                  mqtt_port: int, 
