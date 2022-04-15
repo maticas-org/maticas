@@ -34,259 +34,36 @@ class db_connection:
                                                                                           self.dbname,
                                                                                           self.password, 
                                                                                           self.sslmode)
-        print(self.conn_string)
+        #print(self.conn_string)
 
         # Activa la conexión con el conn_string
         self.activate_connection()
 
     def create_tables(self):
 
+        self.conn.set_session(autocommit=True)
+
         # Crea la base de datos
-        
-        ###########################################################################
-        #                       Tablas de variables del cultivo 
-        ###########################################################################
+        self.cursor.execute(open("../../sql/create_variables_tables.sql", "r").read())
+        print("DONE sql/create_variables_tables.sql")
 
-        #cursor.execute("DROP DATABASE IF EXISTS sensors_data;")
-        #cursor.execute("CREATE DATABASE sensors_data;")
-        #print("Finished creating database")
+        self.cursor.execute(open("../../sql/create_optimal_tables.sql", "r").read())
+        print("DONE sql/create_optimal_tables.sql")
 
-        #crea la tabla de temperature
-        #-- object: public.temperature | type: TABLE --
-        #-- DROP TABLE IF EXISTS public.temperature CASCADE;
-        self.cursor.execute('CREATE TABLE IF NOT EXISTS                  \
-                                    public.temperature (                \
-                                    temp_level float4 NOT NULL,         \
-                                    "time" timestamp NOT NULL,          \
-                                    CONSTRAINT temperature_pk PRIMARY KEY ("time"));\
-                            ALTER TABLE public.temperature OWNER TO dave;')
+        self.cursor.execute(open("../../sql/create_ok_tables.sql", "r").read())
+        print("DONE sql/create_ok_tables.sql")
 
-        print("Finished creating table *temperature*")
+        self.conn.set_session(autocommit=False)
 
-        #crea la tabla de humidity
-        #-- object: public.humidity | type: TABLE --
-        #-- DROP TABLE IF EXISTS public.humidity CASCADE;    
-        self.cursor.execute('CREATE TABLE if NOT EXISTS              \
-                                    public.humidity (               \
-                                    hum_level float4 NOT NULL,      \
-                                    "time" timestamp NOT NULL,      \
-                                    CONSTRAINT humidity_pk PRIMARY KEY ("time") ); \
-                            ALTER TABLE public.humidity OWNER TO dave;')
-        
-        print("Finished creating table *humidity*")
-
-        #crea la tabla de temperature del agua 
-        #-- object: public.water_temperature | type: TABLE --
-        #-- DROP TABLE IF EXISTS public.water_temperature CASCADE;    
-        self.cursor.execute('CREATE TABLE if NOT EXISTS              \
-                            public.water_temperature (              \
-                                    wtemp_level float8 NOT NULL,    \
-                                    "time" timestamp NOT NULL,      \
-                                    CONSTRAINT water_temperature_pk PRIMARY KEY ("time") ); \
-                            ALTER TABLE public.water_temperature OWNER TO dave;')
-        
-        print("Finished creating table *water_temperature*")
-
-        #crea la tabla de electroconductivity 
-        #-- object: public.electroconductivity | type: TABLE --
-        #-- DROP TABLE IF EXISTS public.electroconductivity CASCADE;    
-        self.cursor.execute('CREATE TABLE if NOT EXISTS              \
-                            public.electroconductivity (            \
-                                ec_level float4 NOT NULL,           \
-                                "time" timestamp NOT NULL,          \
-                                CONSTRAINT electroconductivity_pk PRIMARY KEY ("time")); \
-                            ALTER TABLE public.electroconductivity OWNER TO dave;')
-        
-        print("Finished creating table *electroconductivity*")
-
-
-        #crea la tabla de electroconductivity 
-        #-- object: public.ph | type: TABLE --
-        #-- DROP TABLE IF EXISTS public.ph CASCADE;    
-        self.cursor.execute('CREATE TABLE if NOT EXISTS      \
-                            public.ph (                     \
-                                ph_level float4 NOT NULL,   \
-                                "time" timestamp NOT NULL,  \
-                                CONSTRAINT ph_pk PRIMARY KEY ("time")); \
-                            ALTER TABLE public.ph OWNER TO dave;')
-        
-        print("Finished creating table *ph*")
 
         
-        #crea la tabla de lux 
-        #-- object: public.lux | type: TABLE --
-        #-- DROP TABLE IF EXISTS public.lux CASCADE;    
-        self.cursor.execute('CREATE TABLE if NOT EXISTS      \
-                            public.lux (                    \
-                                lux_level float8 NOT NULL,  \
-                                "time" timestamp NOT NULL,  \
-                                CONSTRAINT lux_pk PRIMARY KEY ("time")); \
-                            ALTER TABLE public.lux OWNER TO dave;')
-        
-        print("Finished creating table *lux*")
-
-
-        #crea la tabla de atm_pressure 
-        #-- object: public.atm_pressure | type: TABLE --
-        #-- DROP TABLE IF EXISTS public.atm_pressure CASCADE;    
-        self.cursor.execute('CREATE TABLE if NOT EXISTS              \
-                        public.atm_pressure (                   \
-                            pressure_level float4 NOT NULL,     \
-                            "time" timestamp NOT NULL,          \
-                            CONSTRAINT atm_pressure_pk PRIMARY KEY ("time")); \
-                        ALTER TABLE public.atm_pressure OWNER TO dave;')
-        
-        print("Finished creating table *atm_pressure*")
-        
-        ###########################################################################
-        #                           Tablas de optimal settings
-        ###########################################################################
-
-        #crea la tabla de optimal_humidity 
-        #-- object: public.optimal_humidity | type: TABLE --
-        #-- DROP TABLE IF EXISTS public.optimal_humidity CASCADE;    
-
-        self.cursor.execute('CREATE TABLE if NOT EXISTS                             \
-                            public.optimal_humidity(                                \
-                                "time" timestamp NOT NULL,                          \
-                                min float4 NOT NULL,                                \
-                                max float4 NOT NULL,                                \
-                                CONSTRAINT optimal_humidity PRIMARY KEY ("time"));  \
-                            ALTER TABLE public.optimal_humidity OWNER TO dave;')
-        
-        print("Finished creating table *optimal_humidity*")
-
-
-        #crea la tabla de optimal_temperature 
-        #-- object: public.optimal_temperature  | type: TABLE --
-        #-- DROP TABLE IF EXISTS public.optimal_temperature CASCADE;    
-        self.cursor.execute('CREATE TABLE if NOT EXISTS                                 \
-                            public.optimal_temperature(                                 \
-                                "time" timestamp NOT NULL,                              \
-                                min float4 NOT NULL,                                    \
-                                max float4 NOT NULL,                                    \
-                                CONSTRAINT optimal_temperature PRIMARY KEY ("time"));   \
-                            ALTER TABLE public.optimal_temperature OWNER TO dave;')
-
-        print("Finished creating table *optimal_temperature*")
-        
-        #crea la tabla de optimal_ph 
-        #-- object: public.optimal_ph  | type: TABLE --
-        #-- DROP TABLE IF EXISTS public.optimal_ph CASCADE;    
-        self.cursor.execute('CREATE TABLE if NOT EXISTS                             \
-                            public.optimal_ph(                                      \
-                                "time" timestamp NOT NULL,                          \
-                                min float4 NOT NULL,                                \
-                                max float4 NOT NULL,                                \
-                                CONSTRAINT optimal_ph PRIMARY KEY ("time"));        \
-                            ALTER TABLE public.optimal_ph OWNER TO dave;')
-
-        print("Finished creating table *optimal_ph*")
-
-
-
-        #crea la tabla de optimal_ec 
-        #-- object: public.optimal_ec  | type: TABLE --
-        #-- DROP TABLE IF EXISTS public.optimal_ec CASCADE;    
-        self.cursor.execute('CREATE TABLE if NOT EXISTS                             \
-                            public.optimal_ec(                                      \
-                                "time" timestamp NOT NULL,                          \
-                                min float4 NOT NULL,                                \
-                                max float4 NOT NULL,                                \
-                                CONSTRAINT optimal_ec PRIMARY KEY ("time"));        \
-                            ALTER TABLE public.optimal_ec OWNER TO dave;')
-
-        print("Finished creating table *optimal_ec*")
-
-
-        #crea la tabla de optimal_lux 
-        #-- object: public.optimal_lux  | type: TABLE --
-        #-- DROP TABLE IF EXISTS public.optimal_lux CASCADE;    
-        self.cursor.execute('CREATE TABLE if NOT EXISTS                             \
-                            public.optimal_lux(                                     \
-                                "time" timestamp NOT NULL,                          \
-                                min float4 NOT NULL,                                \
-                                max float4 NOT NULL,                                \
-                                CONSTRAINT optimal_lux PRIMARY KEY ("time"));       \
-                            ALTER TABLE public.optimal_lux OWNER TO dave;')
-
-        print("Finished creating table *optimal_lux*")
-
-
-        ###########################################################################
-        #                           Tablas de ok settings
-        ###########################################################################
-
-        #crea la tabla de ok_humidity 
-        #-- object: public.ok_humidity  | type: TABLE --
-        #-- DROP TABLE IF EXISTS public.ok_humidity CASCADE;    
-        self.cursor.execute('CREATE TABLE if NOT EXISTS                             \
-                            public.ok_humidity(                                     \
-                                "time" timestamp NOT NULL,                          \
-                                min float4 NOT NULL,                                \
-                                max float4 NOT NULL,                                \
-                                CONSTRAINT ok_humidity PRIMARY KEY ("time"));       \
-                            ALTER TABLE public.ok_humidity OWNER TO dave;')
-
-        print("Finished creating table *ok_humidity*")
-
-
-        #crea la tabla de ok_temperature 
-        #-- object: public.ok_temperature  | type: TABLE --
-        #-- DROP TABLE IF EXISTS public.ok_temperature CASCADE;    
-        self.cursor.execute('CREATE TABLE if NOT EXISTS                             \
-                            public.ok_temperature(                                     \
-                                "time" timestamp NOT NULL,                          \
-                                min float4 NOT NULL,                                \
-                                max float4 NOT NULL,                                \
-                                CONSTRAINT ok_temperature PRIMARY KEY ("time"));       \
-                            ALTER TABLE public.ok_temperature OWNER TO dave;')
-
-        print("Finished creating table *ok_temperature*")
-
-
-        #crea la tabla de ok_ph 
-        #-- object: public.ok_ph  | type: TABLE --
-        #-- DROP TABLE IF EXISTS public.ok_ph CASCADE;    
-        self.cursor.execute('CREATE TABLE if NOT EXISTS                             \
-                            public.ok_ph(                                     \
-                                "time" timestamp NOT NULL,                          \
-                                min float4 NOT NULL,                                \
-                                max float4 NOT NULL,                                \
-                                CONSTRAINT ok_ph PRIMARY KEY ("time"));       \
-                            ALTER TABLE public.ok_ph OWNER TO dave;')
-
-        print("Finished creating table *ok_ph*")
-
-
-        #crea la tabla de ok_ec 
-        #-- object: public.ok_ec  | type: TABLE --
-        #-- DROP TABLE IF EXISTS public.ok_ec CASCADE;    
-        self.cursor.execute('CREATE TABLE if NOT EXISTS                             \
-                            public.ok_ec(                                     \
-                                "time" timestamp NOT NULL,                          \
-                                min float4 NOT NULL,                                \
-                                max float4 NOT NULL,                                \
-                                CONSTRAINT ok_ec PRIMARY KEY ("time"));       \
-                            ALTER TABLE public.ok_ec OWNER TO dave;')
-
-        print("Finished creating table *ok_ec*")
-
-
-
-
 
     def write_data(self, value: float, type_: str, verbose = False):
 
         """
-        INPUTS:
-                value: float a ser escrito en la base de datos.
-                type_: string que indica en qué tabla guardar los datos
-                       ('temp', 'hum', 'lux', 'press', 'wtemp', 'ec', 'ph') son una opción.
-
-        OUTPUT:
-                None. Esta función escribe los datos en la tabla correspondiente, indicada 
-                por la variable 'type_'.
+            value: float a ser escrito en la base de datos.
+            type_: string que indica en qué tabla guardar los datos
+                   ('temp', 'hum', 'lux', 'press', 'wtemp', 'ec', 'ph') son una opción.
         """
 
 
@@ -314,30 +91,7 @@ class db_connection:
 
 
 
-
-
     def read_data(self, timestamp_start: str, timestamp_end: str, type_: str, verbose = False):
-
-        """
-        INPUTS:
-                timestamp_start:    timestamp *desde* donde se quieren seleccionar los datos 
-                                    es de la forma -> 'YYYY-MM-DD hh:mm:ss'.
-
-                timestamp_end:      timestamp *hasta* donde se quieren seleccionar los datos 
-                                    es de la forma -> 'YYYY-MM-DD hh:mm:ss'.
-                
-                type_:              llave del diccionario 'self.types_dict' que indica el 
-                                    alias de la variable que se quiere consultar.
-                                    ('temp', 'hum', 'lux', 'press', 'wtemp', 'ec', 'ph')
-                                    son una opción.
-
-                verbose:            Modo para printear la consulta que se le hace a la base de
-                                    datos. Principalmente con fines de debugging.
-
-        OUTPUT:
-                Retorna un dataframe de pandas con los datos en el intervalo de tiempo seleccionado
-                con dos columnas, 'time' y 'variable', donde 'time' es el timestamp del dato.
-        """
 
         #nombre de la tabla y de la variable que se va a escribir en esa tabla
         table_name = self.types_dict[type_][0]
