@@ -6,7 +6,7 @@
 -----------------------------------------------
 -- Crea la tabla de  niveles optimos de humedad--
 -----------------------------------------------
-CREATE TABLE                              
+CREATE TABLE if NOT EXISTS
 public.humidity_optimal(                                
                                 "time" timestamp NOT NULL,                          
                                 min float4 NOT NULL,                                
