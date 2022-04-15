@@ -53,31 +53,53 @@ print('\n\n\n')
 ##########################################################
 
 
-conn.write_settings(value_min = 60,
-                    value_max = 70,
-                    config_   = 'hum_optimal',
-                    verbose = True)
+conn.write_ambiental_settings(value_min = 60,
+                                value_max = 70,
+                                config_   = 'hum_optimal',
+                                verbose = True)
 
-conn.write_settings(value_min = 50,
-                    value_max = 80,
-                    config_   = 'hum_ok',
-                    verbose = True)
+conn.write_ambiental_settings(value_min = 50,
+                                value_max = 80,
+                                config_   = 'hum_ok',
+                                verbose = True)
 
-print('\n\n\n')
+
+conn.write_actuators_settings(config_ = 'pump',
+                              params = ('6:00:00', 
+                                        '20:00:00', 
+                                        40, 
+                                        10),
+                              verbose = True
+                              )
+print('-'*50)
+print('\n\n')
+
+conn.write_actuators_settings(config_ = 'lights',
+                              params = ('17:00:00', 
+                                        '20:00:00'),
+                              verbose = True
+                              )
+
+print('-'*50)
+print('\n\n')
+
+
 
 ##########################################################
 #                  Leyendo los settings 
 ##########################################################
 
-print(
-        conn.read_settings(config_ = 'hum_optimal', verbose = True)
-)
+print( conn.read_ambiental_settings(config_ = 'hum_optimal', verbose = True) )
 
-print(
-        conn.read_settings(config_ = 'hum_ok', verbose = True)
-)
+print( conn.read_ambiental_settings(config_ = 'hum_ok', verbose = True) )
+
+print('-'*50)
+print('\n\n')
 
 
+print( conn.read_actuators_settings(config_ = 'pump') )
+
+print( conn.read_actuators_settings(config_ = 'lights') )
 
 conn.end_connection()
 

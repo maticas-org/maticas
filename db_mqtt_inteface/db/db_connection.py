@@ -21,18 +21,30 @@ class db_connection:
                            'ph':     ('ph',                  'ph_level')
                           }
 
+        #--------------------------------------------------------------------------------------------------
+        #                             'alias'       |  'nombre de la tabla' | 'nombre de las vars
+        #                                           |                       |     en la tabla'
+        #--------------------------------------------------------------------------------------------------
 
-        self.settings = {'temp_optimal':    ('temperature_optimal', 'min', 'max'),
-                         'temp_ok':         ('temperature_ok',      'min', 'max'),
-                         'hum_optimal':     ('humidity_optimal',    'min', 'max'),
-                         'hum_ok':          ('humidity_ok',         'min', 'max'),
-                         'lux_optimal':     ('lux_optimal',         'min', 'max'),
-                         'lux_ok':          ('lux_ok',              'min', 'max'),
-                         'ec_optimal':      ('ec_optimal',          'min', 'max'),
-                         'ec_ok':           ('ec_ok',               'min', 'max'),
-                         'ph_optimal':      ('ph_optimal',          'min', 'max'),
-                         'ph_ok':           ('ph_ok',               'min', 'max'),
-                        }
+        self.ambiental_settings = {'temp_optimal':    ('temperature_optimal', 'min', 'max'),
+                                   'temp_ok':         ('temperature_ok',      'min', 'max'),
+                                   'hum_optimal':     ('humidity_optimal',    'min', 'max'),
+                                   'hum_ok':          ('humidity_ok',         'min', 'max'),
+                                   'lux_optimal':     ('lux_optimal',         'min', 'max'),
+                                   'lux_ok':          ('lux_ok',              'min', 'max'),
+                                   'ec_optimal':      ('ec_optimal',          'min', 'max'),
+                                   'ec_ok':           ('ec_ok',               'min', 'max'),
+                                   'ph_optimal':      ('ph_optimal',          'min', 'max'),
+                                   'ph_ok':           ('ph_ok',               'min', 'max'),
+                                 }
+                                   
+        #--------------------------------------------------------------------------------------------------
+        #                             'alias'  |  'nombre de  | 'nombre de las vars
+        #                                      |    la tabla' |     en la tabla'
+        #--------------------------------------------------------------------------------------------------
+        self.actuators_settings = {'pump':      ('water_pump', 'start_time', 'end_time', 'frequency', 'duration'),
+                                   'lights':    ('lights',     'start_time', 'end_time')
+                                 }
         
 
 
@@ -68,13 +80,22 @@ class db_connection:
         self.cursor.execute(open("../../sql/create_ok_tables.sql", "r").read())
         print("DONE sql/create_ok_tables.sql")
 
+        self.cursor.execute(open("../../sql/create_actuators_tables.sql", "r").read())
+        print("DONE sql/create_actuators_tables.sql")
+
         self.conn.set_session(autocommit=False)
 
 
-    def write_settings(self, value_min: float,
-                             value_max: float, 
-                             config_: str, 
-                             verbose = False):
+    ###################################################################################
+    #        Lectura y escritura en tablas de configuración de las condiciones
+    #           optimas o aceptables para algunas variables del cultivo
+    ###################################################################################
+
+
+    def write_ambiental_settings(self, value_min: float,
+                                 value_max: float, 
+                                 config_: str, 
+                                 verbose = False):
 
         """
         INPUTS:
@@ -90,23 +111,26 @@ class db_connection:
                          ('temp_optimal',   'temp_ok',      'hum_optimal',  'hum_ok', 
                           'lux_optimal',    'lux_ok',       'ec_optimal',   'ec_ok', 
                           'ph_optimal',     'ph_ok') son una opción.
+
+                verbose:    Modo para printear la consulta que se le hace a la base de
+                            datos. Principalmente con fines de debugging.
         OUTPUT:
                 None. Esta función escribe los datos en la tabla correspondiente, indicada 
-                por la variable 'config_' y su diccionario 'self.settings'.
+                por la variable 'config_' y su diccionario 'self.ambiental_settings'.
         """
 
 
 
         # si la config_ ingresada es válida entonces pasa a editar los datos previos
-        if config_ in self.settings.keys():
+        if config_ in self.ambiental_settings.keys():
 
             #timestamp: momento de llegada del mensaje de la forma 'YYYY-MM-DD hh:mm:ss'
             timestamp = datetime.datetime.now()
 
             #nombre de la tabla y de la variable que se va a escribir en esa tabla
-            table_name = self.settings[config_][0]
-            variable_name1 = self.settings[config_][1]
-            variable_name2 = self.settings[config_][2]
+            table_name = self.ambiental_settings[config_][0]
+            variable_name1 = self.ambiental_settings[config_][1]
+            variable_name2 = self.ambiental_settings[config_][2]
 
             # generación de la query para meter el nuevo dato 
             query = "INSERT INTO {}({}, {}, time) VALUES (%s, %s, %s);".format(table_name,
@@ -130,8 +154,8 @@ class db_connection:
         
 
 
-    def read_settings(self, config_: str,
-                            verbose = False):
+    def read_ambiental_settings(self, config_: str,
+                                      verbose = False):
 
         """
         INPUTS:
@@ -151,9 +175,9 @@ class db_connection:
 
 
         #nombre de la tabla y de la variable que se va a escribir en esa tabla
-        table_name = self.settings[config_][0]
-        variable1_name = self.settings[config_][1]
-        variable2_name = self.settings[config_][2]
+        table_name = self.ambiental_settings[config_][0]
+        variable1_name = self.ambiental_settings[config_][1]
+        variable2_name = self.ambiental_settings[config_][2]
 
         query = "select * from {};".format(table_name)
 
@@ -165,13 +189,112 @@ class db_connection:
         return data
 
 
+
+    ###################################################################################
+    #        Lectura y escritura en tablas de configuración de las condiciones
+    #           optimas o aceptables para algunas variables del cultivo
+    ###################################################################################
+
+
+    def write_actuators_settings(self, config_: str, params: tuple, verbose = False):
+
+        """
+            INPUT:
+                    config_:    alias para indicar la tabla sobre la que se va a trabajar.
+                                Recuerde que los alias se definen en 'self.actuators_settings'.
+                                Las opciones son -> ('pump', 'lights').
+
+                    params:     tupla que contiene todos los parámetros que se van a escribir.
+                                deben ser en el orden en que especifica el valor correspondiente
+                                a la llave 'config_' del diccionario 'self.actuators_settings'.
+
+                                Observe como el nombre de la tabla no se debe incluir dentro de 
+                                params.
+                                
+                                Es decir params deben ser:
+                                ('start_time', 'end_time', 'frequency', 'duration') ó 
+                                ('start_time', 'end_time')
+
+                    verbose:    Modo para printear la consulta que se le hace a la base de
+                                datos. Principalmente con fines de debugging.
+
+            OUTPUT:
+
+
+        """
+
+        if config_ in self.actuators_settings.keys():
+
+            #timestamp: momento de llegada del mensaje de la forma 'YYYY-MM-DD hh:mm:ss'
+            timestamp = datetime.datetime.now()
+
+            #nombre de la tabla y de la variable que se va a escribir en esa tabla
+            table_name = self.actuators_settings[config_][0]
+            #start_time = self.actuators_settings[type_][1]
+            #end_time   = self.actuators_settings[type_][2]
+
+
+            #generación de la query
+            if config_ == 'lights':
+                query = "INSERT INTO {}({}, {}, time) VALUES (%s, %s, %s);".format( *self.actuators_settings[config_] )
+
+            else:
+                query = "INSERT INTO {}({}, {}, {}, {}, time) VALUES (%s, %s, %s, %s, %s);".format( *self.actuators_settings[config_] )
+
+            # generaciónde la query para borrar el dato viejo
+            delete_query = "DELETE FROM {} WHERE time < '{}';".format(table_name, timestamp)
+
+            if verbose:
+                print(delete_query)
+                print(query)
+
+            self.cursor.execute(delete_query)
+            self.cursor.execute(query, (*params, timestamp))
+
+            ##
+            self.conn.commit()
+            
+
+
+        else:
+            print("bad input")
+
+
+
+    def read_actuators_settings(self, config_: str, verbose = False):
+
+        if config_ in self.actuators_settings.keys():
+
+            table_name = self.actuators_settings[config_][0]
+
+            #generación de la query
+            query = "SELECT * from  {};".format(table_name)
+
+            if verbose:
+                print(query)
+
+            #hace la query y la guarda en un dataframe para fácil uso
+            data = pd.read_sql(query, self.conn)
+
+            return data
+
+
+    ###################################################################################
+    #        Lectura y escritura en tablas de datos de variables ambientales
+    ###################################################################################
+
+
     def write_data(self, value: float, type_: str, verbose = False):
 
         """
         INPUTS:
-                value: float a ser escrito en la base de datos.
-                type_: string que indica en qué tabla guardar los datos
-                       ('temp', 'hum', 'lux', 'press', 'wtemp', 'ec', 'ph') son una opción.
+                value:      float a ser escrito en la base de datos.
+
+                type_:      string que indica en qué tabla guardar los datos
+                            ('temp', 'hum', 'lux', 'press', 'wtemp', 'ec', 'ph') son una opción.
+
+                verbose:    Modo para printear la consulta que se le hace a la base de
+                            datos. Principalmente con fines de debugging.
         OUTPUT:
                 None. Esta función escribe los datos en la tabla correspondiente, indicada 
                 por la variable 'type_'.
