@@ -46,6 +46,38 @@ conn.read_data(timestamp_start = '2020-01-01 00:00:00',
 )
 
 
+print('\n\n\n')
+
+##########################################################
+#                   Escribiendo settings
+##########################################################
+
+
+conn.write_settings(value_min = 60,
+                    value_max = 70,
+                    config_   = 'hum_optimal',
+                    verbose = True)
+
+conn.write_settings(value_min = 50,
+                    value_max = 80,
+                    config_   = 'hum_ok',
+                    verbose = True)
+
+print('\n\n\n')
+
+##########################################################
+#                  Leyendo los settings 
+##########################################################
+
+print(
+        conn.read_settings(config_ = 'hum_optimal', verbose = True)
+)
+
+print(
+        conn.read_settings(config_ = 'hum_ok', verbose = True)
+)
+
+
 
 conn.end_connection()
 

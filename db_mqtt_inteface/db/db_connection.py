@@ -21,6 +21,21 @@ class db_connection:
                            'ph':     ('ph',                  'ph_level')
                           }
 
+
+        self.settings = {'temp_optimal':    ('temperature_optimal', 'min', 'max'),
+                         'temp_ok':         ('temperature_ok',      'min', 'max'),
+                         'hum_optimal':     ('humidity_optimal',    'min', 'max'),
+                         'hum_ok':          ('humidity_ok',         'min', 'max'),
+                         'lux_optimal':     ('lux_optimal',         'min', 'max'),
+                         'lux_ok':          ('lux_ok',              'min', 'max'),
+                         'ec_optimal':      ('ec_optimal',          'min', 'max'),
+                         'ec_ok':           ('ec_ok',               'min', 'max'),
+                         'ph_optimal':      ('ph_optimal',          'min', 'max'),
+                         'ph_ok':           ('ph_ok',               'min', 'max'),
+                        }
+        
+
+
         # Información para conexión con la base de datos 
         self.host = db_host
         self.dbname = db_name
@@ -56,16 +71,111 @@ class db_connection:
         self.conn.set_session(autocommit=False)
 
 
+    def write_settings(self, value_min: float,
+                             value_max: float, 
+                             config_: str, 
+                             verbose = False):
+
+        """
+        INPUTS:
+                value_min: float a ser escrito en la base de datos.
+                value_max: float a ser escrito en la base de datos.
+                           (Son los valores inferior y superior para las condiciones 
+                           optimas o aceptables para la variable).
+
+                config_: string que indica en qué tabla guardar los datos, en otras palabras
+                         qué configuración sea de 'optimal' o 'ok' va a ser modificada 
+                         y para qué variable en particular.
+
+                         ('temp_optimal',   'temp_ok',      'hum_optimal',  'hum_ok', 
+                          'lux_optimal',    'lux_ok',       'ec_optimal',   'ec_ok', 
+                          'ph_optimal',     'ph_ok') son una opción.
+        OUTPUT:
+                None. Esta función escribe los datos en la tabla correspondiente, indicada 
+                por la variable 'config_' y su diccionario 'self.settings'.
+        """
+
+
+
+        # si la config_ ingresada es válida entonces pasa a editar los datos previos
+        if config_ in self.settings.keys():
+
+            #timestamp: momento de llegada del mensaje de la forma 'YYYY-MM-DD hh:mm:ss'
+            timestamp = datetime.datetime.now()
+
+            #nombre de la tabla y de la variable que se va a escribir en esa tabla
+            table_name = self.settings[config_][0]
+            variable_name1 = self.settings[config_][1]
+            variable_name2 = self.settings[config_][2]
+
+            # generación de la query para meter el nuevo dato 
+            query = "INSERT INTO {}({}, {}, time) VALUES (%s, %s, %s);".format(table_name,
+                                                                               variable_name1,
+                                                                               variable_name2)
+            # generaciónde la query para borrar el dato viejo
+            delete_query = "DELETE FROM {} WHERE time < '{}';".format(table_name, timestamp)
+
+            if verbose:
+                print(delete_query)
+                print(query)
+
+            self.cursor.execute(delete_query)
+            self.cursor.execute(query, (value_min, value_max, timestamp))
+
+            ##
+            self.conn.commit()
+
+        else:
+            print("bad input")
         
+
+
+    def read_settings(self, config_: str,
+                            verbose = False):
+
+        """
+        INPUTS:
+
+                config_: string que indica en qué tabla va a leer los datos.
+
+                         ('temp_optimal',   'temp_ok',      'hum_optimal',  'hum_ok', 
+                          'lux_optimal',    'lux_ok',       'ec_optimal',   'ec_ok', 
+                          'ph_optimal',     'ph_ok') son una opción.
+
+                verbose: Modo para printear la consulta que se le hace a la base de
+                         datos. Principalmente con fines de debugging.
+        OUTPUT:
+                Retorna un dataframe de pandas con los datos en el intervalo de tiempo seleccionado
+                con dos columnas, 'time' y 'variable', donde 'time' es el timestamp del dato.
+        """
+
+
+        #nombre de la tabla y de la variable que se va a escribir en esa tabla
+        table_name = self.settings[config_][0]
+        variable1_name = self.settings[config_][1]
+        variable2_name = self.settings[config_][2]
+
+        query = "select * from {};".format(table_name)
+
+        if verbose:
+            print(query)
+
+        #hace la query y la guarda en un dataframe para fácil uso
+        data = pd.read_sql(query, self.conn)
+        return data
+
 
     def write_data(self, value: float, type_: str, verbose = False):
 
         """
-            value: float a ser escrito en la base de datos.
-            type_: string que indica en qué tabla guardar los datos
-                   ('temp', 'hum', 'lux', 'press', 'wtemp', 'ec', 'ph') son una opción.
+        INPUTS:
+                value: float a ser escrito en la base de datos.
+                type_: string que indica en qué tabla guardar los datos
+                       ('temp', 'hum', 'lux', 'press', 'wtemp', 'ec', 'ph') son una opción.
+        OUTPUT:
+                None. Esta función escribe los datos en la tabla correspondiente, indicada 
+                por la variable 'type_'.
         """
-
 
         if type_ in self.types_dict.keys():
 
@@ -92,6 +202,25 @@ class db_connection:
 
 
     def read_data(self, timestamp_start: str, timestamp_end: str, type_: str, verbose = False):
+
+        """
+        INPUTS:
+                timestamp_start:    timestamp *desde* donde se quieren seleccionar los datos 
+                                    es de la forma -> 'YYYY-MM-DD hh:mm:ss'.
+                timestamp_end:      timestamp *hasta* donde se quieren seleccionar los datos 
+                                    es de la forma -> 'YYYY-MM-DD hh:mm:ss'.
+                
+                type_:              llave del diccionario 'self.types_dict' que indica el 
+                                    alias de la variable que se quiere consultar.
+                                    ('temp', 'hum', 'lux', 'press', 'wtemp', 'ec', 'ph')
+                                    son una opción.
+                verbose:            Modo para printear la consulta que se le hace a la base de
+                                    datos. Principalmente con fines de debugging.
+        OUTPUT:
+                Retorna un dataframe de pandas con los datos en el intervalo de tiempo seleccionado
+                con dos columnas, 'time' y 'variable', donde 'time' es el timestamp del dato.
+        """
+
 
         #nombre de la tabla y de la variable que se va a escribir en esa tabla
         table_name = self.types_dict[type_][0]
@@ -134,28 +263,4 @@ class db_connection:
 
 
 
-
-
-"""
-cursor.execute("DROP TABLE IF EXISTS public.temperatura CASCADE;")
-cursor.execute("DROP TABLE IF EXISTS public.temperatura_agua CASCADE;")
-cursor.execute("DROP TABLE IF EXISTS public.humedad CASCADE;")
-cursor.execute("DROP TABLE IF EXISTS public.lux CASCADE;")
-cursor.execute("DROP TABLE IF EXISTS public.ph CASCADE;")
-cursor.execute("DROP TABLE IF EXISTS public.electroconductivity CASCADE;")
-cursor.execute("DROP TABLE IF EXISTS public.presion_atm CASCADE;")
-"""
-
-"""
-def write_test_data():
-
-    #print("escribiendo data...")
-
-    for t in types_dict.keys():
-        write_data(value = 6.6 , type_ = t)
-        read_data(timestamp_start = '2020-01-01 00:00:00', timestamp_end = '2023-01-01 00:00:00', type_ = t)
-
-    #print("data escrita!")
-
-"""
 
