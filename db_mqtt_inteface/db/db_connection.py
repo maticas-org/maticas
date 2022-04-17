@@ -415,35 +415,35 @@ class db_connection:
                                       )
 
         ###
-        self.write_ambiental_settings(  value_min = 50,
-                                        value_max = 80,
+        self.write_ambiental_settings(  value_min = 64000,
+                                        value_max = 84000,
                                         config_   = 'lux_optimal',
                                       )
 
-        self.write_ambiental_settings(  value_min = 50,
-                                        value_max = 80,
+        self.write_ambiental_settings(  value_min = 32000,
+                                        value_max = 100000,
                                         config_   = 'lux_ok',
                                       )
 
         ####
-        self.write_ambiental_settings(  value_min = 50,
-                                        value_max = 80,
+        self.write_ambiental_settings(  value_min = 2,
+                                        value_max = 2.3,
                                         config_   = 'ec_optimal',
                                       )
 
-        self.write_ambiental_settings(  value_min = 50,
-                                        value_max = 80,
+        self.write_ambiental_settings(  value_min = 1.8,
+                                        value_max = 2.8,
                                         config_   = 'ec_ok',
                                       )
 
         #####
-        self.write_ambiental_settings(  value_min = 50,
-                                        value_max = 80,
+        self.write_ambiental_settings(  value_min = 5.5,
+                                        value_max = 6,
                                         config_   = 'ph_optimal',
                                       )
 
-        self.write_ambiental_settings(  value_min = 50,
-                                        value_max = 80,
+        self.write_ambiental_settings(  value_min = 5,
+                                        value_max = 6.5,
                                         config_   = 'ph_ok',
                                       )
 
