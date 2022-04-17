@@ -71,4 +71,17 @@ ALTER TABLE public.lux_ok OWNER TO dave;
 
 
 
+-----------------------------------------------
+-- Crea la tabla de  niveles aceptables de temperatura del agua--
+-----------------------------------------------
+CREATE TABLE if NOT EXISTS                             
+public.water_temperature_ok(                                     
+                                "time" timestamp NOT NULL,                          
+                                min float4 NOT NULL,                                
+                                max float4 NOT NULL,                                
+                                CONSTRAINT water_temperature_ok_pk PRIMARY KEY ("time")
+							);       
+ALTER TABLE public.water_temperature_ok OWNER TO dave;
+
+
 

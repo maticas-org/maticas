@@ -6,7 +6,7 @@
 -----------------------------------------------
 -- Crea la tabla de  niveles optimos de humedad--
 -----------------------------------------------
-CREATE TABLE if NOT EXISTS
+CREATE TABLE if NOT EXISTS                             
 public.humidity_optimal(                                
                                 "time" timestamp NOT NULL,                          
                                 min float4 NOT NULL,                                
@@ -69,6 +69,20 @@ public.lux_optimal(
                                 CONSTRAINT lux_optimal_pk PRIMARY KEY ("time")
 							);       
 ALTER TABLE public.lux_optimal OWNER TO dave;
+
+
+
+-----------------------------------------------
+-- Crea la tabla de  niveles aceptables de temperatura del agua--
+-----------------------------------------------
+CREATE TABLE if NOT EXISTS                             
+public.water_temperature_optimal(                                     
+                                "time" timestamp NOT NULL,                          
+                                min float4 NOT NULL,                                
+                                max float4 NOT NULL,                                
+                                CONSTRAINT water_temperature_optimal_pk PRIMARY KEY ("time")
+							);       
+ALTER TABLE public.water_temperature_optimal OWNER TO dave;
 
 
 
