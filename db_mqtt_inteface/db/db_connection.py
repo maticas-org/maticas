@@ -21,23 +21,27 @@ class db_connection:
                            'ph':     ('ph',                  'ph_level')
                           }
 
+
         #--------------------------------------------------------------------------------------------------
-        #                             'alias'       |  'nombre de la tabla' | 'nombre de las vars
-        #                                           |                       |     en la tabla'
+        #                             'alias'       |  'nombre de la tabla'        | 'nombre de las vars
+        #                                           |                              |     en la tabla'
         #--------------------------------------------------------------------------------------------------
 
-        self.ambiental_settings = {'temp_optimal':    ('temperature_optimal', 'min', 'max'),
-                                   'temp_ok':         ('temperature_ok',      'min', 'max'),
-                                   'hum_optimal':     ('humidity_optimal',    'min', 'max'),
-                                   'hum_ok':          ('humidity_ok',         'min', 'max'),
-                                   'lux_optimal':     ('lux_optimal',         'min', 'max'),
-                                   'lux_ok':          ('lux_ok',              'min', 'max'),
-                                   'ec_optimal':      ('ec_optimal',          'min', 'max'),
-                                   'ec_ok':           ('ec_ok',               'min', 'max'),
-                                   'ph_optimal':      ('ph_optimal',          'min', 'max'),
-                                   'ph_ok':           ('ph_ok',               'min', 'max'),
+        self.ambiental_settings = {'temp_optimal':    ('temperature_optimal',             'min', 'max'),
+                                   'temp_ok':         ('temperature_ok',                  'min', 'max'),
+                                   'hum_optimal':     ('humidity_optimal',                'min', 'max'),
+                                   'hum_ok':          ('humidity_ok',                     'min', 'max'),
+                                   'lux_optimal':     ('lux_optimal',                     'min', 'max'),
+                                   'lux_ok':          ('lux_ok',                          'min', 'max'),
+                                   'ec_optimal':      ('electroconductivity_optimal',     'min', 'max'),
+                                   'ec_ok':           ('electroconductivity_ok',          'min', 'max'),
+                                   'ph_optimal':      ('ph_optimal',                      'min', 'max'),
+                                   'ph_ok':           ('ph_ok',                           'min', 'max'),
+                                   'wtemp_optimal':   ('water_temperature_optimal',       'min', 'max'),
+                                   'wtemp_ok':        ('water_temperature_ok',            'min', 'max') 
                                  }
                                    
+
         #--------------------------------------------------------------------------------------------------
         #                             'alias'  |  'nombre de  | 'nombre de las vars
         #                                      |    la tabla' |     en la tabla'
@@ -85,6 +89,8 @@ class db_connection:
 
         self.conn.set_session(autocommit=False)
 
+        # mete valores por defecto en la tabla
+        self.default_table_initialization()
 
     ###################################################################################
     #        Lectura y escritura en tablas de configuración de las condiciones
@@ -375,6 +381,100 @@ class db_connection:
         self.conn.commit()
         self.cursor.close()
         self.conn.close()
+
+    def default_table_initialization(self):
+
+
+
+        ############################################################
+        #          Inicialización por defecto de las tablas
+        #                       de settings ambientales
+        ############################################################
+
+
+        #
+        self.write_ambiental_settings(  value_min = 15,
+                                        value_max = 20,
+                                        config_   = 'temp_optimal',
+                                      )
+
+        self.write_ambiental_settings(  value_min = 14,
+                                        value_max = 24,
+                                        config_   = 'temp_ok',
+                                      )
+
+        ##
+        self.write_ambiental_settings(  value_min = 60,
+                                        value_max = 70,
+                                        config_   = 'hum_optimal',
+                                      )
+
+        self.write_ambiental_settings(  value_min = 50,
+                                        value_max = 80,
+                                        config_   = 'hum_ok',
+                                      )
+
+        ###
+        self.write_ambiental_settings(  value_min = 50,
+                                        value_max = 80,
+                                        config_   = 'lux_optimal',
+                                      )
+
+        self.write_ambiental_settings(  value_min = 50,
+                                        value_max = 80,
+                                        config_   = 'lux_ok',
+                                      )
+
+        ####
+        self.write_ambiental_settings(  value_min = 50,
+                                        value_max = 80,
+                                        config_   = 'ec_optimal',
+                                      )
+
+        self.write_ambiental_settings(  value_min = 50,
+                                        value_max = 80,
+                                        config_   = 'ec_ok',
+                                      )
+
+        #####
+        self.write_ambiental_settings(  value_min = 50,
+                                        value_max = 80,
+                                        config_   = 'ph_optimal',
+                                      )
+
+        self.write_ambiental_settings(  value_min = 50,
+                                        value_max = 80,
+                                        config_   = 'ph_ok',
+                                      )
+
+        ######
+        self.write_ambiental_settings(  value_min = 10,
+                                        value_max = 17,
+                                        config_   = 'wtemp_optimal',
+                                      )
+
+        self.write_ambiental_settings(  value_min = 8,
+                                        value_max = 19,
+                                        config_   = 'wtemp_ok',
+                                      )
+
+        ############################################################
+        #          Inicialización por defecto de las tablas
+        #                       de actuadores
+        ############################################################
+
+        self.write_actuators_settings(  config_ = 'lights',
+                                        params = ('17:00:00', 
+                                                  '20:00:00'),
+                                      )
+
+        self.write_actuators_settings(config_ = 'pump',
+                                      params = ('6:00:00', 
+                                                '20:00:00', 
+                                                40, 
+                                                10)
+                                      )
+
 
 
 
