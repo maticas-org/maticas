@@ -1,5 +1,5 @@
 # Interfaz entre la base de datos y el broker MQTT
-----
+
 
 Acá se encuentran varios archivos y subcarpetas. A saber:
 
@@ -9,8 +9,14 @@ Acá se encuentran varios archivos y subcarpetas. A saber:
 
 * El ***'main\_db\_mqtt.py'*** es el archivo que crea una instancia de la clase definida en ***'db\_mqtt.py'***, este archivo debería estar corriendo permanentemente en un computador en la nube ya que sin este los mensajes que se envíen desde los sensores al broker MQTT no serán guardados en la base de datos postgres.
 
+Se ejecuta así *(en caso de que se quiera dejar corriendo permanentemente mientras el computador no se apague)*:
 
+		 nohup python3 ./main_db_mqtt.py &
 
+Para correrlo una sola vez, poder detener el script más fácilmente y ver el output:
 
+		python3 ./main_db_mqtt.py
+
+***Precaución: no corra varios scripts de 'main\_db\_mqtt.py' a la vez ya que podría acabar escribiendo la misma información tantas veces como scripts de 'main\_db\_mqtt.py' tiene corriendo.***
 
 
