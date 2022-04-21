@@ -1,4 +1,4 @@
-#Conexión con la base de datos
+# Conexión con la base de datos
 ---
 
 Los archivos son:
