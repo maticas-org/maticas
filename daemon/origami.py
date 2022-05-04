@@ -1,3 +1,12 @@
 from daemon import *
 
-daemon()
+good_daemon = daemon()
+good_daemon.rule_them_all_dady()
+
+
+
+
+
+
+
+
