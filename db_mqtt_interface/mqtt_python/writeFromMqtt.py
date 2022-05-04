@@ -63,7 +63,7 @@ class mqtt_broker_connection_write():
 
             self.client.loop_start()
             self.client.publish(self.topics_dict[alias_topic], message)
-            time.sleep(0.5) # wait
+            time.sleep(0.1) # wait
 
         else:
 
