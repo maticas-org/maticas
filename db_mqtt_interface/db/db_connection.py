@@ -51,6 +51,7 @@ class db_connection:
                                  }
         
 
+        self.tz = pytz.timezone('America/Bogota')
 
         # Información para conexión con la base de datos 
         self.host = db_host
@@ -131,7 +132,8 @@ class db_connection:
         if config_ in self.ambiental_settings.keys():
 
             #timestamp: momento de llegada del mensaje de la forma 'YYYY-MM-DD hh:mm:ss'
-            timestamp = datetime.datetime.now()
+            colombia_now = datetime.datetime.now(self.tz)
+            timestamp = colombia_now.strftime("%Y-%m-%d %H:%M:%S") 
 
             #nombre de la tabla y de la variable que se va a escribir en esa tabla
             table_name = self.ambiental_settings[config_][0]
@@ -232,7 +234,8 @@ class db_connection:
         if config_ in self.actuators_settings.keys():
 
             #timestamp: momento de llegada del mensaje de la forma 'YYYY-MM-DD hh:mm:ss'
-            timestamp = datetime.datetime.now()
+            colombia_now = datetime.datetime.now(self.tz)
+            timestamp = colombia_now.strftime("%Y-%m-%d %H:%M:%S") 
 
             #nombre de la tabla y de la variable que se va a escribir en esa tabla
             table_name = self.actuators_settings[config_][0]
@@ -309,7 +312,8 @@ class db_connection:
         if type_ in self.types_dict.keys():
 
             #timestamp: momento de llegada del mensaje de la forma 'YYYY-MM-DD hh:mm:ss'
-            timestamp = datetime.datetime.now()
+            colombia_now = datetime.datetime.now(self.tz)
+            timestamp = colombia_now.strftime("%Y-%m-%d %H:%M:%S") 
 
             #nombre de la tabla y de la variable que se va a escribir en esa tabla
             table_name = self.types_dict[type_][0]
