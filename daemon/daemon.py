@@ -14,7 +14,7 @@ cwd = '/'.join(cwd)
 
 # Añade el directorio al path
 path.insert(1, cwd) 
-print(cwd)
+print("current working directory: cd .. -> ",  cwd)
 
 # Importa la clase para hacer operaciones sobre la base de datos
 from db_mqtt_interface.db.db_connection import *
@@ -25,9 +25,12 @@ from dirty9w9 import *
 
 # librerías para manejar el tiempo
 import datetime
+import time
 import pytz
 
+# para procesamiento de unos daticos 
 import numpy as np 
+
 
 class daemon:
 
@@ -90,9 +93,16 @@ class daemon:
         print("Correcta.\n")
 
 
-    def rule_them_all_dady(self):
+    def rule_them_all_dady(self, check_everyn_minutes = 5):
 
+        #valores para inicializar el loop
         colombia_start   = datetime.datetime.now(self.tz)
+
+        #valores para inicializar el control de la bomba 
+        #de agua en el loop
+        current_time_pump = 0
+        start_time_pump  = 0 
+        finish_time_pump = 0
  
         # Loop
         while True:
@@ -102,18 +112,211 @@ class daemon:
 
             # diferencia de tiempo necesaria para hacer las revisiones
             # las revisiones se hacen cada 5 minutos
-            if delta.total_seconds() >= (5*60):
+            if delta.total_seconds() >= (check_everyn_minutes*60):
 
+                # revisiones y control de las variables ambientales
                 for alias in self.aliases.keys():
                     print(alias)
                     print(self.check_and_control_variable(alias = alias))
 
-                #reinicia el contador
+                #reinicia el contador para determinar cuando 
+                #volver a revisar (en check_everyn_minutes minutos)
                 colombia_start   = datetime.datetime.now(self.tz)
+
+                # ******************************
+                # Control de las luces
+                # ******************************
+                current_time_light = datetime.datetime.now(self.tz)
+                self.control_timed_lights(current_time = current_time_light)
+
+                # ******************************
+                # Control de la bomba de agua
+                # ******************************
+
+                current_time_pump = datetime.datetime.now(self.tz)
+
+                current_time_pump, start_time_pump, finish_time_pump = self.control_timed_pump(
+                                                                            current_time_pump = current_time_pump,
+                                                                            start_time_pump   = start_time_pump,
+                                                                            end_time_pump     = finish_time_pump )
                 print()
 
+
+
+            # espera 5 segundos
+            time.sleep(5)
     
 
+    #################################################################################
+    #                           Controla eventos temporizados
+    #                           (cuando encender, apagar luces
+    #                                         y
+    #                                   bomba de agua)
+    #################################################################################
+
+
+    #################################################################################
+    #                           Control de la bomba de agua
+    #################################################################################
+
+    def control_timed_pump(self, 
+                           current_time_pump: datetime.datetime,
+                           start_time_pump:   datetime.datetime,
+                           end_time_pump:     datetime.datetime):
+
+        """
+            función que revisa si dado un momento de encendido (start_time)
+            y un momento de apagado (end_time), y dado un horario fijo 
+            en que la bomba puede estar operativa, se debe apagar 
+            o encender la bomba de agua.
+
+            INPUT:
+                    current_time_pump    -> momento actual
+                    start_time_pump      -> momento en que se debería encender la bomba de agua
+                    end_time_pump        -> momento en que se debería apagar la bomba de agua
+            
+            OUTPUT:
+                    (current_time_pump, start_time_pump, end_time_pump) actualizados
+        """
+
+        code = 'pump'
+
+        # extrae el valor de la hora actual
+        current_hour = int(current_time_pump.strftime("%H"))
+
+        # pide las configuraciones de funcionamiento de la bomba de agua
+        main_settings = self.db_conn.read_actuators_settings(config_ = code)
+
+        # revisa la hora inicial, desde la que debe encender la bomba
+        settings    =  main_settings["start_time"][0]
+        settings    =  str(settings)
+        start_time  =  datetime.datetime.strptime(settings, "%H:%M:%S")
+        start_hour  =  int(start_time.strftime("%H"))
+
+        # revisa la hora final, hasta la que se puede encender la bomba
+        settings    =  main_settings["end_time"][0]
+        settings    =  str(settings)
+        end_time    =  datetime.datetime.strptime(settings, "%H:%M:%S")
+        end_hour    =  int(start_time.strftime("%H"))
+
+        # revisa la cantidad de tiempo, que se debe mantener encendida la bomba de agua
+        duration    =  int(main_settings["duration"][0])
+
+        # revisa cada cuanto tiempo se debe encender la bomba de agua
+        freq        =  int(main_settings["frequency"][0])
+
+
+
+        # si esta inicializando entonces manda la orden de encender la bomba
+        # (e internamente se revisa si se puede hacer dada la hora)
+        if start_time_pump == 0:
+
+            #el momento de incio de la bomba es ahora mismo
+            start_time_pump = current_time_pump
+
+            #indica que el momento de finalización es en +duration minutos
+            end_time_pump = current_time_pump + datetime.timedelta(minutes = duration)
+
+            # si está en el horario permitido la enciende
+            if (current_hour <= end_hour) and (current_hour >= start_hour):
+
+                self.send_conn.send_message(alias_topic = 'pump', message = '1')
+                self.send_conn.send_message(alias_topic = 'pump', message = '1')
+
+            # de lo contrario la apaga
+            else:
+
+                self.send_conn.send_message(alias_topic = 'pump', message = '0')
+                self.send_conn.send_message(alias_topic = 'pump', message = '0')
+
+
+        # caso en que ya hay inicialización
+        else:
+
+            # determina el momento de inicio denuevo basados en 
+            # el momento en que se terminó la ejecución + freq min.
+            start_time_pump = end_time_pump + datetime.timedelta(minutes = freq)
+
+            # definimos el momento de finalización en caso de que comenzaramos en 
+            # start_time_pump (la necesidad de esta variable es que si sobreescribimos
+            # end_time_pump el start time se va a poner cada vez más lejos y nunca 
+            # encenderíamos la bomba)
+            end_time_pump_in_the_future = start_time_pump + datetime.timedelta(minutes = duration)
+
+            # si han pasado freq minutos desde que se apagó la bomba de agua
+            # ya es hora de encender la bomba de agua, si y solo si 
+            # tengo un momento de finalización que me acota
+            if (current_time_pump.timestamp() >= start_time_pump.timestamp() ) and \
+               (current_time_pump.timestamp() <= end_time_pump_in_the_future.timestamp() ):
+
+                end_time_pump = end_time_pump_in_the_future
+
+                # si está en el horario permitido la enciende
+                if (current_hour <= end_hour) and (current_hour >= start_hour):
+                    self.send_conn.send_message(alias_topic = 'pump', message = '1')
+                    self.send_conn.send_message(alias_topic = 'pump', message = '1')
+
+                # de lo contrario la apaga
+                else:
+
+                    self.send_conn.send_message(alias_topic = 'pump', message = '0')
+                    self.send_conn.send_message(alias_topic = 'pump', message = '0')
+
+
+
+        return (current_time_pump, start_time, end_time)
+
+    #################################################################################
+    #                           Control de las luces
+    #################################################################################
+
+    def control_timed_lights(self, 
+                             current_time: datetime.datetime):
+
+        """
+            Función para encender y apagar la bomba de agua, y las luces
+            cuando es necesario.
+        """
+
+        code = 'lights'
+        current_hour = int(current_time.strftime("%H"))
+
+
+        main_settings = self.db_conn.read_actuators_settings(config_ = code)
+
+        # revisa la hora final, hasta la que se puede encender la luz
+        settings    =  main_settings["end_time"][0]
+        settings    =  str(settings)
+        end_time    =  datetime.datetime.strptime(settings, "%H:%M:%S")
+        end_hour    =  int(end_time.strftime("%H"))
+
+        # revisa la hora inicial, desde la que debe encender la luz
+        settings    =  main_settings["start_time"][0]
+        settings    =  str(settings)
+        start_time  =  datetime.datetime.strptime(settings, "%H:%M:%S")
+        start_hour  =  int(start_time.strftime("%H"))
+        
+        # si está dentro del espacio de tiempo obligatorio 
+        # para encender la luz la enciende
+        if (current_hour <= end_hour) and (current_hour >= start_hour):
+        
+            self.send_conn.send_message(alias_topic = 'light', message = '1')
+            self.send_conn.send_message(alias_topic = 'light', message = '1')
+
+
+        #si ya es muy tarde en la noche paga la luz
+        elif  (current_hour >= end_hour):
+
+            self.send_conn.send_message(alias_topic = 'light', message = '0')
+            self.send_conn.send_message(alias_topic = 'light', message = '0')
+
+        pass
+
+    #################################################################################
+    #                   Control de las variables ambientales 
+    #                                 por 
+    #                                casos 
+    #################################################################################
 
     def check_and_control_variable(self, alias, variation_threshold = 0):
         
@@ -158,15 +361,31 @@ class daemon:
         #######################################################################
 
         elif alias == 'lux':
+
+            # timestamp del momento actual en tiempo de colombia
+            colombia_now   = datetime.datetime.now(self.tz)
+
+            # obtiene la hora en el momento actual
+            hour_now  = int(colombia_now.strftime("%H"))
+
+            # revisa la hora final, hasta la que se puede encender la luz
+            settings    =  self.db_conn.read_actuators_settings(config_ = 'lights')["end_time"][0]
+            settings    =  str(settings)
+            end_time    =  datetime.datetime.strptime( settings, "%H:%M:%S" )
+            end_hour    =  int(end_time.strftime("%H"))
+
             
-            if action == 1:
+            # si se debe encender y está dentro de los tiempos adecuados entonces bien
+            if (action == 1) and (hour_now < end_hour):
                 self.send_conn.send_message(alias_topic = 'light', message = '1')
                 self.send_conn.send_message(alias_topic = 'light', message = '1')
 
                 
+            # si se debe apagar
             elif action == -1:
                 self.send_conn.send_message(alias_topic = 'light', message = '0')
                 self.send_conn.send_message(alias_topic = 'light', message = '0')
+
 
         #######################################################################
         #                   Control de  temperatura del agua 
@@ -248,6 +467,8 @@ class daemon:
 
         direction, value   = self.check_variable_tendence(alias = alias, 
                                                           variation_threshold = variation_threshold)
+
+        print(direction, value)
         
         if value > max_ok:
 
@@ -289,11 +510,14 @@ class daemon:
         # Para revisar los datos y la tendencia que tienen.
         time_diff        = datetime.timedelta(hours=1)
         timestamp_start  = (colombia_now - time_diff).strftime("%Y-%m-%d %H:%M:%S")
+        print(timestamp_start, timestamp_end)
 
         # Consulta a la base de datos 
         data = self.db_conn.read_data(timestamp_end = timestamp_end,
                                       timestamp_start = timestamp_start, 
                                       type_ = alias)
+
+        #print(data)
 
         # Extrae el nombre de la variable consultada en la base de datos
         # esto para poder acceder al campo del dataframe y calcular 
