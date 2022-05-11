@@ -1,0 +1,94 @@
+  body{
+    background: #cdced1;
+    color: #000000;
+    font-weight: bold;
+  }
+  
+  input{
+    width: 135px;
+    border-radius: 7px;
+    text-align: center;
+    padding: 5px;
+  }
+
+  input[type=number]::-webkit-inner-spin-button,
+  input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  
+  hr{
+    /*color: #000000;*/
+    height: 50px;
+    background-color: black;
+    /* margin-left: 25%;
+    margin-right: 25%; */
+  }
+
+  .boton-encender{
+    background-color: mediumseagreen;
+    border-color: transparent;
+  }
+
+  .boton-apagar{
+    background-color: firebrick;
+    border-color: transparent;
+  }
+
+  h3{
+    background: #000000;
+    box-shadow: 0 0 0 1px #5F5A4B, 1px 1px 3px 1px rgba(10, 10, 0, 0.5);
+    color: #cdced1;
+    font-size: 16px;
+    height: 30px;
+    line-height: 20px;
+    margin: 12px 0 !important;
+    padding: 5px 0 5px 10px;
+    text-shadow: 2px 2px 3px #222222;
+  }
+
+  .navbar-toggler{
+    width: 100px;
+    height: 45px;
+  }
+
+  .navbar{
+    background-color: #000000;
+  }
+  
+  .back_navbar{
+    background-color: #000000;
+  }
+  
+  .titulo_navbar{
+    background: #cdced1;
+    -webkit-background-clip: text;
+    color: transparent; 
+  }
+
+  .label_cada_cuanto_tiempo_regado{
+    padding-right: 78px;
+  }
+
+  .label_duracion_tiempo_regado{
+    padding-right: 120px;
+  }
+
+  .lable_encendido_luz{
+    padding-right: 400px;
+  }
+
+  .botones-de-cambio{
+    border-radius: 9px;
+    text-align: center;
+    width: 220px;
+    height: 45px;
+    font: bold;
+    font-size: large;
+    color: #cdced1;
+    background-color: #000000;
+  }
+
+  
+
+  
