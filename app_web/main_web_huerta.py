@@ -80,25 +80,25 @@ def modify_values_in_settings():
 
 @app.route('/pump_on')
 def pump_on():
-    send_conn.send_message(alias_topic='pump', message=1)
+    send_conn.send_message(alias_topic='pump', message='1')
     #flash('Bomba de agua encendida satisfactoriamente')
     return redirect(url_for('settings'))
 
 @app.route('/pump_off')
 def pump_off():
-    send_conn.send_message(alias_topic='pump', message=0)
+    send_conn.send_message(alias_topic='pump', message='0')
     #flash('Bomba de agua apagada satisfactoriamente')
     return redirect(url_for('settings'))
 
 @app.route('/light_on')
 def light_on():
-    send_conn.send_message(alias_topic='light', message=1)
+    send_conn.send_message(alias_topic='light', message='1')
     #flash('Luces encendidas satisfactoriamente')
     return redirect(url_for('settings'))
 
 @app.route('/light_off')
 def light_off():
-    send_conn.send_message(alias_topic='light', message=0)
+    send_conn.send_message(alias_topic='light', message='0')
     #flash('Luces apagadas satisfactoriamente')
     return redirect(url_for('settings'))
 
