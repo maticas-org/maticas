@@ -22,7 +22,7 @@ from manipulate_data_for_settings import *
 
 #CREACIÓN DE LA APLICACIÓN
 app = Flask(__name__)
-#create_dash_app(app)
+create_dash_app(app)
 
 #SECRET KEY DE LA APP
 app.secret_key = 'APP#%&**twyt34+%'
@@ -57,7 +57,7 @@ def home():
 def settings():
     get_data_from_all_ambiental_settings()
     get_data_from_all_actuators_settings()
-    return render_template('settings_copy.html', title='Settings', ambiental_dict = interval_ambiental_vars, actuators_dict = interval_actuators_vars)
+    return render_template('settings.html', title='Settings', ambiental_dict = interval_ambiental_vars, actuators_dict = interval_actuators_vars)
 
 
 #EDITAR LOS DATOS DE LAS SETTINGS
@@ -78,6 +78,29 @@ def modify_values_in_settings():
         write_all_actuators_settings()
         return redirect(url_for('settings'))
 
+@app.route('/pump_on')
+def pump_on():
+    send_conn.send_message(alias_topic='pump', message=1)
+    #flash('Bomba de agua encendida satisfactoriamente')
+    return redirect(url_for('settings'))
+
+@app.route('/pump_off')
+def pump_off():
+    send_conn.send_message(alias_topic='pump', message=0)
+    #flash('Bomba de agua apagada satisfactoriamente')
+    return redirect(url_for('settings'))
+
+@app.route('/light_on')
+def light_on():
+    send_conn.send_message(alias_topic='light', message=1)
+    #flash('Luces encendidas satisfactoriamente')
+    return redirect(url_for('settings'))
+
+@app.route('/light_off')
+def light_off():
+    send_conn.send_message(alias_topic='light', message=0)
+    #flash('Luces apagadas satisfactoriamente')
+    return redirect(url_for('settings'))
 
 
 #VERIFICACIÓN PARA CORRER LA APP

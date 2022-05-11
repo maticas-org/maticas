@@ -195,9 +195,9 @@
 
         <br>
         <br>
-    </form>
+    
 
-    <form action="">
+    
         <!--BOTONES DE ACCIONADO DE LA LUZ Y DE LA BOMBA DE AGUA-->
         <div class="text-center">
             <br>
@@ -208,33 +208,34 @@
         <div class="row">
             <div class="col-6 text-center">
                 <h4>Bomba de agua:</h4>
-                <button class="btn btn-primary boton-encender" type="button">Encender</button>
-                <button class="btn btn-primary boton-apagar" type="button">Apagar</button>
+                <a href="/pump_on" class="btn btn-primary boton-encender">Encender</a>
+                <a href="/pump_off" class="btn btn-primary boton-apagar">Apagar</a>
             </div>
 
             <div class="col-6 text-center">
                 <h4>Luz:</h4>
-                <button class="btn btn-primary boton-encender" type="button">Encender</button>
-                <button class="btn btn-primary boton-apagar" type="button">Apagar</button>
+                <a href="/light_on" class="btn btn-primary boton-encender">Encender</a>
+                <a href="/light_off" class="btn btn-primary boton-apagar">Apagar</a>
             </div>
         </div>
-    </form>
+    
 
-    <form action="">
+    
         <!--EDITAR CONFIGURACIONES-->
         <div class="row">
             <div class="col-12 text-center">
                 <div class="guardar_datos">
+                    <br>
                     <br>
                     <a href="/settings_update" class="btn btn-secondary botones-de-cambio">Editar configuraciones</a>
                 </div>
                 
             </div>
         </div>
-    </form>
+    
         <br>
         <br>
 
-    
+    </form>
 
 {% endblock %}
