@@ -14,11 +14,10 @@ cwd = '/'.join(cwd)
 
 # Añade el directorio al path
 path.insert(1, cwd) 
-print("current working directory: cd .. -> ",  cwd)
+#print("current working directory: cd .. -> ",  cwd)
 
 
 from flask import request
-print('ACAAAAAAAAAAA')
 from db_mqtt_interface.db.dirty7w7 import *
 from db_mqtt_interface.db.db_connection import db_connection
 #CONEXIÓN A LA BASE DE DATOS
@@ -52,13 +51,47 @@ interval_ambiental_vars = {}
 interval_actuators_vars = {}
 
 
+
+
 def get_data_from_ambiental_settings(config_: str):
+
+    """
+    INPUTS:
+            config_: string que indica de qué tabla de las variable ambientales se deben leer los datos,
+                     en otras palabras qué configuración sea de 'optimal' o 'ok' va a ser leida y para 
+                     qué variable en particular.
+
+    OUTPUTS:
+               min_: float tomado de la base de datos
+               max_: float tomado de la base de datos  
+                     (Son los valores inferior y superior para las condiciones 
+                     optimas o aceptables para la variable).
+    """ 
+
     df = conn.read_ambiental_settings(config_= config_)
     min_ = df['min'][0]
     max_ = df['max'][0]    
     return min_, max_
 
 def get_data_from_actuators_settings(config_: str):
+
+    """
+    INPUTS:
+               config_: string que indica de qué tabla de las variable de los actuadores se deben leer los datos,
+                        en otras palabras qué configuración sea de 'pump' o 'lights' va a ser leida
+
+    OUTPUTS:
+        Si se quiere la información de 'pump':
+               frecuency:  entero que indica la frecuencia con la que se bombeará agua
+               duration:   entero que indica la duración del bombeo de agua  
+               start_time: hora en la que se debe encender la bomba de agua
+               end_time:   hora en la que se debe apagar la bomba de agua
+
+        Si se quiere la información de 'lights':
+               start_time: hora en la que se deben encender las luces
+               end_time:   hora en la que se deben apagar las luces 
+    """
+
     df = conn.read_actuators_settings(config_ = config_)
     if config_ == 'pump':
         frecuency = df['frequency'][0]
@@ -96,6 +129,14 @@ def get_data_from_all_actuators_settings():
                                                  end_time]
 
 def get_info_from_html_form():
+    
+    """
+    Esta función se encarga de hacer un request de la información que se encuentra en
+    el formulario html con el fin de poder hacer fill de los campos al hacer cambio de 
+    rutas entre 'settings' y 'settings_update'
+    (Revisar: 'main_web_huerta.py')
+    """
+
     iterator = 0
     for variable in interval_ambiental_vars.keys():
         interval_ambiental_vars[variable][0] = request.form[simplify_ambiental_variable_names[iterator]]
@@ -117,6 +158,12 @@ def get_info_from_html_form():
 
 
 def write_all_ambiental_settings():
+
+    """
+    Esta función se encarga de escribir en la base de datos los cambios en los datos de 
+    los intervalos de las variables ambientales, hechas por parte del usuario
+    """
+
     for variable in ambiental_vars_:
         conn.write_ambiental_settings(value_min=interval_ambiental_vars[variable][0],
                                       value_max=interval_ambiental_vars[variable][1],
@@ -124,6 +171,12 @@ def write_all_ambiental_settings():
 
 
 def write_all_actuators_settings():
+
+    """
+    Esta función se encarga de escribir en la base de datos los cambios en los datos de 
+    los intervalos de los actuadores, hechas por parte del usuario
+    """
+
     for variable in actuators_vars_:
         if variable == 'pump':
             conn.write_actuators_settings(config_=variable, params=(interval_actuators_vars[variable][2], 

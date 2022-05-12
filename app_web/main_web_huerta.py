@@ -18,6 +18,8 @@ from dash_data_app import create_dash_app
 #MODULO QUE CONTIENE LAS FUNCIONES USADAS EN LAS RUTAS
 from manipulate_data_for_settings import *
 
+import time
+
 
 
 #CREACIÓN DE LA APLICACIÓN
@@ -80,25 +82,60 @@ def modify_values_in_settings():
 
 @app.route('/pump_on')
 def pump_on():
-    send_conn.send_message(alias_topic='pump', message='1')
+
+    
+    # dependiendo de como funcione el relé se envía un 1 un 0.
+    # para encenderla
+
+    send_conn.send_message(alias_topic='pump', message='0')
+    time.sleep(0.3)
+    send_conn.send_message(alias_topic='pump', message='0')
+    time.sleep(0.4)
+    send_conn.send_message(alias_topic='pump', message='0')
     #flash('Bomba de agua encendida satisfactoriamente')
     return redirect(url_for('settings'))
 
 @app.route('/pump_off')
 def pump_off():
-    send_conn.send_message(alias_topic='pump', message='0')
+
     #flash('Bomba de agua apagada satisfactoriamente')
+
+    # dependiendo de como funcione el relé se envía un 1 un 0.
+    # para apagarla. Envío varias veces para asegurarme que llega 
+    # el mensaje al otro lado
+
+    send_conn.send_message(alias_topic='pump', message='1')
+    time.sleep(0.3)
+    send_conn.send_message(alias_topic='pump', message='1')
+    time.sleep(0.4)
+    send_conn.send_message(alias_topic='pump', message='1')
     return redirect(url_for('settings'))
 
 @app.route('/light_on')
 def light_on():
-    send_conn.send_message(alias_topic='light', message='1')
     #flash('Luces encendidas satisfactoriamente')
+
+    # dependiendo de como funcione el relé se envía un 1 un 0.
+    # para encenderla
+
+    send_conn.send_message(alias_topic='light', message='0')
+    time.sleep(0.3)
+    send_conn.send_message(alias_topic='light', message='0')
+    time.sleep(0.4)
+    send_conn.send_message(alias_topic='light', message='0')
     return redirect(url_for('settings'))
 
 @app.route('/light_off')
 def light_off():
-    send_conn.send_message(alias_topic='light', message='0')
+
+    # dependiendo de como funcione el relé se envía un 1 un 0.
+    # para apagarla
+
+    send_conn.send_message(alias_topic='light', message='1')
+    time.sleep(0.3)
+    send_conn.send_message(alias_topic='light', message='1')
+    time.sleep(0.4)
+    send_conn.send_message(alias_topic='light', message='1')
     #flash('Luces apagadas satisfactoriamente')
     return redirect(url_for('settings'))
 
