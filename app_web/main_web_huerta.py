@@ -13,7 +13,8 @@ from db_mqtt_interface.mqtt_python.dirty8w8 import *
 from db_mqtt_interface.mqtt_python.writeFromMqtt import *
 
 #MODULO PARA PODER CREAR EL DASHBOARD DENTRO DE LA APLICACIÓN FLASK
-from dash_data_app import create_dash_app
+from data_dash_app import create_dash_app
+from detailed_data_dash_app import create_dash_app_2
 
 #MODULO QUE CONTIENE LAS FUNCIONES USADAS EN LAS RUTAS
 from manipulate_data_for_settings import *
@@ -25,6 +26,7 @@ import time
 #CREACIÓN DE LA APLICACIÓN
 app = Flask(__name__)
 create_dash_app(app)
+create_dash_app_2(app)
 
 #SECRET KEY DE LA APP
 app.secret_key = 'APP#%&**twyt34+%'
@@ -92,13 +94,11 @@ def pump_on():
     send_conn.send_message(alias_topic='pump', message='0')
     time.sleep(0.4)
     send_conn.send_message(alias_topic='pump', message='0')
-    #flash('Bomba de agua encendida satisfactoriamente')
+    flash('Bomba de agua encendida satisfactoriamente')
     return redirect(url_for('settings'))
 
 @app.route('/pump_off')
 def pump_off():
-
-    #flash('Bomba de agua apagada satisfactoriamente')
 
     # dependiendo de como funcione el relé se envía un 1 un 0.
     # para apagarla. Envío varias veces para asegurarme que llega 
@@ -109,11 +109,12 @@ def pump_off():
     send_conn.send_message(alias_topic='pump', message='1')
     time.sleep(0.4)
     send_conn.send_message(alias_topic='pump', message='1')
+    flash('Bomba de agua apagada satisfactoriamente')
     return redirect(url_for('settings'))
 
 @app.route('/light_on')
 def light_on():
-    #flash('Luces encendidas satisfactoriamente')
+    
 
     # dependiendo de como funcione el relé se envía un 1 un 0.
     # para encenderla
@@ -123,6 +124,7 @@ def light_on():
     send_conn.send_message(alias_topic='light', message='0')
     time.sleep(0.4)
     send_conn.send_message(alias_topic='light', message='0')
+    flash('Luces encendidas satisfactoriamente')
     return redirect(url_for('settings'))
 
 @app.route('/light_off')
@@ -136,7 +138,7 @@ def light_off():
     send_conn.send_message(alias_topic='light', message='1')
     time.sleep(0.4)
     send_conn.send_message(alias_topic='light', message='1')
-    #flash('Luces apagadas satisfactoriamente')
+    flash('Luces apagadas satisfactoriamente')
     return redirect(url_for('settings'))
 
 

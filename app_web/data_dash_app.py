@@ -14,7 +14,7 @@ cwd = '/'.join(cwd)
 
 # Añade el directorio al path
 path.insert(1, cwd) 
-print("current working directory: cd .. -> ",  cwd)
+#print("current working directory: cd .. -> ",  cwd)
 
 import dash
 from datetime import date
@@ -24,8 +24,9 @@ import plotly.express as px
 import plotly.graph_objects as go
 import pandas as pd
 
-from maticas.db_mqtt_inteface.db.dirty7w7 import *
-from maticas.db_mqtt_inteface.db.db_connection import db_connection
+from db_mqtt_interface.db.dirty7w7 import *
+from db_mqtt_interface.db.db_connection import db_connection
+
 conn = db_connection(db_host =  db_host,
                      db_name =  db_name,
                      db_user = db_user,
