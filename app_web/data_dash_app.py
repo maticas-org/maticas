@@ -40,262 +40,134 @@ def create_dash_app(flask_app):
     app_dash = dash.Dash(server=flask_app, name="Dashboard", url_base_pathname="/data/")
     
     #Obtener y almacenar valores óptimos y aceptables de cada variable
-    #ph
-    inicio='2020-01-01 00:00:00'
-    fin= '2029-01-01 00:00:00'
-    table_h = conn.read_data(timestamp_start = inicio,
-            timestamp_end= fin,
-            type_ = "hum")
-    table_ph = conn.read_data(timestamp_start = inicio,
-            timestamp_end= fin,
-            type_ = "ph")
-    table_t = conn.read_data(timestamp_start = inicio,
-            timestamp_end= fin,
-            type_ = "temp")
-    table_tw= conn.read_data(timestamp_start = inicio,
-            timestamp_end= fin,
-            type_ = "wtemp")
-    table_ec = conn.read_data(timestamp_start = inicio,
-            timestamp_end= fin,
-            type_ = "ec")
-    table_l = conn.read_data(timestamp_start = inicio,
-            timestamp_end= fin,
-            type_ = "lux")
-    ac_h=table_h.iat[len(table_h)-1,1]
-    ac_t=table_t.iat[len(table_t)-1,1]
-    ac_tw=table_tw.iat[len(table_tw)-1,1]
-    ac_ph=table_ph.iat[len(table_ph)-1,1]
-    ac_l=table_l.iat[len(table_l)-1,1]
-    ac_ec=table_ec.iat[len(table_ec)-1,1]
+    inicio  = '2022-01-01 00:00:00'
+    fin     = '2023-01-01 00:00:00'
+    fondo   = "#161a28"
+    fondo_2 = "#161a28"
+    fondo_g = "#1e2130"
+    letra   = "white"
+    f_family = "Sans-serif"
 
-    df_ph_a = conn.read_ambiental_settings(config_='ph_ok')
-    ok_min_ph= df_ph_a['min'][0]
-    ok_max_ph = df_ph_a['max'][0]
+    #funcion para obtener las tablas
+    def ob_dat(apodo: str):
+        table_aux = conn.read_data(timestamp_start = inicio,
+            timestamp_end= fin,
 
-    df_ph_o = conn.read_ambiental_settings(config_='ph_optimal')
-    opt_min_ph= df_ph_o['min'][0]
-    opt_max_ph = df_ph_o['max'][0]
+            type_ = apodo)
+        return table_aux
 
-    #humedad
-    df_h_a = conn.read_ambiental_settings(config_='hum_ok')
-    ok_min_h= df_h_a['min'][0]
-    ok_max_h = df_h_a['max'][0]
+    #funcion para obtener el valor actual
+    def ac(tabla):
+        aux = tabla.iat[len(tabla)-1,1]
+        return aux
 
-    df_h_o = conn.read_ambiental_settings(config_='hum_optimal')
-    opt_min_h= df_h_o['min'][0]
-    opt_max_h = df_h_o['max'][0]
+    #funcion valores optimos y aceptables
+    def ol(variable:str):
+        ok=variable+"_ok"
+        df_aux_a = conn.read_ambiental_settings(config_=ok)
+        ok_min   = df_aux_a['min'][0]
+        ok_max   = df_aux_a['max'][0]
+
+        op=variable+"_optimal"
+        df_aux_o = conn.read_ambiental_settings(config_=op)
+        opt_min  = df_aux_o['min'][0]
+        opt_max  = df_aux_o['max'][0]
+
+        return ok_min,ok_max, opt_min, opt_max
     
-    #temperatura
-    df_t_a = conn.read_ambiental_settings(config_='temp_ok')
-    ok_min_t= df_t_a['min'][0]
-    ok_max_t = df_t_a['max'][0]
-
-    df_t_o = conn.read_ambiental_settings(config_='temp_optimal')
-    opt_min_t= df_t_o['min'][0]
-    opt_max_t = df_t_o['max'][0]
-
-    #temperatura del agua
-    df_wt_a = conn.read_ambiental_settings(config_='wtemp_ok')
-    ok_min_wt= df_wt_a['min'][0]
-    ok_max_wt = df_wt_a['max'][0]
-
-    df_wt_o = conn.read_ambiental_settings(config_='wtemp_optimal')
-    opt_min_wt= df_wt_o['min'][0]
-    opt_max_wt = df_wt_o['max'][0]
-
-    #Electroconductividad
-    df_ec_a = conn.read_ambiental_settings(config_='ec_ok')
-    ok_min_ec= df_ec_a['min'][0]
-    ok_max_ec = df_ec_a['max'][0]
-
-    df_ec_o = conn.read_ambiental_settings(config_='ec_optimal')
-    opt_min_ec= df_ec_o['min'][0]
-    opt_max_ec = df_ec_o['max'][0]
-    #luz
-    df_l_a = conn.read_ambiental_settings(config_='lux_ok')
-    ok_min_l= df_l_a['min'][0]
-    ok_max_l = df_l_a['max'][0]
-
-    df_l_o = conn.read_ambiental_settings(config_='lux_optimal')
-    opt_min_l= df_l_o['min'][0]
-    opt_max_l = df_l_o['max'][0]
-
-
-    #creación de los indicadores
-        #Humedad
-    fig_IH= go.Figure(go.Indicator(
+    #funcion para los indicadores
+    def indicadores(nombre:str,actual:float,lim_inf:float,lim_sup:float,ok_min:float,ok_max:float,op_min:float,op_max:float):
+       
+        aux= go.Figure(go.Indicator(
            mode = "gauge+number+delta",
-           value = ac_h,
+           value = actual,
            domain = {'x': [0, 1], 'y': [0, 1]},
-           title = {'text': "Humedad", 'font': {'size': 24}},
-           delta = {'reference': ac_h, 'increasing': {'color': "RebeccaPurple"}},
+           title = {'text': nombre, 'font': {'size': 24}},
+           delta = {'reference': actual, 'increasing': {'color': "#372937"}},
            gauge = {
-                'axis': {'range': [40, 90], 'tickwidth': 1, 'tickcolor': "darkblue"},
-                'bar': {'color': "darkblue"},
+                'axis': {'range': [lim_inf, lim_sup], 'tickwidth': 1, 'tickcolor': "darkblue"},
+                'bar': {'color': "#2d3bb1"},
                 'bgcolor': "blue",
                 'borderwidth': 2,
                 'bordercolor': "gray",
                 'steps': [
-                {'range': [40, ok_min_h], 'color': 'red'},
-                {'range': [ok_min_h, opt_min_h], 'color': 'skyblue'},
-                {'range': [opt_min_h, opt_max_h], 'color': 'green'},
-                {'range': [opt_max_h, ok_max_h], 'color': 'skyblue'},
-                {'range': [ok_max_h, 90], 'color': 'red'},
-                
+                {'range': [lim_inf, ok_min], 'color': '#d14e5a'},
+                {'range': [ok_min, op_min], 'color': '#88c2d8'},
+                {'range': [op_min, op_max], 'color': '#9AD888'},
+                {'range': [op_max, ok_max], 'color': '#88c2d8'},
+                {'range': [ok_max, lim_sup], 'color': '#d14e5a'},
                 ],
                 'threshold': {
-                    'line': {'color': "red", 'width': 4},
+                    'line': {'color': "white", 'width': 4},
                     'thickness': 0.75,
                 }}))
-        #Ph
-    fig_IPH = go.Figure(go.Indicator(
-           mode = "gauge+number+delta",
-           value = ac_ph,
-           domain = {'x': [0, 1], 'y': [0, 1]},
-           title = {'text': "Ph", 'font': {'size': 24}},
-           delta = {'reference': ac_ph, 'increasing': {'color': "RebeccaPurple"}},
-           gauge = {
-           
-                'axis': {'range': [4, 8], 'tickwidth': 1, 'tickcolor': "darkblue"},
-                'bar': {'color': "darkblue"},
-                
-                'borderwidth': 2,
-                'bordercolor': "gray",
-                 'steps': [
-                {'range': [4, ok_min_ph], 'color': 'red'},
-                {'range': [ok_min_ph, opt_min_ph], 'color': 'skyblue'},
-                {'range': [opt_min_ph, opt_max_ph], 'color': 'green'},
-                {'range': [opt_max_ph, ok_max_ph], 'color': 'skyblue'},
-                {'range': [ok_max_ph, 8], 'color': 'red'},
-                
-                ],
-             'threshold': {
-                'line': {'color': "red", 'width': 4},
-                'thickness': 0.75,
-                }}))
-        #Luz
-    fig_IL = go.Figure(go.Indicator(
-           mode = "gauge+number+delta",
-           value = ac_l/10,
-           domain = {'x': [0, 1], 'y': [0, 1]},
-           title = {'text': "Luz", 'font': {'size': 24}},
-           delta = {'reference': ac_l/10, 'increasing': {'color': "RebeccaPurple"}},
-           gauge = {
-           
-                'axis': {'range': [25000/1000, 105000/1000], 'tickwidth': 1, 'tickcolor': "darkblue"},
-                'bar': {'color': "darkblue"},
-               
-                'borderwidth': 2,
-                'bordercolor': "gray",
-                'steps': [
-                {'range': [25000/1000,  ok_min_l/1000], 'color': 'red'},
-                {'range': [ok_min_l/1000, opt_min_l/1000], 'color': 'skyblue'},
-                {'range': [opt_min_l/1000, opt_max_l/1000], 'color': 'green'},
-                {'range': [opt_max_l/1000, ok_max_l/1000], 'color': 'skyblue'},
-                {'range': [ok_max_l/1000, 105000/1000], 'color': 'red'},
-                
-                
-                ],
-            'threshold': {
-                'line': {'color': "red", 'width': 4},
-                'thickness': 0.75,
-                }}))
-        #Temperatura
-    fig_IT= go.Figure(go.Indicator(
-           mode = "gauge+number+delta",
-           value = ac_t, #VALOR ACTUAL QUE TIENE EL SENSOR
-           domain = {'x': [0, 1], 'y': [0, 1]},
-           title = {'text': "Temperatura", 'font': {'size': 24}}, #'text': NOMBRE DE LA FIGURA, 'font': {'size': 24}
-           delta = {'reference':  ac_t, 'increasing': {'color': "RebeccaPurple"}},
-           gauge = {
-           
-                'axis': {'range': [10, 28], 'tickwidth': 1, 'tickcolor': "darkblue"}, #500 ES VALOR MAIXMO QUE PUEDE LLEGAR A TOMAR
-                'bar': {'color': "darkblue"},
-                
-                'borderwidth': 2,
-                'bordercolor': "gray",
-                'steps': [
-                {'range': [10, ok_min_t], 'color': 'red'},
-                {'range': [ok_min_t, opt_min_t], 'color': 'skyblue'},
-                {'range': [opt_min_t, opt_max_t], 'color': 'green'},
-                {'range': [opt_max_t, ok_max_t], 'color': 'skyblue'},
-                {'range': [ok_max_t, 100], 'color': 'red'},
-                
-                ],
-            'threshold': {
-                'line': {'color': "red", 'width': 4},
-                'thickness': 0.75,
-                }}))
-        #Temperatura del agua
-    fig_ITW= go.Figure(go.Indicator(
-           mode = "gauge+number+delta",
-           value =ac_tw,
-           domain = {'x': [0, 1], 'y': [0, 1]},
-           title = {'text': "Temperatura del agua", 'font': {'size': 24}},
-           delta = {'reference': ac_tw, 'increasing': {'color': "RebeccaPurple"}},
-           gauge = {
-                'axis': {'range': [6,21], 'tickwidth': 1, 'tickcolor': "darkblue"},
-                'bar': {'color': "darkblue"},
-                'bgcolor': "blue",
-                'borderwidth': 2,
-                'bordercolor': "gray",
-                'steps': [
-                {'range': [6, ok_min_wt], 'color': 'red'},
-                {'range': [ok_min_wt, opt_min_wt], 'color': 'skyblue'},
-                {'range': [opt_min_wt, opt_max_wt], 'color': 'green'},
-                {'range': [opt_max_wt, ok_max_wt], 'color': 'skyblue'},
-                {'range': [ok_max_wt, 21], 'color': 'red'},
-                
-                ],
-                'threshold': {
-                    'line': {'color': "red", 'width': 4},
-                    'thickness': 0.75,
-                }}))
+        return aux
+
+
+    
+    table_h  = ob_dat("hum")
+    table_t  = ob_dat("temp")
+    table_ph = ob_dat("ph")
+    table_tw = ob_dat("wtemp")
+    table_ec = ob_dat("ec")
+    table_l  = ob_dat("lux")
+  
+ 
+    ac_h  = ac(table_h)
+    ac_t  = ac(table_t)
+    ac_wt = ac(table_tw)
+    ac_ph = ac(table_ph)
+    ac_l  = ac(table_l)
+    ac_ec = ac(table_ec)
+
+    
+    ok_min_ph,ok_max_ph,opt_min_ph,opt_max_ph  = ol("ph")
+    ok_min_h,ok_max_h, opt_min_h,opt_max_h     = ol("hum")
+    ok_min_t,ok_max_t, opt_min_t,opt_max_t     = ol("temp")
+    ok_min_wt,ok_max_wt, opt_min_wt,opt_max_wt = ol("wtemp")
+    ok_min_ec,ok_max_ec, opt_min_ec,opt_max_ec = ol("ec") 
+    ok_min_l,ok_max_l, opt_min_l,opt_max_l     = ol("lux") 
+
+    fig_IH  = indicadores("Humedad",ac_h,40,90,ok_min_h,ok_max_h,opt_min_h,opt_max_h)
+    fig_IPH = indicadores("Ph",ac_ph,4,8.5,ok_min_ph,ok_max_ph,opt_min_ph,opt_max_ph)
+    fig_IL  = indicadores("Luz",ac_l/10,25,105,ok_min_l/1000,ok_max_l/1000,opt_min_l/1000,opt_max_l/1000)
+    fig_IT  = indicadores("Temperatura",ac_t,10,28,ok_min_t,ok_max_t,opt_min_t,opt_max_t)
+    fig_ITW = indicadores("Temperatura del agua",ac_wt,6,21,ok_min_wt,ok_max_wt,opt_min_wt,opt_max_wt)
+    fig_IEC = indicadores("Electroconductividad",ac_ec,1,3,ok_min_ec,ok_max_ec,opt_min_ec,opt_max_ec)
    
-        #electroconductividad
-    fig_IEC= go.Figure(go.Indicator(
-           mode = "gauge+number+delta",
-           value = ac_ec,
-           domain = {'x': [0, 1], 'y': [0, 1]},
-           title = {'text': "Electroconductividad", 'font': {'size': 24}},
-           delta = {'reference': ac_ec, 'increasing': {'color': "RebeccaPurple"}},
-           gauge = {
-                'axis': {'range': [1.5, 3], 'tickwidth': 1, 'tickcolor': "darkblue"},
-                'bar': {'color': "darkblue"},
-                'bgcolor': "blue",
-                'borderwidth': 2,
-                'bordercolor': "gray",
-               'steps': [
-                {'range': [0, ok_min_ec], 'color': 'red'},
-                {'range': [ok_min_ec, opt_min_ec], 'color': 'skyblue'},
-                {'range': [opt_min_ec, opt_max_ec], 'color': 'green'},
-                {'range': [opt_max_ec, ok_max_ec], 'color': 'skyblue'},
-                {'range': [ok_max_ec, 3], 'color': 'red'},
-                
-                ],
-                'threshold': {
-                    'line': {'color': "red", 'width': 4},
-                    'thickness': 0.75,
-                }}))
-   
+    
    #modificarle el estilo a la fig
-    fig_IT.update_layout(paper_bgcolor =    "#cdced1", font = {'color': "darkblue", 'family': "Arial"})
-    fig_IEC.update_layout(paper_bgcolor = "#cdced1", font = {'color': "darkblue", 'family': "Arial"})
-    fig_ITW.update_layout(paper_bgcolor = "#cdced1", font = {'color': "darkblue", 'family': "Arial"})
-    fig_IH.update_layout(paper_bgcolor = "#cdced1", font = {'color': "darkblue", 'family': "Arial"})
-    fig_IPH.update_layout(paper_bgcolor = "#cdced1", font = {'color': "darkblue", 'family': "Arial"})
-    fig_IL.update_layout(paper_bgcolor = "#cdced1", font = {'color': "darkblue", 'family': "Arial"})
+    fig_IEC.update_layout(paper_bgcolor =  fondo_g,  font = {'color': letra, 'family': f_family})
+    fig_IT.update_layout(paper_bgcolor  =  fondo_2,  font = {'color': letra, 'family': f_family})
+    fig_ITW.update_layout(paper_bgcolor =  fondo_2,  font = {'color': letra, 'family': f_family})
+    fig_IH.update_layout(paper_bgcolor  =  fondo_g,  font = {'color': letra, 'family': f_family})
+    fig_IPH.update_layout(paper_bgcolor =  fondo_2,  font = {'color': letra, 'family': f_family})
+    fig_IL.update_layout(paper_bgcolor  =  fondo_g,  font = {'color': letra, 'family': f_family})
+
+    
+   
    
     #APP LAYOUT----------------------------
-    app_dash.layout = html.Div(children=[
-
-    html.H1(children='Datos', className='text-center',style={'backgroundColor':"#000000",'color':"#cdced1", 'font':'Arial'}),
-    html.Div(children='''Aquí encuentra información sobre su cultivo'''),
+    app_dash.layout =  html.Div(children=[
+    
+    html.H1(children=[ html.Div(children='HUERTA INTELIGENTE',style={'family': "Courier New",'text-align':"right",'color':"white",'margin':0,'font-style': "italic"}),
+       #para el cambhio de paginas
+       dcc.Link(html.Button("Settings",style={'backgroundColor':"#3d3d43",'color':"white",'size':"20px"}), href="/settings", refresh=True),
+       dcc.Link(html.Button("Detailed analysis",style={'backgroundColor':"#3d3d43",'color':"white",'size':"20px"}), href="/detailed_analysis", refresh=True,),
+       dcc.Link(html.Button("Data",style={'backgroundColor':"#3d3d43",'color':"white",'size':"20px"}), href="/data", refresh=True)],
+       style={'backgroundColor':"black",'color':letra,'family': f_family,'size':"40px"}),
+       
+    html.Div(children='''DATOS''', style={ 'fontSize':40,'text-align':"center",'family': f_family}),
+    html.Div(children='''separador''',style={'fontSize':20, 'text-align':"center",'backgroundColor':fondo,'color':fondo}),
+    html.Div(children='''Aquí encuentra información sobre su cultivo''',style={'fontSize':20, 'text-align':"center",'backgroundColor':fondo_g,'family': f_family}),
     
     #Mostrar los indicadores
     html.Div(children=[
-       html.Div(children='''Intervalos óptimos de las variables en verde'''),
-       html.Div(children='''Intervalos óptimos  de las variables en azul'''),
+       html.Div(children='''separador''',style={'fontSize':20, 'text-align':"center",'backgroundColor':fondo,'color':fondo}),
+       html.Div(children='''Convenciones:''',style={'backgroundColor':fondo_g,'text-align':"center"}),
+       html.Div(children='''Intervalos óptimos de las variables en verde''',style={'backgroundColor':fondo_g,'text-align':"center"}),
+       html.Div(children='''Intervalos óptimos  de las variables en azul''',style={'backgroundColor':fondo_g,'text-align':"center"}),
+       html.Div(children='''separador''',style={'fontSize':20, 'text-align':"center",'backgroundColor':fondo,'color':fondo}),
        dcc.Graph(
             id='humedad_i',
             figure=fig_IH,
@@ -309,15 +181,11 @@ def create_dash_app(flask_app):
         dcc.Graph(
             id='l_i',
             figure=fig_IL,
-            style={'width': '30%','display': 'inline-block','backgroundColor':'blue'}
+            style={'width': '30%','display': 'inline-block'}
         ),
-       
-        
+          
      ],
-    #style={"border":"2px gray solid","border-radius": "25px",},
-   
-    
-    
+  
     ),
     html.Div(children=[
     
@@ -342,25 +210,25 @@ def create_dash_app(flask_app):
             
         ),
      ],
-    #style={"border":"2px gray solid","border-radius": "25px"},
-   
-    
-    
     ),
-    
+    html.Div(children='''separador''',style={'fontSize':20, 'text-align':"center",'backgroundColor':fondo,'color':fondo}),
+
+    html.Div(children='''Seleccione la fecha de inicio y  fin y la variable que desea visualizar''',style={'fontSize':20, 'text-align':"center",'backgroundColor':fondo_g,'size':90}),
+    html.Div(children='''separador''',style={'fontSize':20, 'text-align':"center",'backgroundColor':fondo,'color':fondo}),
     #calendario
     dcc.DatePickerRange(
         id="fecha",
         display_format='M-D-Y',
         start_date_placeholder_text='M-D-Y',
-        style={'backgroundColor':"#cdced1;"}
+        style={'backgroundColor':"black"}
     ),
     #Input hora
-    dcc.Input(id='h_in', value='00:00:00', type='text'),
-    dcc.Input(id='h_fin', value='23:59:59', type='text'),
+    dcc.Input(id='h_in', value='00:00:00', type='text', style={'backgroundColor':"#565F8C",'color':"white"}),
+    dcc.Input(id='h_fin', value='23:59:59', type='text', style={'backgroundColor':"#565F8C",'color':"white"}),
     #Boton para activdar por primera vez
-    html.Button('Ver', id='b_ver', n_clicks=0),
+    html.Button('Ver', id='b_ver', n_clicks=0,style={'backgroundColor':"#565F8C",'color':"white",'size':"20px"}),
     #cuadro de texto de la fecha
+    html.Div(children='''separador''',style={'fontSize':20, 'text-align':"center",'backgroundColor':fondo,'color':fondo}),
     html.Div(id='my-div'),
     #dropdown para seleccionar las  variables
     dcc.Dropdown( id = 'menu',
@@ -373,14 +241,16 @@ def create_dash_app(flask_app):
             {'label': 'Temperatura del agua', 'value':'wtemp'},
             {'label': 'Electroconductividad', 'value':'ec'},
              ],
-        style={'backgroundColor':"#e4e4e6;"}
+        style={'backgroundColor':"#565F8C",'color':"black"}
       ),
 
     #llamar la grafica
     dcc.Graph(id='figuraa'),  
      
 
-    ],style={'backgroundColor':'#cdced1'}) 
+    ],style={'backgroundColor': fondo,'color':"161a28", 'font-family': f_family,'margin':0, 'height':'100vh', 
+             'width':'100%', 'height':'100%', 'top':'0px', 'left':'0px'}) 
+    
 
     #Aquí es donde recibe los inputs y dice dónde son los outputs
     @app_dash.callback( 
@@ -471,7 +341,9 @@ def create_dash_app(flask_app):
       
         #definir la gráfica según la tabla
         figuraa = px.line(table1, x='time', y=y_1)
-        figuraa.update_layout(paper_bgcolor = "#cdced1", font = {'color': "black", 'family': "Arial"})
+        figuraa.update_traces(line_color='#FFC300')
+
+        figuraa.update_layout(paper_bgcolor = fondo, plot_bgcolor= fondo_g, font = {'color': "white", 'family': f_family})
         
         return figuraa,st
 

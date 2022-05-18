@@ -19,8 +19,6 @@ from detailed_data_dash_app import create_dash_app_2
 #MODULO QUE CONTIENE LAS FUNCIONES USADAS EN LAS RUTAS
 from manipulate_data_for_settings import *
 
-import time
-
 
 
 #CREACIÓN DE LA APLICACIÓN
@@ -84,7 +82,6 @@ def modify_values_in_settings():
 
 @app.route('/pump_on')
 def pump_on():
-
     
     # dependiendo de como funcione el relé se envía un 1 un 0.
     # para encenderla
@@ -114,7 +111,6 @@ def pump_off():
 
 @app.route('/light_on')
 def light_on():
-    
 
     # dependiendo de como funcione el relé se envía un 1 un 0.
     # para encenderla

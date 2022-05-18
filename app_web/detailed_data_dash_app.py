@@ -38,16 +38,21 @@ conn = db_connection(db_host =  db_host,
                     )
 
 def create_dash_app_2(flask_app):
-    app_dash = dash.Dash(server=flask_app, name="Dashboard", url_base_pathname="/detailed_analysis/")
+    app = dash.Dash(server=flask_app, name="Dashboard", url_base_pathname="/detailed_analysis/")
+
+    fondo   = "#161a28"
+    fondo_2 = "#161a28"
+    fondo_g = "#1e2130"
+    letra   = "white"
+    f_family = "Sans-serif"
 
     table1=conn.read_data(timestamp_start = '2020-01-01 00:00:00',
                timestamp_end   = '2029-01-01 00:00:00',
                type_ = 'hum',
                verbose = True)
-               
     #Tabla normal
     my_plot1 = table1.plot("time", "hum_level", kind="line")
-    tbl1 = px.line(table1,x='time',y='hum_level')
+    tbl1=px.line(table1,x='time',y='hum_level')
 
     #Table Promedio datos x hora
     table1['hora']=table1['time'].dt.hour
@@ -141,47 +146,67 @@ def create_dash_app_2(flask_app):
 
     #CREACIÓN DE LA APLICACIÓN
 
+    app.layout = html.Div([
 
-    app_dash.layout = html.Div([
+        html.H1(children=[html.Div(children='HUERTA INTELIGENTE',
+                                style={'family': "Courier New", 'text-align': "right", 'color': "white", 'margin': 0,
+                                        'font-style': "italic"}),
+                        # para el cambhio de paginas
+                        dcc.Link(html.Button("Settings",
+                                            style={'backgroundColor': "#3d3d43", 'color': "white", 'size': "20px"}),
+                                href="/settings", refresh=True),
+                        dcc.Link(html.Button("Detailed analysis",
+                                            style={'backgroundColor': "#3d3d43", 'color': "white", 'size': "20px"}),
+                                href="/detailed_analysis", refresh=True, ),
+                        dcc.Link(
+                            html.Button("Data", style={'backgroundColor': "#3d3d43", 'color': "white", 'size': "20px"}),
+                            href="/data", refresh=True)],
+                style={'backgroundColor': "black", 'color': 'letra', 'family': 'f_family', 'size': "40px"}),
+
+        html.Div(children='''Detailed Analisis''', style={'fontSize': 40, 'text-align': "center", 'family': 'f_family'}),
+        html.Div(children='''''',
+                style={'fontSize': 20, 'text-align': "center", 'backgroundColor': 'fondo', 'color': 'fondo'}),
+        html.Div(children='''''',
+                style={'fontSize': 20, 'text-align': "center", 'backgroundColor': 'fondo_g', 'family': 'f_family'}),
 
 
-    html.H6(children='Medias por hora de cada variable',style={'backgroundColor':"#000000",'color':"#cdced1", 'font':'Arial','textAlign': 'center'}),
 
+    html.H5(children='Medias por hora de cada variable',style={'backgroundColor':"#000000",'color':"#cdced1", 'font':'bold','textAlign': 'center'}),
     dcc.Dropdown(id='seleccion_prom',
-                options=[{'label':'HUMEDAD_Prom','value':'HUMEDAD_Prom'},
-                {'label':'TEMPERATURA_Prom','value':'TEMPERATURA_Prom'},
-                {'label':'LUX_Prom','value':'LUX_Prom'},
-                {'label':'PRESION_Prom','value':'PRESION_Prom'}],
+                options=[{'label':'Promedio por horas x Humedad','value':'HUMEDAD_Prom'},
+                {'label':'Promedio por horas x Temperatura','value':'TEMPERATURA_Prom'},
+                {'label':'Promedio por horas x Lux','value':'LUX_Prom'},
+                {'label':'Promedio por horas x Presion','value':'PRESION_Prom'}],
                 value='HUMEDAD_Prom',
                 multi=False,
                 clearable=False,
-                style={'width':'50%','font':'Arial','textAlign': 'center'}),
+                style={'width':'100%','font':'Bold','textAlign': 'center' ,'align-items': 'center', 'justify-content': 'center'}),
         html.Div([
             dcc.Graph(id='grafico_prom')
-        ],style = {'display': 'inline-block', 'width': '95%'}),
+        ],style = {'width': '100%', 'display': 'flex', 'align-items': 'center', 'justify-content': 'center'}),
 
-    html.H6(children='Caja de vigotes por variable',style={'backgroundColor':"#000000",'color':"#cdced1", 'font':'Arial','textAlign': 'center'}),
+    html.H5(children='Caja de vigotes por variable',style={'backgroundColor':"#000000",'color':"#cdced1", 'font':'bold','textAlign': 'center'}),
     dcc.Dropdown(id='seleccion_box',
-                options=[{'label':'HUMEDAD_box','value':'HUMEDAD_box'},
-                {'label':'TEMPERATURA_box','value':'TEMPERATURA_box'},
-                {'label':'LUX_box','value':'LUX_box'},
-                {'label':'PRESION_box','value':'PRESION_box'}],
+                options=[{'label':'Caja de vigotes x Humedad','value':'HUMEDAD_box'},
+                {'label':'Caja de vigotes x Temperatura','value':'TEMPERATURA_box'},
+                {'label':'Caja de vigotes x Lux','value':'LUX_box'},
+                {'label':'Caja de vigotes x Presion','value':'PRESION_box'}],
                 value='HUMEDAD_box',
                 multi=False,
                 clearable=False,
-                style={'width':'50%','font':'Arial','textAlign': 'center'}),
+                style={'width':'100%','font':'Bold','textAlign': 'center' ,'align-items': 'center', 'justify-content': 'center'}),
         html.Div([
             dcc.Graph(id='grafico_box'),
-        ],style = {'display': 'inline-block', 'width': '95%'})
+        ],style = {'width': '100%', 'display': 'flex', 'align-items': 'center', 'justify-content': 'center'})
 
 
-    ],style={'backgroundColor':"#cdced1",'margin':0} )
+    ],style={'backgroundColor': fondo,'color':"161a28", 'font-family': f_family,'margin':0, 'height':'100vh', 
+             'width':'100%', 'height':'100%', 'top':'0px', 'left':'0px'})
 
-    @app_dash.callback(
+    @app.callback(
         Output(component_id='grafico_prom',component_property="figure"),
         Input(component_id='seleccion_prom',component_property= 'value')
     )
-
     def update_graph(seleccion_prom):
         if (seleccion_prom=='HUMEDAD_Prom'):
             return  tbl11
@@ -193,12 +218,10 @@ def create_dash_app_2(flask_app):
             return  tbl44
         else:
             return "xd"
-
-    @app_dash.callback(
+    @app.callback(
         Output(component_id='grafico_box',component_property="figure"),
         Input(component_id='seleccion_box',component_property= 'value')
     )
-
     def update_graph(seleccion_prom):
         if (seleccion_prom=='HUMEDAD_box'):
             return  tbl111
@@ -211,4 +234,4 @@ def create_dash_app_2(flask_app):
         else:
             return "xd"
 
-    return app_dash
+    return app
