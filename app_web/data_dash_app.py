@@ -14,7 +14,7 @@ cwd = '/'.join(cwd)
 
 # Añade el directorio al path
 path.insert(1, cwd) 
-#print("current working directory: cd .. -> ",  cwd)
+print("current working directory: cd .. -> ",  cwd)
 
 import dash
 from datetime import date
@@ -26,7 +26,6 @@ import pandas as pd
 
 from db_mqtt_interface.db.dirty7w7 import *
 from db_mqtt_interface.db.db_connection import db_connection
-
 conn = db_connection(db_host =  db_host,
                      db_name =  db_name,
                      db_user = db_user,
@@ -34,19 +33,20 @@ conn = db_connection(db_host =  db_host,
                      db_sslmode = db_sslmode
                     )
 
-
+ur="/data/"
 
 def create_dash_app(flask_app):
-    app_dash = dash.Dash(server=flask_app, name="Dashboard", url_base_pathname="/data/")
+    app_dash = dash.Dash(server=flask_app, name="Dashboard", url_base_pathname=ur)
     
     #Obtener y almacenar valores óptimos y aceptables de cada variable
     inicio  = '2022-01-01 00:00:00'
     fin     = '2023-01-01 00:00:00'
+    #Variables del estilo de la página
     fondo   = "#161a28"
-    fondo_2 = "#161a28"
-    fondo_g = "#1e2130"
+    fondo_2 = "#1e2130"
     letra   = "white"
     f_family = "Sans-serif"
+    sty_ind={'width': '30%','display': 'inline-block'}
 
     #funcion para obtener las tablas
     def ob_dat(apodo: str):
@@ -137,101 +137,96 @@ def create_dash_app(flask_app):
    
     
    #modificarle el estilo a la fig
-    fig_IEC.update_layout(paper_bgcolor =  fondo_g,  font = {'color': letra, 'family': f_family})
-    fig_IT.update_layout(paper_bgcolor  =  fondo_2,  font = {'color': letra, 'family': f_family})
-    fig_ITW.update_layout(paper_bgcolor =  fondo_2,  font = {'color': letra, 'family': f_family})
-    fig_IH.update_layout(paper_bgcolor  =  fondo_g,  font = {'color': letra, 'family': f_family})
-    fig_IPH.update_layout(paper_bgcolor =  fondo_2,  font = {'color': letra, 'family': f_family})
-    fig_IL.update_layout(paper_bgcolor  =  fondo_g,  font = {'color': letra, 'family': f_family})
+    fig_IEC.update_layout(paper_bgcolor =  fondo_2,  font = {'color': letra, 'family': f_family})
+    fig_IT.update_layout(paper_bgcolor  =  fondo,  font = {'color': letra, 'family': f_family})
+    fig_ITW.update_layout(paper_bgcolor =  fondo,  font = {'color': letra, 'family': f_family})
+    fig_IH.update_layout(paper_bgcolor  =  fondo_2,  font = {'color': letra, 'family': f_family})
+    fig_IPH.update_layout(paper_bgcolor =  fondo,  font = {'color': letra, 'family': f_family})
+    fig_IL.update_layout(paper_bgcolor  =  fondo_2,  font = {'color': letra, 'family': f_family})
 
-    
+    body= { 'margin': 0}
    
    
     #APP LAYOUT----------------------------
     app_dash.layout =  html.Div(children=[
     
-    html.H1(children=[ html.Div(children='HUERTA INTELIGENTE',style={'family': "Courier New",'text-align':"right",'color':"white",'margin':0,'font-style': "italic"}),
+    html.H1(children=[ html.Div(children='HUERTA INTELIGENTE',style={'family': "Courier New",'text-align':"right",'color':"white",'font-style': "italic",'margin-right': 30}),
        #para el cambhio de paginas
-       dcc.Link(html.Button("Settings",style={'backgroundColor':"#3d3d43",'color':"white",'size':"20px"}), href="/settings", refresh=True),
-       dcc.Link(html.Button("Detailed analysis",style={'backgroundColor':"#3d3d43",'color':"white",'size':"20px"}), href="/detailed_analysis", refresh=True,),
-       dcc.Link(html.Button("Data",style={'backgroundColor':"#3d3d43",'color':"white",'size':"20px"}), href="/data", refresh=True)],
-       style={'backgroundColor':"black",'color':letra,'family': f_family,'size':"40px"}),
+       dcc.Link(html.Button("Settings",style={'backgroundColor':"#3d3d43",'color':"white",'height':"30px"}),href="/settings", refresh=True),
+       dcc.Link(html.Button("Detailed analysis",style={'backgroundColor':"#3d3d43",'color':"white",'height':"30px"}), href="/detailed_analysis", refresh=True,),
+       dcc.Link(html.Button("Data",style={'backgroundColor':"#3d3d43",'color':"white",'height':"30px"}), href="/data", refresh=True)],
+       style={'backgroundColor':"black",'color':letra,'family': f_family}),
        
     html.Div(children='''DATOS''', style={ 'fontSize':40,'text-align':"center",'family': f_family}),
-    html.Div(children='''separador''',style={'fontSize':20, 'text-align':"center",'backgroundColor':fondo,'color':fondo}),
-    html.Div(children='''Aquí encuentra información sobre su cultivo''',style={'fontSize':20, 'text-align':"center",'backgroundColor':fondo_g,'family': f_family}),
     
-    #Mostrar los indicadores
+    html.Div(children='''Aquí encuentra información sobre su cultivo''',style={'fontSize':20, 'text-align':"center",'backgroundColor':fondo_2,'family': f_family,'margin-bottom':"30px"}),
+    
+   
     html.Div(children=[
-       html.Div(children='''separador''',style={'fontSize':20, 'text-align':"center",'backgroundColor':fondo,'color':fondo}),
-       html.Div(children='''Convenciones:''',style={'backgroundColor':fondo_g,'text-align':"center"}),
-       html.Div(children='''Intervalos óptimos de las variables en verde''',style={'backgroundColor':fondo_g,'text-align':"center"}),
-       html.Div(children='''Intervalos óptimos  de las variables en azul''',style={'backgroundColor':fondo_g,'text-align':"center"}),
-       html.Div(children='''separador''',style={'fontSize':20, 'text-align':"center",'backgroundColor':fondo,'color':fondo}),
+      
+       html.Div(children='''Convenciones:''',style={'backgroundColor':fondo_2,'text-align':"center"}),
+       html.Div(children='''Intervalos  óptimos de las variables en verde ''',style={'backgroundColor':fondo_2,'text-align':"center"}),
+       html.Div(children='''Intervalos aceptables  de las variables en azul''',style={'backgroundColor':fondo_2,'text-align':"center"}),
+       html.Div(children='''Intervalos  inestables de las variables en rojo ''',style={'backgroundColor':fondo_2,'text-align':"center"}),
+       
+          ],
+          style={'margin-bottom':"30px"}),
+       html.Div(children=[ 
+        #Mostrar los indicadores
        dcc.Graph(
             id='humedad_i',
             figure=fig_IH,
-            style={'width': '30%','display': 'inline-block'}
-        ),
+            style=sty_ind
+                ),
         dcc.Graph(
             id='ph_i',
             figure=fig_IPH,
-            style={'width': '30%','display': 'inline-block'}
-        ),
+            style=sty_ind
+                ),
         dcc.Graph(
             id='l_i',
             figure=fig_IL,
-            style={'width': '30%','display': 'inline-block'}
-        ),
+            style=sty_ind
+                ),
+          ],
+        style={'family': letra,'text-align':"center",'color':"white" }
           
-     ],
-  
-    ),
+  ),
+
     html.Div(children=[
-    
+        
         dcc.Graph(
             id='t_i',
             figure=fig_IT
-            ,style={'width': '30%','display': 'inline-block'}
+            ,style=sty_ind
             
         ),
         dcc.Graph(
             id='ec_i',
             figure=fig_IEC
-            ,style={'width': '30%','display': 'inline-block'}
-            
-        
-            
+            ,style=sty_ind
         ),
         dcc.Graph(
             id='wt_i',
             figure=fig_ITW
-            ,style={'width': '30%','display': 'inline-block'}
+            ,style=sty_ind
             
         ),
      ],
+      style={'family': letra,'text-align':"center",'color':"white" }
     ),
-    html.Div(children='''separador''',style={'fontSize':20, 'text-align':"center",'backgroundColor':fondo,'color':fondo}),
-
-    html.Div(children='''Seleccione la fecha de inicio y  fin y la variable que desea visualizar''',style={'fontSize':20, 'text-align':"center",'backgroundColor':fondo_g,'size':90}),
-    html.Div(children='''separador''',style={'fontSize':20, 'text-align':"center",'backgroundColor':fondo,'color':fondo}),
-    #calendario
-    dcc.DatePickerRange(
+    html.Div(children='''     .    ''',style={'fontSize':20, 'text-align':"center",'backgroundColor':fondo,'color':fondo}),
+    html.Div(children=[
+        html.Div(children='''Seleccione la fecha de inicio y  fin ''',style={'fontSize':20, 'text-align':"center",'backgroundColor':fondo_2,'size':90,'display': 'inline-block','margin-right': "10px"}),
+        dcc.DatePickerRange(
         id="fecha",
         display_format='M-D-Y',
         start_date_placeholder_text='M-D-Y',
-        style={'backgroundColor':"black"}
-    ),
-    #Input hora
-    dcc.Input(id='h_in', value='00:00:00', type='text', style={'backgroundColor':"#565F8C",'color':"white"}),
-    dcc.Input(id='h_fin', value='23:59:59', type='text', style={'backgroundColor':"#565F8C",'color':"white"}),
-    #Boton para activdar por primera vez
-    html.Button('Ver', id='b_ver', n_clicks=0,style={'backgroundColor':"#565F8C",'color':"white",'size':"20px"}),
-    #cuadro de texto de la fecha
-    html.Div(children='''separador''',style={'fontSize':20, 'text-align':"center",'backgroundColor':fondo,'color':fondo}),
-    html.Div(id='my-div'),
-    #dropdown para seleccionar las  variables
-    dcc.Dropdown( id = 'menu',
+        style={'backgroundColor':"black",'display': 'inline-block'}),
+        dcc.Input(id='h_in', value='00:00:00', type='text', style={'backgroundColor':"#565F8C",'color':"white",'display': 'inline-block','margin': "1em",'height':"35px"}),
+        dcc.Input(id='h_fin', value='23:59:59', type='text', style={'backgroundColor':"#565F8C",'color':"white",'display': 'inline-block','height':"35px"}),
+        html.Div(children=''' Variable que desea visualizar''',style={'fontSize':20, 'text-align':"center",'backgroundColor':fondo_2,'size':90,'display': 'inline-block','margin': "1em"}),
+        dcc.Dropdown( id = 'menu',
         options = [
             {'label':'Humedad', 'value':'hum' },
             {'label': 'Temperatura', 'value':'temp'},
@@ -241,17 +236,38 @@ def create_dash_app(flask_app):
             {'label': 'Temperatura del agua', 'value':'wtemp'},
             {'label': 'Electroconductividad', 'value':'ec'},
              ],
-        style={'backgroundColor':"#565F8C",'color':"black"}
-      ),
-
-    #llamar la grafica
-    dcc.Graph(id='figuraa'),  
+        style={'backgroundColor':"#565F8C",'color':"black",'display': 'inline-block','width': "200px"}
+         ),],
+        style={'backgroundColor': fondo_2,'height':"100px",'text-align':"center"}
+       
+    ),
+    html.Div(children='''       .  ''',style={'fontSize':20, 'text-align':"center",'backgroundColor':fondo,'color':fondo}),
+    html.Div(children=[
      
+       #Boton para activdar por primera vez
 
-    ],style={'backgroundColor': fondo,'color':"161a28", 'font-family': f_family,'margin':0, 'height':'100vh', 
-             'width':'100%', 'height':'100%', 'top':'0px', 'left':'0px'}) 
+        html.Button('Ver', id='b_ver', n_clicks=0,
+            style={'fontSize':20,'backgroundColor':"#565F8C",'color':"white",'margin-left': "43.5%",'height':"35px",'width': "200px"}),
+    ]),
+    #calendario
+  
+    #Input hora
+    
+    #cuadro de texto de la fecha
+   html.Div(children='''         ''',style={'fontSize':20, 'text-align':"center",'backgroundColor':fondo,'color':fondo}),
+    html.Div(id='my-div',style={'text-align':"center"}),
+    #dropdown para seleccionar las  variables
     
 
+    #llamar la grafica
+    dcc.Graph(id='figuraa'), 
+   
+
+    ],style={'backgroundColor':fondo,'color':"white", 'font-family': f_family, 'margin-bottom':-25,  'margin-top':-25,'margin-left':-15,'margin-right':-15}) 
+
+
+
+    
     #Aquí es donde recibe los inputs y dice dónde son los outputs
     @app_dash.callback( 
         dash.dependencies.Output("figuraa","figure"),
@@ -343,7 +359,7 @@ def create_dash_app(flask_app):
         figuraa = px.line(table1, x='time', y=y_1)
         figuraa.update_traces(line_color='#FFC300')
 
-        figuraa.update_layout(paper_bgcolor = fondo, plot_bgcolor= fondo_g, font = {'color': "white", 'family': f_family})
+        figuraa.update_layout(paper_bgcolor = fondo, plot_bgcolor= fondo_2, font = {'color': "white", 'family': f_family})
         
         return figuraa,st
 
