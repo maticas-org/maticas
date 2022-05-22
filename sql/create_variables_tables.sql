@@ -7,12 +7,12 @@
 -- Crea la tabla de temperatura --
 -------------------------------------------
 CREATE TABLE IF NOT EXISTS                  
-public.temperature (                
+public.temperature_ (                
 							temp_level float4 NOT NULL,         
 							"time" timestamp NOT NULL,          
 							CONSTRAINT temperature_pk PRIMARY KEY ("time")
 						);
-ALTER TABLE public.temperature OWNER TO dave;
+ALTER TABLE public.temperature_ OWNER TO dave;
 
 
 						
