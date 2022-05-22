@@ -27,6 +27,7 @@ from dirty9w9 import *
 import datetime
 import time
 import pytz
+import schedule
 
 # para procesamiento de unos daticos 
 import numpy as np 
@@ -79,8 +80,6 @@ class daemon:
                         'ph':        ('ph_optimal',                 'ph_ok')
                        }
 
-                                    
-
 
 
         print("Conexión al broker MQTT...")
@@ -92,196 +91,89 @@ class daemon:
                                                       )
         print("Correcta.\n")
 
+        ####################################################
+        #   diccionarios para guardar las configuraciones 
+        ####################################################
 
-    def rule_them_all_dady(self, check_everyn_minutes = 5):
+        #             |||       Configuración               ||| cada cuantos
+        #             |||                                   ||| minutos se actualiza    
+        #             |||                                   ||| o se ejecuta la función
+        #-----------------------------------------------------------------------
+        self.timing_settings = {'update_pump_settings'          :       60, 
+                                'update_lights_settings'        :       50, 
+                                'control_timed_pump'            :       -1, 
+                                'control_timed_lights'          :       5,
+                                'check_and_control_variables'   :       10}
 
-        #valores para inicializar el loop
-        colombia_start   = datetime.datetime.now(self.tz)
 
-        #valores para inicializar el control de la bomba 
-        #de agua en el loop
-        current_time_pump = 0
-        start_time_pump  = 0 
-        finish_time_pump = 0
- 
+        #             |||       Configuración               ||| valor por defecto previo 
+        #             |||                                   ||| a la inicialización   
+        #-----------------------------------------------------------------------
+        self.pump_settings  = { 'start_hour'                            : -1, 
+                                'end_hour'                              : -1,
+                                'duration'                              : -1, 
+                                'freq'                                  : -1,
+                                'proportion'                            : -1,
+                                'check_every_n_minutes'                 : -1}
+
+        self.light_settings = { 'start_hour'                            : -1, 
+                                'end_hour'                              : -1}
+
+
+        #inicializa los diccionarios
+        self.update_pump_settings()
+        self.update_lights_settings()
+
+        #####################################################################
+        # Definición de variables usadas frecuentemente para correr 
+        #               eventos o controlar actuadores
+        #####################################################################
+
+        self.iteration_count_pump = 0.0
+
+
+
+    def rule_them_all_dady(self):
+
+        # eventos de actualización de configuraciones
+        schedule.every(self.timing_settings['update_pump_settings']).minutes.do(self.update_pump_settings)
+        schedule.every(self.timing_settings['update_lights_settings']).minutes.do(self.update_lights_settings)
+
+        # eventos de control
+        schedule.every(self.timing_settings['control_timed_lights']).minutes.do(self.control_timed_lights)
+        schedule.every(self.timing_settings['control_timed_pump']).minutes.do(self.control_timed_pump)
+        schedule.every(self.timing_settings['check_and_control_variables']).minutes.do(self.check_and_control_variables)
+
+
+
         # Loop
         while True:
 
-            colombia_now = datetime.datetime.now(self.tz)
-            delta        = (colombia_now - colombia_start)
+            schedule.run_pending()
 
-            # diferencia de tiempo necesaria para hacer las revisiones
-            # las revisiones se hacen cada 5 minutos
-            if delta.total_seconds() >= (check_everyn_minutes*60):
-
-                # revisiones y control de las variables ambientales
-                for alias in self.aliases.keys():
-                    print(alias)
-                    print(self.check_and_control_variable(alias = alias))
-
-                #reinicia el contador para determinar cuando 
-                #volver a revisar (en check_everyn_minutes minutos)
-                colombia_start   = datetime.datetime.now(self.tz)
-
-                # ******************************
-                # Control de las luces
-                # ******************************
-                current_time_light = datetime.datetime.now(self.tz)
-                self.control_timed_lights(current_time = current_time_light)
-
-                # ******************************
-                # Control de la bomba de agua
-                # ******************************
-
-                current_time_pump = datetime.datetime.now(self.tz)
-
-                current_time_pump, start_time_pump, finish_time_pump = self.control_timed_pump(
-                                                                            current_time_pump = current_time_pump,
-                                                                            start_time_pump   = start_time_pump,
-                                                                            end_time_pump     = finish_time_pump )
-                print()
-
-
-
-            # espera 5 segundos
-            time.sleep(5)
+            # espera 1 segundos
+            time.sleep(1)
     
 
     #################################################################################
-    #                           Controla eventos temporizados
-    #                           (cuando encender, apagar luces
-    #                                         y
-    #                                   bomba de agua)
+    #                       Actualiza los diccionarios que guardan 
+    #                   Las configuraciones que pueden estar cambiando 
+    #                               por solicitud del usuario
     #################################################################################
 
-
-    #################################################################################
-    #                           Control de la bomba de agua
-    #################################################################################
-
-    def control_timed_pump(self, 
-                           current_time_pump: datetime.datetime,
-                           start_time_pump:   datetime.datetime,
-                           end_time_pump:     datetime.datetime):
+    def update_lights_settings(self):
 
         """
-            función que revisa si dado un momento de encendido (start_time)
-            y un momento de apagado (end_time), y dado un horario fijo 
-            en que la bomba puede estar operativa, se debe apagar 
-            o encender la bomba de agua.
+        INPUT:
+                None.
 
-            INPUT:
-                    current_time_pump    -> momento actual
-                    start_time_pump      -> momento en que se debería encender la bomba de agua
-                    end_time_pump        -> momento en que se debería apagar la bomba de agua
-            
-            OUTPUT:
-                    (current_time_pump, start_time_pump, end_time_pump) actualizados
-        """
+        OUTPUT: None.
 
-        code = 'pump'
-
-        # extrae el valor de la hora actual
-        current_hour = int(current_time_pump.strftime("%H"))
-
-        # pide las configuraciones de funcionamiento de la bomba de agua
-        main_settings = self.db_conn.read_actuators_settings(config_ = code)
-
-        # revisa la hora inicial, desde la que debe encender la bomba
-        settings    =  main_settings["start_time"][0]
-        settings    =  str(settings)
-        start_time  =  datetime.datetime.strptime(settings, "%H:%M:%S")
-        start_hour  =  int(start_time.strftime("%H"))
-
-        # revisa la hora final, hasta la que se puede encender la bomba
-        settings    =  main_settings["end_time"][0]
-        settings    =  str(settings)
-        end_time    =  datetime.datetime.strptime(settings, "%H:%M:%S")
-        end_hour    =  int(start_time.strftime("%H"))
-
-        # revisa la cantidad de tiempo, que se debe mantener encendida la bomba de agua
-        duration    =  int(main_settings["duration"][0])
-
-        # revisa cada cuanto tiempo se debe encender la bomba de agua
-        freq        =  int(main_settings["frequency"][0])
-
-
-
-        # si esta inicializando entonces manda la orden de encender la bomba
-        # (e internamente se revisa si se puede hacer dada la hora)
-        if start_time_pump == 0:
-
-            #el momento de incio de la bomba es ahora mismo
-            start_time_pump = current_time_pump
-
-            #indica que el momento de finalización es en +duration minutos
-            end_time_pump = current_time_pump + datetime.timedelta(minutes = duration)
-
-            # si está en el horario permitido la enciende
-            if (current_hour <= end_hour) and (current_hour >= start_hour):
-
-                self.send_conn.send_message(alias_topic = 'pump', message = '1')
-                self.send_conn.send_message(alias_topic = 'pump', message = '1')
-
-            # de lo contrario la apaga
-            else:
-
-                self.send_conn.send_message(alias_topic = 'pump', message = '0')
-                self.send_conn.send_message(alias_topic = 'pump', message = '0')
-
-
-        # caso en que ya hay inicialización
-        else:
-
-            # determina el momento de inicio denuevo basados en 
-            # el momento en que se terminó la ejecución + freq min.
-            start_time_pump = end_time_pump + datetime.timedelta(minutes = freq)
-
-            # definimos el momento de finalización en caso de que comenzaramos en 
-            # start_time_pump (la necesidad de esta variable es que si sobreescribimos
-            # end_time_pump el start time se va a poner cada vez más lejos y nunca 
-            # encenderíamos la bomba)
-            end_time_pump_in_the_future = start_time_pump + datetime.timedelta(minutes = duration)
-
-            # si han pasado freq minutos desde que se apagó la bomba de agua
-            # ya es hora de encender la bomba de agua, si y solo si 
-            # tengo un momento de finalización que me acota
-            if (current_time_pump.timestamp() >= start_time_pump.timestamp() ) and \
-               (current_time_pump.timestamp() <= end_time_pump_in_the_future.timestamp() ):
-
-                end_time_pump = end_time_pump_in_the_future
-
-                # si está en el horario permitido la enciende
-                if (current_hour <= end_hour) and (current_hour >= start_hour):
-                    self.send_conn.send_message(alias_topic = 'pump', message = '1')
-                    self.send_conn.send_message(alias_topic = 'pump', message = '1')
-
-                # de lo contrario la apaga
-                else:
-
-                    self.send_conn.send_message(alias_topic = 'pump', message = '0')
-                    self.send_conn.send_message(alias_topic = 'pump', message = '0')
-
-
-
-        return (current_time_pump, start_time, end_time)
-
-    #################################################################################
-    #                           Control de las luces
-    #################################################################################
-
-    def control_timed_lights(self, 
-                             current_time: datetime.datetime):
-
-        """
-            Función para encender y apagar la bomba de agua, y las luces
-            cuando es necesario.
+            Actualiza la información de los diccionarios que guardan las configuraciones
+            de las luces.
         """
 
         code = 'lights'
-        current_hour = int(current_time.strftime("%H"))
-
-
         main_settings = self.db_conn.read_actuators_settings(config_ = code)
 
         # revisa la hora final, hasta la que se puede encender la luz
@@ -295,28 +187,267 @@ class daemon:
         settings    =  str(settings)
         start_time  =  datetime.datetime.strptime(settings, "%H:%M:%S")
         start_hour  =  int(start_time.strftime("%H"))
+
+        self.light_settings['start_hour']   = start_hour
+        self.light_settings['end_hour']     = end_hour
+
+        print("Light settings were updated: ")
+        print(self.light_settings)
+        print("----"*100)
+
+    def update_pump_settings(self):
+
+        """
+        INPUT:
+                None.
+
+        OUTPUT: None.
+
+            Actualiza la información de los diccionarios que guardan las configuraciones
+            de la bomba de agua.
+        """
+
+        code = 'pump'
+
+        # pide las configuraciones de funcionamiento de la bomba de agua
+        main_settings = self.db_conn.read_actuators_settings(config_ = code)
+
+        # revisa la hora inicial, desde la que debe encender la bomba
+        settings    =  main_settings["start_time"][0]
+        settings    =  str(settings)
+        start_time  =  datetime.datetime.strptime(settings, "%H:%M:%S")
+        start_hour  =  int(start_time.strftime("%H"))
+
+
+        # revisa la hora final, hasta la que se puede encender la bomba
+        settings    =  main_settings["end_time"][0]
+        settings    =  str(settings)
+        end_time    =  datetime.datetime.strptime(settings, "%H:%M:%S")
+        end_hour    =  int(end_time.strftime("%H"))
+
+        # revisa la cantidad de tiempo, que se debe mantener encendida la bomba de agua
+        duration    =  int(main_settings["duration"][0])
+
+        # revisa cada cuanto tiempo se debe encender la bomba de agua
+        freq        =  int(main_settings["frequency"][0])
+
+        # actualiza las configuraciones 
+        self.pump_settings['start_hour']             = start_hour
+        self.pump_settings['end_hour']               = end_hour 
+        self.pump_settings['duration']               = duration
+        self.pump_settings['freq']                   = freq 
+        self.pump_settings['proportion']             = min(freq, duration)/(duration + freq)
+        self.pump_settings['check_every_n_minutes']  = min(freq, duration)
+
+        # sobreescribe la configuración de cada cuanto revisar si se debe apagar o no la bomba
+        # de agua
+        self.timing_settings['control_timed_pump'] = self.pump_settings['check_every_n_minutes']
+
+        print("Pump settings were updated: ")
+        print(self.pump_settings)
+        print("----"*100)
+
+    #################################################################################
+    #                           Controla eventos temporizados
+    #                           (cuando encender, apagar luces
+    #                                         y
+    #                                   bomba de agua)
+    #################################################################################
+
+    #################################################################################
+    #                           Control de la bomba de agua
+    #################################################################################
+
+    def control_timed_pump(self):
+
+        """
+            Funció que revisa si según el horario es hora de encender 
+            o apagar la bomba de agua.
+
+            INPUT:
+                    None.
+            
+            OUTPUT:
+                    None.
+        """
+
+        # hora actual en colombia, o en el timezone seleccionado
+        current_time = datetime.datetime.now(self.tz)
+        current_hour = int(current_time.strftime("%H"))
         
-        # si está dentro del espacio de tiempo obligatorio 
-        # para encender la luz la enciende
-        if (current_hour <= end_hour) and (current_hour >= start_hour):
+        # si es muy tarde se debe apagar la bomba 
+        if (current_hour > self.pump_settings['end_hour']):
+
+            print("Very late {} h, pump is off".format(current_hour) )
+
+            self.send_order( alias = 'pump',
+                            message = '0',
+                            resend_times = 5,
+                            starting_delay = 0.1,
+                            step_size = 0.085 )
+
+            return 
+
+        # si es muy temprano se debe apagar la bomba también
+        if (current_hour < self.pump_settings['start_hour']):
+                 
+            print("Very early {} h, pump is off".format(current_hour) )
+            self.send_order( alias = 'pump',
+                            message = '0',
+                            resend_times = 5,
+                            starting_delay = 0.1,
+                            step_size = 0.085 )
+
+            return 
+
+        # la función que queremos replicar es:
+        #  
+        #      
+        #   |  
+        # 1 |-----          -----            -----           
+        #   |                                                 
+        # 0 |     ----------      ----------       ----------
+        #  _____________________________________
+        #   |
+        #   |
         
-            self.send_conn.send_message(alias_topic = 'light', message = '1')
-            self.send_conn.send_message(alias_topic = 'light', message = '1')
+        # note que esto se compone de una unica oscilación que se repite:
+        #   |  
+        # 1 |-----          
+        #   |               
+        # 0 |     ----------
+        #  _____________________________________
+        #   |
+        #   |
+
+        # --> esta tiene un periodo: [tiempo_encendido + tiempo_apagado]
+        # si medimos la parte del periodo en la que estamos inicio (0)
+        # o fin (1) podemos determinar cuando encender la bomba
+
+        # inicialización del contador 
+        # counter = 0.0
+
+        # cada cuanto tiempo se va a tomar la decisión de encende o apagar:
+        # tiempo_minimo = min(tiempo_apagado, tiempo_encendido)
+
+        # aumento del contador con el tiempo 
+        # counter += [tiempo_minimo]/[tiempo_apagado + tiempo_encendido]
+
+        ######################
+        # si no es obligatorio apagar la bomba entonces 
+        # se debe encender la bomba y revisar si es momento para ello 
+        ######################
+
+        # está inicializando, está empezando la 'oscilación'
+        # y esta es como medio 'coseno' empieza encendido un ratito 
+        # después se apaga un rato más largo, y  repite
+        if (self.iteration_count_pump == 0.0):
 
 
-        #si ya es muy tarde en la noche paga la luz
-        elif  (current_hour >= end_hour):
+            self.send_order( alias = 'pump',
+                             message = '1',
+                             resend_times = 10,
+                             starting_delay = 0.1,
+                             step_size = 0.05 )
 
-            self.send_conn.send_message(alias_topic = 'light', message = '0')
-            self.send_conn.send_message(alias_topic = 'light', message = '0')
+            self.iteration_count_pump += self.pump_settings['proportion'] 
+            print("Initialization {} h, pump is on".format(current_hour) )
 
-        pass
+
+        # si ya completó la oscilación entonces es un 1 
+        # y se debe resetear ese contador 
+        elif (self.iteration_count_pump > 1.0):
+
+            self.send_order( alias = 'pump',
+                             message = '1',
+                             resend_times = 5,
+                             starting_delay = 0.1,
+                             step_size = 0.085 )
+
+            #resetea el contador a: (0 + [tiempo_minimo]/[tiempo_apagado + tiempo_encendido] 
+            self.iteration_count_pump = self.pump_settings['proportion'] 
+            print("Recovery period completed {} h, pump is on".format(current_hour) )
+
+
+        # si aún no ha completado la oscilación aumente el contador y 
+        # mantenga apagada la bomba de agua
+        else:
+
+            self.send_order( alias = 'pump',
+                             message = '0',
+                             resend_times = 5,
+                             starting_delay = 0.1,
+                             step_size = 0.085 )
+
+            self.iteration_count_pump += self.pump_settings['proportion'] 
+            print("Recovery period {} h, pump is off. Period is: {}".format(current_hour,
+                                                                            self.iteration_count_pump) )
+
+
+        return 
+
+
+
+    #################################################################################
+    #                           Control de las luces
+    #################################################################################
+
+    def control_timed_lights(self):
+
+        """
+            Función para encender y apagar las luces
+            cuando es necesario según el horario.
+        """
+
+        # hora actual en colombia, o en el timezone seleccionado
+        current_time = datetime.datetime.now(self.tz)
+        current_hour = int(current_time.strftime("%H"))
+
+        # si es muy tarde se debe apagar la luz
+        if (current_hour > self.light_settings['end_hour']):
+
+            print("Very late {} h, light is off".format(current_hour) )
+            self.send_order( alias = 'light',
+                             message = '0',
+                             resend_times = 5,
+                             starting_delay = 0.1,
+                             step_size = 0.085 )
+            return
+
+        # si es muy temprano se debe apagar la luz también
+        if (current_hour < self.light_settings['start_hour']):
+                 
+            print("Very early {} h, light is off".format(current_hour) )
+            self.send_order( alias = 'light',
+                             message = '0',
+                             resend_times = 5,
+                             starting_delay = 0.1,
+                             step_size = 0.085 )
+
+            return
+
+
+
+        self.send_order(alias = 'light',
+                        message = '1',
+                        resend_times = 5,
+                        starting_delay = 0.1,
+                        step_size = 0.1)
+
+
 
     #################################################################################
     #                   Control de las variables ambientales 
     #                                 por 
     #                                casos 
     #################################################################################
+
+    def check_and_control_variables(self):
+
+        for var in self.aliases.keys():
+
+            self.check_and_control_variable(alias = var)
+
 
     def check_and_control_variable(self, alias, variation_threshold = 0):
         
@@ -326,7 +457,7 @@ class daemon:
         """
 
         action = self.what_to_do(alias = alias,
-                            variation_threshold = variation_threshold)
+                                variation_threshold = variation_threshold)
         
         #######################################################################
         #                   Control de temperatura ambiental 
@@ -360,6 +491,7 @@ class daemon:
         #                   Control de lux ambiental 
         #######################################################################
 
+
         elif alias == 'lux':
 
             # timestamp del momento actual en tiempo de colombia
@@ -368,23 +500,24 @@ class daemon:
             # obtiene la hora en el momento actual
             hour_now  = int(colombia_now.strftime("%H"))
 
-            # revisa la hora final, hasta la que se puede encender la luz
-            settings    =  self.db_conn.read_actuators_settings(config_ = 'lights')["end_time"][0]
-            settings    =  str(settings)
-            end_time    =  datetime.datetime.strptime( settings, "%H:%M:%S" )
-            end_hour    =  int(end_time.strftime("%H"))
+            # si se debe encender y esta dentro de los tiempos adecuados entonces bien
+            if (action == 1) and (hour_now <= self.light_settings['end_hour']) and \
+               (hour_now >= self.light_settings['start_hour']):
 
-            
-            # si se debe encender y está dentro de los tiempos adecuados entonces bien
-            if (action == 1) and (hour_now < end_hour):
-                self.send_conn.send_message(alias_topic = 'light', message = '1')
-                self.send_conn.send_message(alias_topic = 'light', message = '1')
+                self.send_order(alias = 'light',
+                                message = '1',
+                                resend_times = 4,
+                                starting_delay = 0.1,
+                                step_size = 0.1)
 
                 
             # si se debe apagar
             elif action == -1:
-                self.send_conn.send_message(alias_topic = 'light', message = '0')
-                self.send_conn.send_message(alias_topic = 'light', message = '0')
+                self.send_order(alias = 'light',
+                                message = '0',
+                                resend_times = 4,
+                                starting_delay = 0.1,
+                                step_size = 0.1)
 
 
         #######################################################################
@@ -394,12 +527,18 @@ class daemon:
         elif alias == 'wtemp':
             
             if action == 1:
-                self.send_conn.send_message(alias_topic = 'pump', message = '1')
-                self.send_conn.send_message(alias_topic = 'pump', message = '1')
+                self.send_order(alias = 'pump',
+                                message = '1',
+                                resend_times = 4,
+                                starting_delay = 0.1,
+                                step_size = 0.1)
 
             elif action == -1:
-                self.send_conn.send_message(alias_topic = 'pump', message = '0')
-                self.send_conn.send_message(alias_topic = 'pump', message = '0')
+                self.send_order(alias = 'pump',
+                                message = '0',
+                                resend_times = 4,
+                                starting_delay = 0.1,
+                                step_size = 0.1)
 
         #######################################################################
         #                   Control de electroconductividad del agua 
@@ -409,17 +548,44 @@ class daemon:
             
             #envia 2 veces la orden para asegurarse de que llegue al otro lado
             if action == 1:
-                self.send_conn.send_message(alias_topic = 'ec_a', message = '1')
-                self.send_conn.send_message(alias_topic = 'ec_a', message = '1')
-                time.sleep(3)
-                self.send_conn.send_message(alias_topic = 'ec_a', message = '0')
-                self.send_conn.send_message(alias_topic = 'ec_a', message = '0')
 
-                self.send_conn.send_message(alias_topic = 'ec_b', message = '1')
-                self.send_conn.send_message(alias_topic = 'ec_b', message = '1')
-                time.sleep(1.3)
-                self.send_conn.send_message(alias_topic = 'ec_b', message = '0')
-                self.send_conn.send_message(alias_topic = 'ec_b', message = '0')
+                #########
+                # enciende la bomba de ec a y la apaga después
+                # de un rato
+                #########
+
+                self.send_order(alias = 'ec_a',
+                                message = '1',
+                                resend_times = 10,
+                                starting_delay = 0.1,
+                                step_size = 0.05)
+
+                time.sleep(4)
+
+                self.send_order(alias = 'ec_a',
+                                message = '0',
+                                resend_times = 10,
+                                starting_delay = 0.1,
+                                step_size = 0.05)
+
+                #########
+                # enciende la bomba de ec b y la apaga después
+                # de un rato
+                #########
+
+                self.send_order(alias = 'ec_b',
+                                message = '1',
+                                resend_times = 10,
+                                starting_delay = 0.1,
+                                step_size = 0.05)
+
+                time.sleep(2)
+
+                self.send_order(alias = 'ec_b',
+                                message = '0',
+                                resend_times = 10,
+                                starting_delay = 0.1,
+                                step_size = 0.05)
 
             elif action == -1:
                 return "Por favor disminuye la electroconductividad del agua."
@@ -432,18 +598,43 @@ class daemon:
             
             #envia 2 veces la orden para asegurarse de que llegue al otro lado
             if action == 1:
-                self.send_conn.send_message(alias_topic = 'ph_basic', message = '1')
-                self.send_conn.send_message(alias_topic = 'ph_basic', message = '1')
-                time.sleep(2)
-                self.send_conn.send_message(alias_topic = 'ph_basic', message = '0')
-                self.send_conn.send_message(alias_topic = 'ph_basic', message = '0')
+
+                #########
+                # apaga y enciende la bomba de ph basic
+                #########
+                self.send_order(alias = 'ph_basic',
+                                message = '1',
+                                resend_times = 10,
+                                starting_delay = 0.1,
+                                step_size = 0.05)
+
+                time.sleep(3)
+
+                self.send_order(alias = 'ph_basic',
+                                message = '0',
+                                resend_times = 10,
+                                starting_delay = 0.1,
+                                step_size = 0.05)
+
 
             elif action == -1:
-                self.send_conn.send_message(alias_topic = 'ph_acid', message = '1')
-                self.send_conn.send_message(alias_topic = 'ph_acid', message = '1')
-                time.sleep(2)
-                self.send_conn.send_message(alias_topic = 'ph_acid', message = '0')
-                self.send_conn.send_message(alias_topic = 'ph_acid', message = '0')
+
+                #########
+                # apaga y enciende la bomba de ph acid
+                #########
+                self.send_order(alias = 'ph_acid',
+                                message = '1',
+                                resend_times = 10,
+                                starting_delay = 0.1,
+                                step_size = 0.05)
+
+                time.sleep(3)
+
+                self.send_order(alias = 'ph_acid',
+                                message = '0',
+                                resend_times = 10,
+                                starting_delay = 0.1,
+                                step_size = 0.05)
 
 
 
@@ -552,12 +743,53 @@ class daemon:
             return (0, data_mean)
 
 
-    def send_order(self):
+    def send_order(self,
+                   alias: str,
+                   message: int,
+                   resend_times = 4,
+                   starting_delay = 0.1,
+                   step_size = 0.1):
 
-        send_conn.send_message(alias_topic = 'light', message = '1')
-        send_conn.send_message(alias_topic = 'light', message = '0')
-        send_conn.send_message(alias_topic = 'pump', message = '1')
-        send_conn.send_message(alias_topic = 'pump', message = '0')
+        """
+            INPUT: 
+                    alias           ->   Identificador de el tema al que se va a escribir
+                                          ( la lista de aliases está en: 
+                                            db_mqtt_interface.mqtt_python.writeFromMqtt ).
+
+                    message         ->  '1' ó '0' para encender o apagar los dispositivos 
+                                         a los que se comunica con el alias.  
+
+                    resend_times    ->  Número de veces que se va a reenviar el mensaje 
+                                        (el módulo arduino no soporta QoS 2 entonces para
+                                         compensar se hace retransmisión automática del mensaje).
+
+                    starting_delay  ->  Para no saturar el broker o los microcontroladores 
+                                        y dar tiempo de reacción al broker entonces manda mensajes 
+                                        cada cierto tiempo determinado por esta variable.
+
+                    step_size       ->  El tiempo de espera para retransmitir el mensaje aumenta cada 
+                                        que se envía, y este aumento está determinado por esta variable.
+
+            OUTPUT:
+
+                    None.
+        """
+
+        for i in range(resend_times - 1):
+            # envía el mensaje al tema 
+            self.send_conn.send_message(alias_topic = alias,
+                                        message = message)
+
+            # espera un momento para hacer la retransmisión del mensaje
+            time.sleep(starting_delay)
+
+            # aumenta el tiempo de espera para retransmitir los próximos
+            # mensajes 
+            starting_delay += step_size
+
+        #envía el último mensaje 
+        self.send_conn.send_message(alias_topic = alias,
+                                    message = message)
 
 
 
