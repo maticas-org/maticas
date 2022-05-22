@@ -30,6 +30,7 @@ class mqtt_broker_connection_write():
         # definición del broker a usar 
         # ip del broker en red local
         self.mqttBroker = mqtt_broker
+        self.mqtt_port  = mqtt_port
 
         self.client = paho.Client( client_id= mqtt_client_id,
                                    userdata = None,
@@ -49,7 +50,7 @@ class mqtt_broker_connection_write():
         #             'alias'         |  'tema para ese alias' 
         #-----------------------------------------------------------------------------
         self.topics_dict = {    'light':    'Esp8266!D4ta/10370005/lights',
-                                'pump':     'Esp8266!D4ta/10370006/pump',
+                                'pump':     'Esp8266!D4ta/10370005/pump',
                                 'ec_a':     'Esp8266!D4ta/10370007/pump/ec/a',
                                 'ec_b':     'Esp8266!D4ta/10370007/pump/ec/b',
                                 'ph_acid':  'Esp8266!D4ta/10370007/pump/ph/acid',
@@ -61,9 +62,11 @@ class mqtt_broker_connection_write():
 
         if alias_topic in self.topics_dict.keys():
 
-            self.client.loop_start()
-            self.client.publish(self.topics_dict[alias_topic], message)
+            self.client.connect(self.mqttBroker, self.mqtt_port) 
+            self.client.publish(self.topics_dict[alias_topic],
+                                message, qos = 1)
             time.sleep(0.1) # wait
+
 
         else:
 

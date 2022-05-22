@@ -13,7 +13,7 @@ class db_connection:
         #-----------------------------------------------------------------------------
         #             'alias' |  'nombre de la tabla' | 'nombre de la var en la tabla'
         #-----------------------------------------------------------------------------
-        self.types_dict = {'temp':   ('temperature',         'temp_level'),
+        self.types_dict = {'temp':   ('temperature_',        'temp_level'),
                            'hum':    ('humidity',            'hum_level'),
                            'lux':    ('lux',                 'lux_level'),
                        'pressure':   ('atm_pressure',        'pressure_level'),
