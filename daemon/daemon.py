@@ -414,7 +414,7 @@ class daemon:
                              step_size = 0.085 )
             return
 
-        # si es muy temprano se debe apagar la luz también
+        # si es muy temprano se debe apagar la bomba también
         if (current_hour < self.light_settings['start_hour']):
                  
             print("Very early {} h, light is off".format(current_hour) )
@@ -427,7 +427,7 @@ class daemon:
             return
 
 
-
+        print("Just in time for schedule {} h, light is on".format(current_hour) )
         self.send_order(alias = 'light',
                         message = '1',
                         resend_times = 5,
