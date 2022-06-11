@@ -1,2 +1,0 @@
-# Controlador de bomba peristaltica
-
