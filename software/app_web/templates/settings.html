@@ -1,0 +1,277 @@
+<!--CONFIGURACIÓN DE LA PESTAÑA 'SETTINGS'-->
+{% extends 'layout.html' %}
+{% block content %}
+
+<div class="row">
+    <div class="col-3"></div>
+    <div class="col-md-6">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+
+        <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+            {{message}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor  %}
+        {% endif %}
+        {% endwith %}
+    </div>
+    <div class="col-3"></div>
+</div>
+<div class="text-center">
+    <br>
+    <h1 class="tit_settings">SETTINGS</h1>
+</div>
+    
+    <br>
+<div class="text-center">
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-md-10">
+            <h3>Niveles óptimos y aceptables de cada variable</h3> 
+        </div>
+        <div class="col-1"></div>
+    </div>
+</div>
+   
+<br>
+
+    <!--VALORES DE LAS VARIABLES------------------------------------------------------------------->
+    <form action="">
+        <div class="row">
+            <div class="col-6 text-center">
+                <h4 class="text-center">NIVELES ÓPTIMOS</h4>
+                <br>
+                <div class="row">
+                    <div class="col", style='text-align:right'>
+                        <label for="temperatura">Temperatura (°C)</label>
+                    </div>
+                
+
+                    <div class="col">
+                        <input type="number" id="temperatura" name="tome" placeholder="Valor menor" value="{{ ambiental_dict['temp_optimal'][0] }}" readonly>
+                        <input type="number" id="temperatura" name="toma" placeholder="Valor mayor" value="{{ ambiental_dict['temp_optimal'][1] }}" readonly> 
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6 text-center">
+                <h4 class="text-center">NIVELES ACEPTABLES</h4>
+                <br>
+                <input type="number" id="temperatura" name="tame" placeholder="Valor menor" value="{{ ambiental_dict['temp_ok'][0] }}" readonly>
+                <input type="number" id="temperatura" name="tama" placeholder="Valor mayor" value="{{ ambiental_dict['temp_ok'][1] }}" readonly>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="row">
+            <div class="col-6 text-center">
+                <div class="row">
+                    <div class="col", style='text-align:right'>
+                        <label for="temperatura_agua">Temperatura del agua (°C)</label>
+                    </div>
+                    
+                    <div class="col">
+                        <input type="number" id="temperatura_agua" name="taome" placeholder="Valor menor" value="{{ ambiental_dict['wtemp_optimal'][0] }}" readonly>
+                        <input type="number" id="temperatura_agua" name="taoma" placeholder="Valor mayor" value="{{ ambiental_dict['wtemp_optimal'][1] }}" readonly>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="col-6 text-center">
+                <input type="number" id="temperatura_agua" name="taame" placeholder="Valor menor" value="{{ ambiental_dict['wtemp_ok'][0] }}" readonly>
+                <input type="number" id="temperatura_agua" name="taama" placeholder="Valor mayor" value="{{ ambiental_dict['wtemp_ok'][1] }}" readonly>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="row">
+            <div class="col-6 text-center">
+                <div class="row">
+                    <div class="col", style='text-align:right'>
+                        <label for="humedad">Humedad (%)</label>
+                    </div>
+
+                    <div class="col">
+                        <input type="number" id="humedad" name="home" placeholder="Valor menor" value="{{ ambiental_dict['hum_optimal'][0] }}" readonly>
+                    <input type="number" id="humedad" name="homa" placeholder="Valor mayor" value="{{ ambiental_dict['hum_optimal'][1] }}" readonly>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6 text-center">
+                <input type="number" id="humedad" name="hame" placeholder="Valor menor" value="{{ ambiental_dict['hum_ok'][0] }}" readonly>
+                <input type="number" id="humedad" name="hama" placeholder="Valor mayor" value="{{ ambiental_dict['hum_ok'][1] }}" readonly>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="row">
+            <div class="col-6 text-center">
+                <div class="row">
+                    <div class="col", style='text-align:right'>
+                        <label for="electroconductividad">Electroconductividad (mS/cm)</label>
+                    </div>
+
+                    <div class="col">
+                        <input type="number" id="electroconductividad" name="eome" placeholder="Valor menor" value="{{ ambiental_dict['ec_optimal'][0] }}" readonly>
+                        <input type="number" id="electroconductividad" name="eoma" placeholder="Valor mayor" value="{{ ambiental_dict['ec_optimal'][1] }}" readonly>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6 text-center">
+                <input type="number" id="electroconductividad" name="eame" placeholder="Valor menor" value="{{ ambiental_dict['ec_ok'][0] }}" readonly>
+                <input type="number" id="electroconductividad" name="eama" placeholder="Valor mayor" value="{{ ambiental_dict['ec_ok'][1] }}" readonly>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="row">
+            <div class="col-6 text-center">
+                <div class="row">
+                    <div class="col", style='text-align:right'>
+                        <label for="">pH</label>
+                    </div>
+
+                    <div class="col">
+                        <input type="number" id="pH" name="phome" placeholder="Valor menor" value="{{ ambiental_dict['ph_optimal'][0] }}" readonly>
+                        <input type="number" id="pH" name="phoma" placeholder="Valor mayor" value="{{ ambiental_dict['ph_optimal'][1] }}" readonly>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6 text-center">
+                <input type="number" id="pH" name="phame" placeholder="Valor menor" value="{{ ambiental_dict['ph_ok'][0] }}" readonly>
+                <input type="number" id="pH" name="phama" placeholder="Valor mayor" value="{{ ambiental_dict['ph_ok'][1] }}" readonly>
+            </div>
+        </div>
+
+    
+
+        <br>
+        <br>
+
+        <!--TIEMPO DE REGADO------------------------------------------------------------------->
+        <div class="text-center">
+            <div class="row">
+                <div class="col-1"></div>
+                <div class="col-md-10">
+                    <h3>Tiempo de regado</h3>    
+                </div>
+                <div class="col-1"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 text-center">
+                <h4 class="text-center">Cada cuanto (min):</h4>
+                <input type="number" name="cada_cuanto" value="{{ actuators_dict['pump'][0] }}" readonly>
+            </div>
+            
+            <div class="col-6 text-center">
+                <h4 class="text-center">Duración (min):</h4>
+                <input type="number" name="duracion_tr" value="{{ actuators_dict['pump'][1] }}" readonly>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="row">
+            <div class="col-6 text-center">
+                <div class="label_hora_inicio_tiempo_regado">
+                    <h4>Desde:</h4>
+                </div>
+                <input type="time" name="desde_tr" value="{{ actuators_dict['pump'][2] }}" readonly>
+            </div>
+            
+            <div class="col-6 text-center">
+                <div class="label_hora_fin_tiempo_regado">
+                    <h4>Hasta:</h4>
+                </div>
+                <input type="time" name="hasta_tr" value="{{ actuators_dict['pump'][3] }}" readonly>
+            </div>
+        </div>
+
+        <br>
+
+        <!--ENCENDIDO DE LUZ------------------------------------------------------------------->
+        <div class="text-center">
+            <div class="row">
+                <div class="col-1"></div>
+                <div class="col-md-10">
+                    <h3>Encendido de la luz</h3>     
+                </div>
+                <div class="col-1"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 text-center">
+                <div class="label_encendido_luz">
+                    <h4>Desde:</h4>
+                </div>
+                <input type="time" name="desde_el" value="{{ actuators_dict['lights'][0] }}" readonly>
+            </div>
+
+            <div class="col-6 text-center">
+                <div class="label_encendido_luz">
+                    <h4>Hasta:</h4>
+                </div>
+                <input type="time" name="hasta_el" value="{{ actuators_dict['lights'][1] }}" readonly>
+            </div>
+        </div>
+
+        <br>
+        <br>
+    
+
+    
+        <!--BOTONES DE ACCIONADO DE LA LUZ Y DE LA BOMBA DE AGUA-->
+        <div class="text-center">
+            <div class="row">
+                <div class="col-1"></div>
+                <div class="col-md-10">
+                    <h3>Botones accionadores</h3>    
+                </div>
+                <div class="col-1"></div>
+            </div>
+        </div>
+    
+        <div class="row">
+            <div class="col-6 text-center">
+                <h4>Bomba de agua:</h4>
+                <a href="/pump_on" class="btn btn-primary boton-encender">Encender</a>
+                <a href="/pump_off" class="btn btn-primary boton-apagar">Apagar</a>
+            </div>
+
+            <div class="col-6 text-center">
+                <h4>Luz:</h4>
+                <a href="/light_on" class="btn btn-primary boton-encender">Encender</a>
+                <a href="/light_off" class="btn btn-primary boton-apagar">Apagar</a>
+            </div>
+        </div>
+    
+
+    
+        <!--EDITAR CONFIGURACIONES-->
+        <div class="row">
+            <div class="col-12 text-center">
+                <div class="guardar_datos">
+                    <br>
+                    <br>
+                    <a href="/settings_update" class="btn btn-secondary botones-de-cambio">Editar configuraciones</a>
+                </div>
+                
+            </div>
+        </div>
+    
+        <br>
+        <br>
+
+    </form>
+
+{% endblock %}

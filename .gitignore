@@ -1,0 +1,13 @@
+./db_mqtt_inteface/db/dirty7w7.py
+./db_mqtt_inteface/mqtt_python/dirty8w8.py
+db_mqtt_inteface/db/dirty7w7.py
+db_mqtt_inteface/mqtt_python/dirty8w8.py
+
+db_mqtt_inteface/db/__pycache__
+db_mqtt_inteface/mqtt_python/__pycache__
+db_mqtt_inteface/__pycache__
+./db_mqtt_inteface/db/__pycache__
+./db_mqtt_inteface/mqtt_python/__pycache__
+./db_mqtt_inteface/__pycache__
+./db_mqtt_interface/db/__pycache__/
+db_mqtt_interface/db/__pycache__/
