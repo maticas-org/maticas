@@ -2,8 +2,8 @@
 
 El módulo para medición de variables ambientales es el presentado en este esquema:
 
-<p align="center;">
-<img src="https://github.com/DaveAlsina/maticas/blob/main/hardware/ambient_sensor/imgs/sensor_ambiental_diagrama.png"
+<p align="center">
+<img align="center" src="https://github.com/DaveAlsina/maticas/blob/main/hardware/ambient_sensor/imgs/sensor_ambiental_diagrama.png"
 	 width = "450" height="450">
 </p>
 
