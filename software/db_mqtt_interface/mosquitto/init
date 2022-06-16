@@ -1,0 +1,8 @@
+#!/bin/bash
+IP=$(ip a | grep -w "inet" | awk -F' ' 'FNR == 2 {print $2}' | awk -F'/' '{print $1}')
+echo "listener 1883 $IP" >> mosquitto.conf
+mosquitto_passwd -U /etc/mosquitto/passfile
+# mosquitto_passwd -U passfile
+mkdir /etc/mosquitto/certs
+sh ssl_create $IP
+
