@@ -22,7 +22,7 @@ This process has been automated with the script `ssl_create` keep in mind that t
         - `server.key`
 ## Instructions and ussage
 ### Boot Up
-    To start running the service use the following command:
+To start running the service use the following command:
     `sudo mosquitto -c /etc/mosquitto/mosquitto.conf -d`
 ### Debug
 For debugging propouses the following commands allow the user plublicate and subscribe into the broker:
