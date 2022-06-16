@@ -12,3 +12,4 @@ Como puede notar los sensores usados son el BH1750 y el BME280. El script: *_"./
 
 
 
+*Tenga en cuenta que todos los módulos usados en esta release de maticas son esp8266.*

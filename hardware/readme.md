@@ -18,7 +18,7 @@ regulación del ph.
 
 * ***hive_conection***, carpeta con código para conectarse al broker mqtt con hive.
 
-* ***certs_from_mozilla.py***, script para crear archivo de certificados.
+* ***certs_from_mozilla.py***, script para crear archivo de certificados, este archivo al ser ejecutado crea una carpeta llamada **data** que contiene el archivo de certificados para el esp8266 **certs.ar**.
 
 
 

@@ -11,7 +11,7 @@ En este módulo se escribe la funcionalidad para controlar el apagado y encendid
 
 Sin embargo podemos ver que en esta carpeta existe la subcarpeta **'./lights\_controller\_and\_pump/'** esto es por que en el proceso de desarrollo del proyecto vimos que era más conveniente juntar el módulo controlador de las luces con el controlador de la bomba principal de agua, esto entre otras cosas por eficiencia de recursos y facilidad para producir un módulo. Entonces allí puede encontrar el código que junta el control de la bomba de agua principal con el control de las luces para las plantas.
 
-
+*Tenga en cuenta que todos los módulos usados en esta release de maticas son esp8266.*
 
 
 
