@@ -38,8 +38,14 @@ Vista de página de visualización de datos de la huerta
 <p align="center">
 <img align="center" src="https://github.com/DaveAlsina/maticas/blob/main/software/app_web/imgs/data_parte1.png"
 	 width = "500" >
+</p>
+
+<p align="center">
 <img align="center" src="https://github.com/DaveAlsina/maticas/blob/main/software/app_web/imgs/data_parte2.png"
 	 width = "500" >
+</p>
+
+<p align="center">
 <img align="center" src="https://github.com/DaveAlsina/maticas/blob/main/software/app_web/imgs/data_parte3.png"
 	 width = "500" >
 </p>
@@ -52,6 +58,9 @@ Vista de página de análisis extra
 <p align="center">
 <img align="center" src="https://github.com/DaveAlsina/maticas/blob/main/software/app_web/imgs/detailed_analisys_parte1.png"
 	 width = "500" >
+</p>
+
+<p align="center">
 <img align="center" src="https://github.com/DaveAlsina/maticas/blob/main/software/app_web/imgs/detailed_analisys_parte2.png"
 	 width = "500" >
 </p>
