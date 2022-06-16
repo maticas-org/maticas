@@ -24,6 +24,7 @@ Vista de página de configuración de la huerta
 <p align="center">
 <img align="center" src="https://github.com/DaveAlsina/maticas/blob/main/software/app_web/imgs/settings_parte1.png"
 	 width = "500" >
+<div> </div>
 <img align="center" src="https://github.com/DaveAlsina/maticas/blob/main/software/app_web/imgs/settings_parte2.png"
 	 width = "500" >
 </p>
