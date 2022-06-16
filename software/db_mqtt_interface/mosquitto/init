@@ -8,8 +8,7 @@ mosquitto_passwd -U /etc/mosquitto/passfile
 # mosquitto_passwd -U passfile
 mkdir /etc/mosquitto/certs
 chown mosquitto /etc/mosquitto/*
-chown mosquitto /etc/mosquitto/certs/*
 mkdir openssl 
 cd openssl
 sh ssl_create $IP
-
+chown mosquitto /etc/mosquitto/certs/*
