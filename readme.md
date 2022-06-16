@@ -9,8 +9,8 @@ de precisión a través de la hidroponía.
 <iframe width = "560" 
 	src   = "https://www.youtube.com/watch?v=mjRLgYRJpWg" 
 	frameborder="0" 
-	allow = "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
-allowfullscreen></iframe>
+	allow = "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture">
+</iframe>
 
 Se compone de la sección de ***'./hardware'*** donde encontrará toda la información respecto a como implementar el sistema
 de cultivos.
