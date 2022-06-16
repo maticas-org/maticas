@@ -28,6 +28,8 @@ Imagen de las tablas de niveles aceptables y las configuraciones de las luces y 
 	 width = "500" >
 </p>
 
+Tenga en cuenta que esto es solo para crear las tablas de la base de datos, usted aún debe crear la base de datos, y el usuario dave 
+para poder crear las tablas.
 
 
 
