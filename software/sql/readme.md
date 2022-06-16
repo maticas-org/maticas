@@ -12,10 +12,16 @@ para las variables en que se podría llegar a controlar.
 
 * ***'./create\_actuators\_tables.sql'***, crea tablas que guardan las configuraciones de funcionamiento de los actuadores (luces y bomba de agua).
 
+Imagen de las tablas de variables y sus niveles optimos en su esquema
+---------------------------------------------------------------------
+
 <p align="center">
 <img align="center" src="https://github.com/DaveAlsina/maticas/blob/main/software/sql/imgs/variables_and_optimals.png"
 	 width = "500" >
 </p>
+
+Imagen de las tablas de niveles aceptables y las configuraciones de las luces y la bomba de agua
+-------------------------------------------------------------------------------------------------
 
 <p align="center">
 <img align="center" src="https://github.com/DaveAlsina/maticas/blob/main/software/sql/imgs/oks_and_actuators.png"
