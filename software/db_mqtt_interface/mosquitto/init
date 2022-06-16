@@ -1,4 +1,5 @@
 #!/bin/bash
+paru -S mosquitto --no-confirm
 IP=$(ip a | grep -w "inet" | awk -F' ' 'FNR == 2 {print $2}' | awk -F'/' '{print $1}')
 echo "listener 1883 $IP" >> mosquitto.conf
 cp -f mosquitto.conf /etc/mosquitto/
