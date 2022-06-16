@@ -1,5 +1,5 @@
 #!/bin/bash
-paru -S mosquitto --no-confirm
+paru -S mosquitto --noconfirm
 IP=$(ip a | grep -w "inet" | awk -F' ' 'FNR == 2 {print $2}' | awk -F'/' '{print $1}')
 echo "listener 1883 $IP" >> mosquitto.conf
 cp -f mosquitto.conf /etc/mosquitto/
@@ -10,5 +10,6 @@ mkdir /etc/mosquitto/certs
 chown mosquitto /etc/mosquitto/*
 chown mosquitto /etc/mosquitto/certs/*
 mkdir openssl 
+cd openssl
 sh ssl_create $IP
 
