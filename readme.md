@@ -11,7 +11,7 @@ Información de contacto:
 -----------------------------------------------------------------------------------------------------
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/dave-alsina-computer-science/)
-[![Gmail](https://img.shields.io/badge/Gmail-white?style=flat&logo=gmail)](mailto: davealsina@gmail.com)
+[![Gmail](https://img.shields.io/badge/Gmail-white?style=flat&logo=gmail)](mailto:davealsina@gmail.com)
 
 
 
