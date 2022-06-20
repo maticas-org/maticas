@@ -10,8 +10,8 @@ de precisión a través de la hidroponía.
 Información de contacto: 
 -----------------------------------------------------------------------------------------------------
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://linkedin.com/in/felipemirque)
-[![Gmail](https://img.shields.io/badge/Gmail-white?style=flat&logo=gmail)](mailto:%20davealsina@gmail.com)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/dave-alsina-computer-science/)
+[![Gmail](https://img.shields.io/badge/Gmail-white?style=flat&logo=gmail)](mailto: davealsina@gmail.com)
 
 
 
