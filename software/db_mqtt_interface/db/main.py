@@ -1,16 +1,21 @@
-# dirty7w7 contiene las credenciales
-# ni por el putas suban al git 'dirty7w7.py'
-from dirty7w7 import *
+# remember that dirty7w7 contains the database credentials 
+# don't ever think of uploading the credentials to the github repository, 
+# just in case I'll add the credentials to the .gitignore
+
+import json
 from  db_connection import db_connection
 
+with open('./dirty7w7.json') as f:
+    db_credentials = json.load(f)
 
-conn = db_connection(db_host =  db_host,
-                     db_name =  db_name,
-                     db_user = db_user,
-                     db_password =  db_password,
-                     db_sslmode = db_sslmode,
+conn = db_connection(db_host        =  db_credentials["db_host"],
+                     db_name        =  db_credentials["db_name"],
+                     db_user        =  db_credentials["db_user"],
+                     db_password    =  db_credentials["db_password"],
+                     db_sslmode     =  db_credentials["db_sslmode"],
                     )
 
+# creates the database tables in case they don't exist
 conn.create_tables()
 
 #######################################################

@@ -1,0 +1,7 @@
+{
+	"mqtt_broker"	 : "url del broker mqtt",
+	"mqtt_port"	 : 0000,
+	"mqtt_username"  : "nombre de usuario en el broker mqtt",
+	"mqtt_password"  : "clave del usuario en el broker mqtt",
+	"mqtt_client_id" : "client id"
+}

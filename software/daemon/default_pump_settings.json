@@ -1,0 +1,8 @@
+{
+       	"start_hour"                            : -1, 
+	"end_hour"                              : -1,
+	"duration"                              : -1, 
+	"freq"                                  : -1,
+	"proportion"                            : -1,
+	"check_every_n_minutes"                 : -1
+}

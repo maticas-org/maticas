@@ -1,0 +1,9 @@
+
+{
+	"temp":      ("temp_optimal",               "temp_ok"),
+	"hum":       ("hum_optimal",                "hum_ok"),
+	"lux":       ("lux_optimal",                "lux_ok"),
+	"wtemp":     ("wtemp_optimal",              "wtemp_ok"),
+	"ec":        ("ec_optimal",                 "ec_ok"),
+	"ph":        ("ph_optimal",                 "ph_ok")
+}
