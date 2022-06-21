@@ -10,6 +10,10 @@ de precisión a través de la hidroponía.
 Información de contacto: 
 -----------------------------------------------------------------------------------------------------
 
+Este es un proyecto desarrollado en equipo con la intención de ayudar a cambiar el país,
+pueden contactarnos através de estos medios en caso de querer hacer parte del equipo, dar feedback o hacer
+alguna contribución al código del proyecto:
+
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/dave-alsina-computer-science/)
 [![Gmail](https://img.shields.io/badge/Gmail-white?style=flat&logo=gmail)](mailto:davealsina@gmail.com)
 
@@ -38,7 +42,22 @@ Se compone de las siguientes secciones:
 	computador para asegurar el correcto funcionamiento del sistema de cultivos, así como las sentencias SQL para crear las tablas de la base de datos.
 
 
+Próximas mejoras:
+-----------------------------------------------------------------------------------------------------
 
+* Dejar de depender de servicios en la nube externos para hacer el amacenamiento de datos *(en nuestro caso de PostgeSQL en Microsoft Azure)*.
+* Dejar de depender de un servicio en la nube externo para implementar el broker MQTT *(en nuestro caso de HiveMQ)*.
+* Mejorar organización de código.
+
+
+
+Donar:
+-----------------------------------------------------------------------------------------------------
+
+Si este proyecto te ha sido de ayuda o te parece un buen precedente puedes apoyar el desarrollo de Maticas donando aquí:
+
+
+<p align="center"><a href='https://www.buymeacoffee.com/DaveAlsina' target='_blank'><img height='35' style='border:0px;height:46px;' src='https://az743702.vo.msecnd.net/cdn/kofi3.png?v=0' border='0' alt='Buy Me a Coffee at ko-fi.com' /></p>
 
 
 
