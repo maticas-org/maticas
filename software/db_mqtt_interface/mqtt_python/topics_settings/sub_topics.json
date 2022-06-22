@@ -1,0 +1,9 @@
+{
+	"temp"		: "Esp8266!D4ta/10370001/temp",
+	"hum" 		: "Esp8266!D4ta/10370001/hum",
+        "pressure" 	: "Esp8266!D4ta/10370001/pressure", 
+	"lux"		: "Esp8266!D4ta/10370001/lux",
+	"ec"		: "Esp8266!D4ta/10370005/ec", 
+	"wtemp"		: "Esp8266!D4ta/10370005/wtemp",
+	"ph" 		: "Esp8266!D4ta/10370006/ph"
+}

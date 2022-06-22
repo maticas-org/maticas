@@ -46,9 +46,13 @@ class mqtt_broker_connection_write():
         #conexión al broker
         self.client.connect(self.mqttBroker, mqtt_port) 
 
+        """
+        # Template of topics_dict data: 
+
         #-----------------------------------------------------------------------------
         #             'alias'         |  'tema para ese alias' 
         #-----------------------------------------------------------------------------
+
         self.topics_dict = {    'light':    'Esp8266!D4ta/10370005/lights',
                                 'pump':     'Esp8266!D4ta/10370005/pump',
                                 'ec_a':     'Esp8266!D4ta/10370007/pump/ec/a',
@@ -56,6 +60,11 @@ class mqtt_broker_connection_write():
                                 'ph_acid':  'Esp8266!D4ta/10370007/pump/ph/acid',
                                 'ph_basic': 'Esp8266!D4ta/10370007/pump/ph/basic'
                            }
+        """
+
+        with open('./topics_settings/pub_settings.json') as f:
+            self.topics_dict = json.load(f)
+
 
 
     def send_message(self, alias_topic: str, message: str):
