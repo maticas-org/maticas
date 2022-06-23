@@ -5,8 +5,22 @@
 import json
 from writeFromMqtt import mqtt_broker_connection_write
 import time
+from datetime import datetime as dt
+import logging
 
-with open('./dirty8w8.py') as f:
+# sets the logging file 
+logging.basicConfig(filename = 'mqtt_write.log', encoding = 'utf-8',
+                    level = logging.DEBUG, filemode = 'w')
+
+logging.info("Started logging data at: {}".format(dt.today()))
+
+# mqtt broker credentials
+mqtt_credential_file = './dirty8w8.json'
+
+# reads credentials from the file
+with open(mqtt_credential_file) as f:
+
+    logging.info("reading credentials {}".format(mqtt_credential_file))
     mqtt_credentials = json.load(f)
 
 send_conn = mqtt_broker_connection_write( mqtt_broker     = mqtt_credentials["mqtt_broker"],

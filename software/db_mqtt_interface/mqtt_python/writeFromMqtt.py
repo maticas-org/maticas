@@ -1,9 +1,11 @@
 import pandas as pd
 import time 
+from datetime import datetime as dt
+import logging
 
 import paho.mqtt.client as paho
 from paho import mqtt
-
+import json
 
 class mqtt_broker_connection_write():
 
@@ -32,18 +34,25 @@ class mqtt_broker_connection_write():
         self.mqttBroker = mqtt_broker
         self.mqtt_port  = mqtt_port
 
+        logging.info("MQTT: Setting up paho client with credentials ...")
         self.client = paho.Client( client_id= mqtt_client_id,
                                    userdata = None,
                                    protocol = paho.MQTTv5 )
+
+        logging.info("MQTT: Defining on_message and on_connect actions ...")
         self.client.on_message = self.on_message
         self.client.on_connect = self.on_connect
 
         # habilita conexión segura con tls
         self.client.tls_set(tls_version=mqtt.client.ssl.PROTOCOL_TLS)
 
+
+        logging.info("MQTT: Logging as user to the broker ...")
         self.client.username_pw_set(username = mqtt_username,
                                     password = mqtt_password)
+
         #conexión al broker
+        logging.info("MQTT: Stablishing connection to the broker ...")
         self.client.connect(self.mqttBroker, mqtt_port) 
 
         """
@@ -62,18 +71,24 @@ class mqtt_broker_connection_write():
                            }
         """
 
-        with open('./topics_settings/pub_settings.json') as f:
+        logging.info("MQTT: Reading publish settings ...")
+
+        with open('./topics_settings/pub_topics.json') as f:
             self.topics_dict = json.load(f)
 
+        logging.info("MQTT: Done setup.")
 
 
-    def send_message(self, alias_topic: str, message: str):
+    def send_message(self, alias_topic: str, message: str, qos = 2):
 
         if alias_topic in self.topics_dict.keys():
 
+            logging.info("MQTT: Connecting...")
             self.client.connect(self.mqttBroker, self.mqtt_port) 
+
+            logging.info("MQTT:MSG: Sending message, qos = {}".format(qos))
             self.client.publish(self.topics_dict[alias_topic],
-                                message, qos = 1)
+                                message, qos = 2)
             time.sleep(0.1) # wait
 
 
@@ -105,6 +120,7 @@ class mqtt_broker_connection_write():
         topic = topic[1:]                               #expresada en el tema del mensajede llegada
                                                         #esto es de la forma: ['10370001','pressure']
 
+        logging.info("MQTT:MSG: Arrived {}".format(topic))
         print(topic)
         print(msg)
         #agrego valores a la llave dada por el id del sensor (topic[0] contiene el id del sensor)

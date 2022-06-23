@@ -1,7 +1,7 @@
 {
-	"db_host": 	"url a base de datos posgres azure", 
-	"db_name": 	"nombre de la base de datos",
-	"db_user": 	"nombre de usuario",
-	"db_password":  "clave de la base de datos",
-	"db_sslmode": 	"modo ssl"
+	"db_host": 	"maticas.postgres.database.azure.com", 
+	"db_name": 	"maticas_data",
+	"db_user": 	"dave",
+	"db_password":  "l4Propi4Cl4v3P4p4!#",
+	"db_sslmode": 	"require"
 }

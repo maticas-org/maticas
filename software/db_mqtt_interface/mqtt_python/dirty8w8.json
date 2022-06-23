@@ -1,7 +1,7 @@
 {
-	"mqtt_broker"	 : "url del broker mqtt",
-	"mqtt_port"	 : 0000,
-	"mqtt_username"  : "nombre de usuario en el broker mqtt",
-	"mqtt_password"  : "clave del usuario en el broker mqtt",
-	"mqtt_client_id" : "client id"
+	"mqtt_broker"	 : "367b0404af444e90a3cf6e47443a0a6b.s1.eu.hivemq.cloud",
+	"mqtt_port"	 : 8883,
+	"mqtt_username"  : "lapropianubecita1",
+	"mqtt_password"  : "Siempreolvidolaclave:3",
+	"mqtt_client_id" : "pc_middleman_you_bitch"
 }

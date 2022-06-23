@@ -3,6 +3,10 @@ import pytz
 import psycopg2
 import pandas as pd
 
+import logging
+import json
+
+
 class db_connection:
 
     def __init__(self, db_host, db_name, db_user, db_password, db_sslmode):
@@ -10,6 +14,8 @@ class db_connection:
         #types_dict: diccionario que hace match entre unos alias cómodos para manejar
         #en el código y los nombres de las variables y tablas en la base de datos
 
+
+        """
         #-----------------------------------------------------------------------------
         #             'alias' |  'nombre de la tabla' | 'nombre de la var en la tabla'
         #-----------------------------------------------------------------------------
@@ -21,7 +27,10 @@ class db_connection:
                            'ec':     ('electroconductivity', 'ec_level'),
                            'ph':     ('ph',                  'ph_level')
                           }
+        """
 
+        with open("./db_settings/data_tables_names.json") as f:
+            self.types_dict = json.read(f)
 
         #--------------------------------------------------------------------------------------------------
         #                             'alias'       |  'nombre de la tabla'        | 'nombre de las vars
