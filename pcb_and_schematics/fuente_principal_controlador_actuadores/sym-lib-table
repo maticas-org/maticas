@@ -1,0 +1,3 @@
+(sym_lib_table
+  (lib (name "maticas")(type "KiCad")(uri "${KIPRJMOD}/maticas.kicad_sym")(options "")(descr ""))
+)
