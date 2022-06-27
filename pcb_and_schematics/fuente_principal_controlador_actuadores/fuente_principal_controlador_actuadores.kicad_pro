@@ -368,7 +368,7 @@
       "gencad": "",
       "idf": "",
       "netlist": "",
-      "specctra_dsn": "",
+      "specctra_dsn": "fuente_principal_controlador_actuadores.dsn",
       "step": "",
       "vrml": ""
     },
