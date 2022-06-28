@@ -11,7 +11,7 @@
     (via_costs 50)
     (plane_via_costs 5)
     (start_ripup_costs 100)
-    (start_pass_no 5)
+    (start_pass_no 6)
     (layer_rule "F.Cu"
       (active on)
       (preferred_direction horizontal)
@@ -26,10 +26,9 @@
     )
   )
   (rule
-    (width 250.0)
+    (width 700.0)
     (clear 200.2)
     (clear 125.0 (type smd_to_turn_gap))
-    (clear 50.0 (type "smd"-"smd"))
   )
   (padstack "Via[0-1]_800:400_um"
     (shape
@@ -53,9 +52,7 @@
     "kicad_default" "Via[0-1]_800:400_um-kicad_default"
   )
   (class "default"
-    "Net-(C1-Pad1)" "GND potencia" "12.0VDC" "5.0VDC" "Net-(C4-Pad1)" "GND 3.3V" "3.3VDC" "Net-(D1-Pad2)"
-    "Net-(D2-Pad2)" "Net-(D3-Pad2)" "Net-(J3-Pad1)" "Net-(J4-Pad1)" "Net-(J5-Pad1)" "Net-(J6-Pad1)" "Net-(J7-Pad1)" "Net-(J8-Pad1)"
-    "Net-(J9-Pad1)" "Net-(J10-Pad1)" "unconnected-(J11-Pad1)" "unconnected-(J11-Pad2)" "unconnected-(J11-Pad3)" "3.3V ec" "GND ec" "signal EC"
+    "GND 3.3V" "3.3VDC" "unconnected-(J11-Pad1)" "unconnected-(J11-Pad2)" "unconnected-(J11-Pad3)" "3.3V ec" "GND ec" "signal EC"
     "signal PH" "unconnected-(J11-Pad8)" "unconnected-(J11-Pad9)" "unconnected-(J11-Pad10)" "unconnected-(J11-Pad11)" "unconnected-(J11-Pad12)" "unconnected-(J11-Pad13)" "unconnected-(J12-Pad1)"
     "unconnected-(J12-Pad2)" "pump1" "pump2" "pump3" "pump4" "lights" "mainWaterPump" "Signal ExtraSensor"
     "signal DB18B20" "unconnected-(J12-Pad11)" "unconnected-(J12-Pad12)" "unconnected-(J12-Pad13)" "extraActuator5V" "extraActuator12V" "unconnected-(JUSB1-Pad2)" "unconnected-(JUSB1-Pad5)"
@@ -70,7 +67,7 @@
     (clearance_class "default")
     (via_rule "default")
     (rule
-      (width 250.0)
+      (width 700.0)
     )
     (circuit 
       (use_layer F.Cu B.Cu)
@@ -80,17 +77,19 @@
     (clearance_class "kicad_default")
     (via_rule "kicad_default")
     (rule
-      (width 250.0)
+      (width 700.0)
     )
     (circuit 
       (use_layer F.Cu B.Cu)
     )
   )
   (class "pot"
+    "Net-(C1-Pad1)" "GND potencia" "12.0VDC" "5.0VDC" "Net-(C4-Pad1)" "Net-(D1-Pad2)" "Net-(D2-Pad2)" "Net-(D3-Pad2)"
+    "Net-(J3-Pad1)" "Net-(J4-Pad1)" "Net-(J5-Pad1)" "Net-(J6-Pad1)" "Net-(J7-Pad1)" "Net-(J8-Pad1)" "Net-(J9-Pad1)" "Net-(J10-Pad1)"
     (clearance_class "default")
     (via_rule "default")
     (rule
-      (width 300.0)
+      (width 3000.0)
     )
     (circuit 
       (use_layer F.Cu B.Cu)
