@@ -1,5 +1,5 @@
 
-(rules PCB fuente_principal_controlador_actuadores
+(rules PCB fuente_principal_controlador_actuadores_og
   (snap_angle 
     fortyfive_degree
   )
@@ -11,7 +11,7 @@
     (via_costs 50)
     (plane_via_costs 5)
     (start_ripup_costs 100)
-    (start_pass_no 4)
+    (start_pass_no 5)
     (layer_rule "F.Cu"
       (active on)
       (preferred_direction horizontal)
@@ -29,6 +29,7 @@
     (width 250.0)
     (clear 200.2)
     (clear 125.0 (type smd_to_turn_gap))
+    (clear 50.0 (type "smd"-"smd"))
   )
   (padstack "Via[0-1]_800:400_um"
     (shape
@@ -80,6 +81,16 @@
     (via_rule "kicad_default")
     (rule
       (width 250.0)
+    )
+    (circuit 
+      (use_layer F.Cu B.Cu)
+    )
+  )
+  (class "pot"
+    (clearance_class "default")
+    (via_rule "default")
+    (rule
+      (width 300.0)
     )
     (circuit 
       (use_layer F.Cu B.Cu)

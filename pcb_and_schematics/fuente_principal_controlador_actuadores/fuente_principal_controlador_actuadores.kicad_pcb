@@ -189,7 +189,7 @@
 
   (footprint "Package_TO_SOT_THT:TO-220-3_Vertical" (layer "F.Cu")
     (tedit 5AC8BA0D) (tstamp 002de8d1-df30-47c2-983d-8728497f8e6d)
-    (at 53.715 82.145)
+    (at 46.155 72.645)
     (descr "TO-220-3, Vertical, RM 2.54mm, see https://www.vishay.com/docs/66542/to-220-1.pdf")
     (tags "TO-220-3 Vertical RM 2.54mm")
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
@@ -226,11 +226,11 @@
     (fp_line (start -2.46 1.25) (end 7.54 1.25) (layer "F.Fab") (width 0.1) (tstamp b5decb4f-7cb8-4ae8-a9de-28486a2ef70c))
     (fp_line (start 7.54 -3.15) (end -2.46 -3.15) (layer "F.Fab") (width 0.1) (tstamp b6b4cbc3-2917-4bdd-a94e-a1d16f9ee3c4))
     (fp_line (start 4.39 -3.15) (end 4.39 -1.88) (layer "F.Fab") (width 0.1) (tstamp b81e614f-83a2-423d-bef7-ff8ead57c6ad))
-    (pad "1" thru_hole rect (at 0 0) (size 1.905 2) (drill 1.1) (layers *.Cu *.Mask)
+    (pad "1" thru_hole rect (at 0 0) (size 1.905 3) (drill 1.1) (layers *.Cu *.Mask)
       (net 6 "GND 3.3V") (pinfunction "GND") (pintype "power_in") (tstamp 6e663805-d372-4a02-8706-d872df8df348))
-    (pad "2" thru_hole oval (at 2.54 0) (size 1.905 2) (drill 1.1) (layers *.Cu *.Mask)
+    (pad "2" thru_hole oval (at 2.54 0) (size 1.905 3) (drill 1.1) (layers *.Cu *.Mask)
       (net 7 "3.3VDC") (pinfunction "VO") (pintype "power_out") (tstamp 05596639-5b3f-4446-9749-157801ba3146))
-    (pad "3" thru_hole oval (at 5.08 0) (size 1.905 2) (drill 1.1) (layers *.Cu *.Mask)
+    (pad "3" thru_hole oval (at 5.08 0) (size 1.905 3) (drill 1.1) (layers *.Cu *.Mask)
       (net 5 "Net-(C4-Pad1)") (pinfunction "VI") (pintype "power_in") (tstamp ab4a3dbd-6b7e-435c-9fc5-334087228771))
     (model "${KICAD6_3DMODEL_DIR}/Package_TO_SOT_THT.3dshapes/TO-220-3_Vertical.wrl"
       (offset (xyz 0 0 0))
@@ -241,7 +241,7 @@
 
   (footprint "MountingHole:MountingHole_2.5mm" (layer "F.Cu")
     (tedit 56D1B4CB) (tstamp 00391d50-616c-460b-b1cd-4b1ebb857043)
-    (at 31 25.7)
+    (at 23.84 51.7)
     (descr "Mounting Hole 2.5mm, no annular")
     (tags "mounting hole 2.5mm no annular")
     (attr exclude_from_pos_files exclude_from_bom)
@@ -264,7 +264,7 @@
 
   (footprint "Resistor_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P5.08mm_Horizontal" (layer "F.Cu")
     (tedit 5AE5139B) (tstamp 02180095-8075-44ba-8eb2-c7cc7684cde3)
-    (at 145.09 73.2)
+    (at 128.58 64.425)
     (descr "Resistor, Axial_DIN0204 series, Axial, Horizontal, pin pitch=5.08mm, 0.167W, length*diameter=3.6*1.6mm^2, http://cdn-reichelt.de/documents/datenblatt/B400/1_4W%23YAG.pdf")
     (tags "Resistor Axial_DIN0204 series Axial Horizontal pin pitch 5.08mm 0.167W length 3.6mm diameter 1.6mm")
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
@@ -308,7 +308,7 @@
 
   (footprint "maticas:40106_maticas_full" (layer "F.Cu")
     (tedit 0) (tstamp 057cebe9-e151-4189-bd93-1d1348f9194a)
-    (at 208.01 53.805)
+    (at 186.59 45.065)
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
     (property "Sheetname" "")
     (path "/609ef24d-deb5-4b33-a0c9-d814ac0fb085")
@@ -358,7 +358,7 @@
 
   (footprint "Connector_USB:USB_A_Molex_67643_Horizontal" (layer "F.Cu")
     (tedit 5EA03975) (tstamp 068bcdfd-de64-4960-b18b-9c01fe3c5b2d)
-    (at 115.2 138.84)
+    (at 111.29 117.87)
     (descr "USB type A, Horizontal, https://www.molex.com/pdm_docs/sd/676433910_sd.pdf")
     (tags "USB_A Female Connector receptacle")
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
@@ -432,7 +432,7 @@
 
   (footprint "maticas:actuators_screws_01x02_low_pot" (layer "F.Cu")
     (tedit 0) (tstamp 07e6c8b8-0eef-4d1a-a077-aab58c7a7aec)
-    (at 32.76 37.98 90)
+    (at 25.34 28.7 90)
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
     (property "Sheetname" "")
     (path "/8513171e-30d4-460b-9d0a-4b50c7ea996d")
@@ -449,15 +449,15 @@
       (effects (font (size 1 1) (thickness 0.15)))
       (tstamp a75835df-fbed-482b-809a-b02fa11579fa)
     )
-    (pad "1" thru_hole rect (at -2.5 0 90) (size 3 3) (drill 1) (layers *.Cu *.Mask)
+    (pad "1" thru_hole rect (at -2.5 0 90) (size 3.5 3.5) (drill 1) (layers *.Cu *.Mask)
       (net 2 "GND potencia") (pinfunction "Pin_1") (pintype "passive") (tstamp 0b277c94-bd16-4ffc-8c19-783bd8f2d119))
-    (pad "2" thru_hole circle (at 2.5 0 90) (size 3 3) (drill 1) (layers *.Cu *.Mask)
+    (pad "2" thru_hole circle (at 2.5 0 90) (size 3.5 3.5) (drill 1) (layers *.Cu *.Mask)
       (net 1 "Net-(C1-Pad1)") (pinfunction "Pin_2") (pintype "passive") (tstamp bf72dd26-f6db-4f16-8b94-05a42f67be82))
   )
 
   (footprint "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical" (layer "F.Cu")
     (tedit 5AE5139B) (tstamp 07f07e0f-fd6d-4f88-89aa-754cd6c972d7)
-    (at 250.56 42.72 180)
+    (at 223.88 33.98 180)
     (descr "Resistor, Axial_DIN0207 series, Axial, Vertical, pin pitch=2.54mm, 0.25W = 1/4W, length*diameter=6.3*2.5mm^2, http://cdn-reichelt.de/documents/datenblatt/B400/1_4W%23YAG.pdf")
     (tags "Resistor Axial_DIN0207 series Axial Vertical pin pitch 2.54mm 0.25W = 1/4W length 6.3mm diameter 2.5mm")
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
@@ -497,7 +497,7 @@
 
   (footprint "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical" (layer "F.Cu")
     (tedit 5AE5139B) (tstamp 0b8e6b50-7254-47c1-9483-2f708898622a)
-    (at 174.3 45.7 90)
+    (at 157.79 36.925 90)
     (descr "Resistor, Axial_DIN0207 series, Axial, Vertical, pin pitch=2.54mm, 0.25W = 1/4W, length*diameter=6.3*2.5mm^2, http://cdn-reichelt.de/documents/datenblatt/B400/1_4W%23YAG.pdf")
     (tags "Resistor Axial_DIN0207 series Axial Vertical pin pitch 2.54mm 0.25W = 1/4W length 6.3mm diameter 2.5mm")
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
@@ -537,7 +537,7 @@
 
   (footprint "maticas:actuators_screws_01x02_low_pot" (layer "F.Cu")
     (tedit 0) (tstamp 12c73fe9-01b9-4075-a78d-5847a28a77ac)
-    (at 188.9 144.5)
+    (at 184.99 123.53)
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
     (property "Sheetname" "")
     (path "/658b9a21-04ab-4923-a7ad-45f56f14ea6d")
@@ -554,15 +554,15 @@
       (effects (font (size 1 1) (thickness 0.15)))
       (tstamp 8b494507-23a0-4188-86a1-f41a69efacbb)
     )
-    (pad "1" thru_hole rect (at -2.5 0) (size 2.286 2.286) (drill 1) (layers *.Cu *.Mask)
+    (pad "1" thru_hole rect (at -2.5 0) (size 2.286 3) (drill 1) (layers *.Cu *.Mask)
       (net 15 "Net-(J7-Pad1)") (pinfunction "Pin_1") (pintype "passive") (tstamp 6c665cce-c7d7-4453-bd52-3aaa1048b223))
-    (pad "2" thru_hole circle (at 2.5 0) (size 2.286 2.286) (drill 1) (layers *.Cu *.Mask)
+    (pad "2" thru_hole oval (at 2.5 0) (size 2.286 3) (drill 1) (layers *.Cu *.Mask)
       (net 2 "GND potencia") (pinfunction "Pin_2") (pintype "passive") (tstamp a3539ede-f00f-4b56-ab6b-39203e642cc1))
   )
 
   (footprint "maticas:actuators_screws_01x02_low_pot" (layer "F.Cu")
     (tedit 0) (tstamp 1578b958-bb8b-4b7b-aeca-a5128ba38fd1)
-    (at 214.6 144.6)
+    (at 210.69 123.63)
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
     (property "Sheetname" "")
     (path "/02ba6043-b2bc-44ff-abc5-ff3cecdb5edd")
@@ -579,15 +579,15 @@
       (effects (font (size 1 1) (thickness 0.15)))
       (tstamp 9e4d12ee-abd0-4fd8-9611-7be5412593b2)
     )
-    (pad "1" thru_hole rect (at -2.5 0) (size 2.286 2.286) (drill 1) (layers *.Cu *.Mask)
+    (pad "1" thru_hole rect (at -2.5 0) (size 2.286 3) (drill 1) (layers *.Cu *.Mask)
       (net 17 "Net-(J9-Pad1)") (pinfunction "Pin_1") (pintype "passive") (tstamp 643ab3d1-84c6-4eef-b74d-c4ededbe63d2))
-    (pad "2" thru_hole circle (at 2.5 0) (size 2.286 2.286) (drill 1) (layers *.Cu *.Mask)
+    (pad "2" thru_hole oval (at 2.5 0) (size 2.286 3) (drill 1) (layers *.Cu *.Mask)
       (net 2 "GND potencia") (pinfunction "Pin_2") (pintype "passive") (tstamp 606fd3a5-e0e2-42ac-a7ca-db1090deeb4e))
   )
 
   (footprint "Connector_USB:USB_A_Molex_67643_Horizontal" (layer "F.Cu")
     (tedit 5EA03975) (tstamp 1a95e438-ba67-4d1a-9e6d-7cd58508172e)
-    (at 88.7 139.24)
+    (at 84.79 118.27)
     (descr "USB type A, Horizontal, https://www.molex.com/pdm_docs/sd/676433910_sd.pdf")
     (tags "USB_A Female Connector receptacle")
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
@@ -661,7 +661,7 @@
 
   (footprint "maticas:actuators_screws_01x02_low_pot" (layer "F.Cu")
     (tedit 0) (tstamp 25242e45-f330-41bf-9d56-00e0122d096a)
-    (at 201.6 144.4)
+    (at 197.69 123.43)
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
     (property "Sheetname" "")
     (path "/aa069ea3-9727-4f0f-99ef-f11d3f5e0bfa")
@@ -678,15 +678,15 @@
       (effects (font (size 1 1) (thickness 0.15)))
       (tstamp 6a6a3d6e-6df9-4898-8dc4-382180d1322a)
     )
-    (pad "1" thru_hole rect (at -2.5 0) (size 2.286 2.286) (drill 1) (layers *.Cu *.Mask)
+    (pad "1" thru_hole rect (at -2.5 0) (size 2.286 3) (drill 1) (layers *.Cu *.Mask)
       (net 16 "Net-(J8-Pad1)") (pinfunction "Pin_1") (pintype "passive") (tstamp 9e04544c-8496-4d9c-8d4e-e9a76721160a))
-    (pad "2" thru_hole circle (at 2.5 0) (size 2.286 2.286) (drill 1) (layers *.Cu *.Mask)
+    (pad "2" thru_hole oval (at 2.5 0) (size 2.286 3) (drill 1) (layers *.Cu *.Mask)
       (net 2 "GND potencia") (pinfunction "Pin_2") (pintype "passive") (tstamp a5b6764f-f64d-4731-a79d-ded77b2d029a))
   )
 
   (footprint "Package_TO_SOT_THT:TO-220-3_Vertical" (layer "F.Cu")
     (tedit 5AC8BA0D) (tstamp 2708f488-1e34-4ba1-a206-a3a3df6dc0fc)
-    (at 261.865 117.865 -90)
+    (at 240.545 103.725 -90)
     (descr "TO-220-3, Vertical, RM 2.54mm, see https://www.vishay.com/docs/66542/to-220-1.pdf")
     (tags "TO-220-3 Vertical RM 2.54mm")
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
@@ -725,9 +725,9 @@
     (fp_line (start -2.46 1.25) (end 7.54 1.25) (layer "F.Fab") (width 0.1) (tstamp e5d85df9-9c44-4c07-a214-0fcd7ebd9b37))
     (pad "1" thru_hole rect (at 0 0 270) (size 1.905 2) (drill 1.1) (layers *.Cu *.Mask)
       (net 95 "Net-(Q8-Pad1)") (pinfunction "B") (pintype "input") (tstamp fea7babc-9d72-45a3-a71e-bd7e1f96676a))
-    (pad "2" thru_hole oval (at 2.54 0 270) (size 1.905 2) (drill 1.1) (layers *.Cu *.Mask)
+    (pad "2" thru_hole oval (at 2.54 0 270) (size 1.905 3) (drill 1.1) (layers *.Cu *.Mask)
       (net 3 "12.0VDC") (pinfunction "C") (pintype "passive") (tstamp 315c4312-3caf-417c-b337-a26cd5cea3fb))
-    (pad "3" thru_hole oval (at 5.08 0 270) (size 1.905 2) (drill 1.1) (layers *.Cu *.Mask)
+    (pad "3" thru_hole oval (at 5.08 0 270) (size 1.905 3) (drill 1.1) (layers *.Cu *.Mask)
       (net 18 "Net-(J10-Pad1)") (pinfunction "E") (pintype "passive") (tstamp d979be56-c22d-43cf-a5c1-31ece97a6ac1))
     (model "${KICAD6_3DMODEL_DIR}/Package_TO_SOT_THT.3dshapes/TO-220-3_Vertical.wrl"
       (offset (xyz 0 0 0))
@@ -738,7 +738,7 @@
 
   (footprint "maticas:40106_maticas_full" (layer "F.Cu")
     (tedit 0) (tstamp 29270e6f-b37b-42eb-bd92-bf57f88cddad)
-    (at 207.91 98.005)
+    (at 186.59 83.865)
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
     (property "Sheetname" "")
     (path "/e4375f9f-bad6-4c53-89aa-c87692cc06e7")
@@ -788,7 +788,7 @@
 
   (footprint "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical" (layer "F.Cu")
     (tedit 5AE5139B) (tstamp 29c1f894-e3d0-4b94-810a-f8d6ed017411)
-    (at 159.655 109.305 180)
+    (at 138.335 95.165 180)
     (descr "Resistor, Axial_DIN0207 series, Axial, Vertical, pin pitch=2.54mm, 0.25W = 1/4W, length*diameter=6.3*2.5mm^2, http://cdn-reichelt.de/documents/datenblatt/B400/1_4W%23YAG.pdf")
     (tags "Resistor Axial_DIN0207 series Axial Vertical pin pitch 2.54mm 0.25W = 1/4W length 6.3mm diameter 2.5mm")
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
@@ -828,7 +828,7 @@
 
   (footprint "maticas:actuators_screws_01x02_low_pot" (layer "F.Cu")
     (tedit 0) (tstamp 2bb3fdfc-a89c-499d-925c-59f0245b58c5)
-    (at 229.4 144.6)
+    (at 225.49 123.63)
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
     (property "Sheetname" "")
     (path "/19b2b5b9-3629-45e1-9d2a-df3d90f334b4")
@@ -845,15 +845,15 @@
       (effects (font (size 1 1) (thickness 0.15)))
       (tstamp e0deaa08-a138-44ed-860f-2d4498058bb6)
     )
-    (pad "1" thru_hole rect (at -2.5 0) (size 2.286 2.286) (drill 1) (layers *.Cu *.Mask)
+    (pad "1" thru_hole rect (at -2.5 0) (size 2.286 3) (drill 1) (layers *.Cu *.Mask)
       (net 18 "Net-(J10-Pad1)") (pinfunction "Pin_1") (pintype "passive") (tstamp b2db0790-b719-4b06-923b-d9cdadaab0c6))
-    (pad "2" thru_hole circle (at 2.5 0) (size 2.286 2.286) (drill 1) (layers *.Cu *.Mask)
+    (pad "2" thru_hole oval (at 2.5 0) (size 2.286 3) (drill 1) (layers *.Cu *.Mask)
       (net 2 "GND potencia") (pinfunction "Pin_2") (pintype "passive") (tstamp 236679de-9f96-487d-a112-f383c6e8f53f))
   )
 
   (footprint "Connector_USB:USB_A_Molex_67643_Horizontal" (layer "F.Cu")
     (tedit 5EA03975) (tstamp 30673d31-4cc2-4d01-87a3-a1156b7a36ff)
-    (at 39.32 139.34)
+    (at 35.41 118.37)
     (descr "USB type A, Horizontal, https://www.molex.com/pdm_docs/sd/676433910_sd.pdf")
     (tags "USB_A Female Connector receptacle")
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
@@ -927,7 +927,7 @@
 
   (footprint "Package_TO_SOT_THT:TO-220-3_Vertical" (layer "F.Cu")
     (tedit 5AC8BA0D) (tstamp 32db2178-ca7b-4f6f-8595-4cf6a5ea4537)
-    (at 263.81 37.005 90)
+    (at 237.13 28.265 90)
     (descr "TO-220-3, Vertical, RM 2.54mm, see https://www.vishay.com/docs/66542/to-220-1.pdf")
     (tags "TO-220-3 Vertical RM 2.54mm")
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
@@ -966,9 +966,9 @@
     (fp_line (start 4.39 -3.15) (end 4.39 -1.88) (layer "F.Fab") (width 0.1) (tstamp dbf73a3b-0ebc-4646-9a99-deec7eef0007))
     (pad "1" thru_hole rect (at 0 0 90) (size 1.905 2) (drill 1.1) (layers *.Cu *.Mask)
       (net 89 "Net-(Q2-Pad1)") (pinfunction "B") (pintype "input") (tstamp 74f3c73e-93b6-4611-9407-ee1bd90294ae))
-    (pad "2" thru_hole oval (at 2.54 0 90) (size 1.905 2) (drill 1.1) (layers *.Cu *.Mask)
+    (pad "2" thru_hole oval (at 2.54 0 90) (size 1.905 3) (drill 1.1) (layers *.Cu *.Mask)
       (net 4 "5.0VDC") (pinfunction "C") (pintype "passive") (tstamp e4710e86-0dc3-4267-b0c2-cb6b39a5896f))
-    (pad "3" thru_hole oval (at 5.08 0 90) (size 1.905 2) (drill 1.1) (layers *.Cu *.Mask)
+    (pad "3" thru_hole oval (at 5.08 0 90) (size 1.905 3) (drill 1.1) (layers *.Cu *.Mask)
       (net 12 "Net-(J4-Pad1)") (pinfunction "E") (pintype "passive") (tstamp 386bab8a-a63b-4a06-9b01-6c0c4b24b17f))
     (model "${KICAD6_3DMODEL_DIR}/Package_TO_SOT_THT.3dshapes/TO-220-3_Vertical.wrl"
       (offset (xyz 0 0 0))
@@ -979,7 +979,7 @@
 
   (footprint "LED_THT:LED_D3.0mm" (layer "F.Cu")
     (tedit 587A3A7B) (tstamp 35f86429-b7b5-4b69-ba12-6945a64c9af9)
-    (at 82.29 90.09)
+    (at 74.54 80.5)
     (descr "LED, diameter 3.0mm, 2 pins")
     (tags "LED diameter 3.0mm 2 pins")
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
@@ -1007,9 +1007,9 @@
     (fp_line (start -0.23 -1.16619) (end -0.23 1.16619) (layer "F.Fab") (width 0.1) (tstamp 50a3e196-20e1-45c8-a0af-552d559a3765))
     (fp_arc (start -0.23 -1.16619) (mid 3.17 0.000452) (end -0.230555 1.165476) (layer "F.Fab") (width 0.1) (tstamp c5b1d423-a5e5-4e61-b5e0-267b022c79a6))
     (fp_circle (center 1.27 0) (end 2.77 0) (layer "F.Fab") (width 0.1) (fill none) (tstamp 57159fdf-a3cd-49ae-8518-c1a6d08567d3))
-    (pad "1" thru_hole rect (at 0 0) (size 1.8 1.8) (drill 0.9) (layers *.Cu *.Mask)
+    (pad "1" thru_hole rect (at -1.1 0) (size 1.8 3) (drill 0.9) (layers *.Cu *.Mask)
       (net 6 "GND 3.3V") (pinfunction "K") (pintype "passive") (tstamp 72c85589-8f84-43bb-88a2-685e5a071a91))
-    (pad "2" thru_hole circle (at 2.54 0) (size 1.8 1.8) (drill 0.9) (layers *.Cu *.Mask)
+    (pad "2" thru_hole oval (at 3.7 0) (size 1.8 3) (drill 0.9) (layers *.Cu *.Mask)
       (net 10 "Net-(D3-Pad2)") (pinfunction "A") (pintype "passive") (tstamp bbb2b605-db97-49d0-be31-20c765c04505))
     (model "${KICAD6_3DMODEL_DIR}/LED_THT.3dshapes/LED_D3.0mm.wrl"
       (offset (xyz 0 0 0))
@@ -1020,7 +1020,7 @@
 
   (footprint "Resistor_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P5.08mm_Horizontal" (layer "F.Cu")
     (tedit 5AE5139B) (tstamp 364b7235-c58f-4d87-9339-d4275e178bbc)
-    (at 144.87 116.705)
+    (at 123.55 102.565)
     (descr "Resistor, Axial_DIN0204 series, Axial, Horizontal, pin pitch=5.08mm, 0.167W, length*diameter=3.6*1.6mm^2, http://cdn-reichelt.de/documents/datenblatt/B400/1_4W%23YAG.pdf")
     (tags "Resistor Axial_DIN0204 series Axial Horizontal pin pitch 5.08mm 0.167W length 3.6mm diameter 1.6mm")
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
@@ -1064,7 +1064,7 @@
 
   (footprint "LED_THT:LED_D3.0mm" (layer "F.Cu")
     (tedit 587A3A7B) (tstamp 3f314568-cf88-4107-a20e-74584558eed9)
-    (at 81.65 42.465)
+    (at 75.94 32.9)
     (descr "LED, diameter 3.0mm, 2 pins")
     (tags "LED diameter 3.0mm 2 pins")
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
@@ -1092,9 +1092,9 @@
     (fp_line (start -0.23 -1.16619) (end -0.23 1.16619) (layer "F.Fab") (width 0.1) (tstamp d5182a21-aa5c-410f-aa15-f1c0477cd52b))
     (fp_arc (start -0.23 -1.16619) (mid 3.17 0.000452) (end -0.230555 1.165476) (layer "F.Fab") (width 0.1) (tstamp 1d110ece-c30a-41d9-b83c-2c9ca6f277f2))
     (fp_circle (center 1.27 0) (end 2.77 0) (layer "F.Fab") (width 0.1) (fill none) (tstamp fdae3121-541d-4854-8f2c-e63d58aba76d))
-    (pad "1" thru_hole rect (at 0 0) (size 1.8 1.8) (drill 0.9) (layers *.Cu *.Mask)
+    (pad "1" thru_hole rect (at -1.1 0) (size 1.8 3) (drill 0.9) (layers *.Cu *.Mask)
       (net 2 "GND potencia") (pinfunction "K") (pintype "passive") (tstamp 20886d60-a285-4f44-9178-e6192d302c57))
-    (pad "2" thru_hole circle (at 2.54 0) (size 1.8 1.8) (drill 0.9) (layers *.Cu *.Mask)
+    (pad "2" thru_hole oval (at 3.7 0) (size 1.8 3) (drill 0.9) (layers *.Cu *.Mask)
       (net 8 "Net-(D1-Pad2)") (pinfunction "A") (pintype "passive") (tstamp fe1db86f-95bf-4018-be85-01518560d6ad))
     (model "${KICAD6_3DMODEL_DIR}/LED_THT.3dshapes/LED_D3.0mm.wrl"
       (offset (xyz 0 0 0))
@@ -1105,7 +1105,7 @@
 
   (footprint "maticas:actuators_screws_01x02_low_pot" (layer "F.Cu")
     (tedit 0) (tstamp 3fb2b7cc-a5a3-41e6-b2c3-af2440482eb8)
-    (at 152.2 144.4)
+    (at 148.29 123.43)
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
     (property "Sheetname" "")
     (path "/885945d1-71b6-4a36-8528-1ea8a2458f47")
@@ -1122,15 +1122,15 @@
       (effects (font (size 1 1) (thickness 0.15)))
       (tstamp 4f3a1d7a-f0ac-4aef-84c4-35354761abbd)
     )
-    (pad "1" thru_hole rect (at -2.5 0) (size 2.286 2.286) (drill 1) (layers *.Cu *.Mask)
+    (pad "1" thru_hole rect (at -2.5 0) (size 2.286 3) (drill 1) (layers *.Cu *.Mask)
       (net 12 "Net-(J4-Pad1)") (pinfunction "Pin_1") (pintype "passive") (tstamp 58d3db00-9d71-4660-a428-9714047d1f3a))
-    (pad "2" thru_hole circle (at 2.5 0) (size 2.286 2.286) (drill 1) (layers *.Cu *.Mask)
+    (pad "2" thru_hole oval (at 2.5 0) (size 2.286 3) (drill 1) (layers *.Cu *.Mask)
       (net 2 "GND potencia") (pinfunction "Pin_2") (pintype "passive") (tstamp 793d5a0e-ede0-4e57-b452-fb2faea4df62))
   )
 
   (footprint "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical" (layer "F.Cu")
     (tedit 5AE5139B) (tstamp 40334c87-3c23-475a-a083-92e4d4865a19)
-    (at 159.755 65.58 180)
+    (at 143.245 56.805 180)
     (descr "Resistor, Axial_DIN0207 series, Axial, Vertical, pin pitch=2.54mm, 0.25W = 1/4W, length*diameter=6.3*2.5mm^2, http://cdn-reichelt.de/documents/datenblatt/B400/1_4W%23YAG.pdf")
     (tags "Resistor Axial_DIN0207 series Axial Vertical pin pitch 2.54mm 0.25W = 1/4W length 6.3mm diameter 2.5mm")
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
@@ -1170,7 +1170,7 @@
 
   (footprint "Resistor_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P5.08mm_Horizontal" (layer "F.Cu")
     (tedit 5AE5139B) (tstamp 4309d677-910d-4a25-8504-d0575b465900)
-    (at 235.87 30.655)
+    (at 209.19 21.915)
     (descr "Resistor, Axial_DIN0204 series, Axial, Horizontal, pin pitch=5.08mm, 0.167W, length*diameter=3.6*1.6mm^2, http://cdn-reichelt.de/documents/datenblatt/B400/1_4W%23YAG.pdf")
     (tags "Resistor Axial_DIN0204 series Axial Horizontal pin pitch 5.08mm 0.167W length 3.6mm diameter 1.6mm")
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
@@ -1214,7 +1214,7 @@
 
   (footprint "Resistor_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P5.08mm_Horizontal" (layer "F.Cu")
     (tedit 5AE5139B) (tstamp 44060e55-704f-4137-be25-e1e359c44fb9)
-    (at 39.01 130.73)
+    (at 35.1 109.76)
     (descr "Resistor, Axial_DIN0204 series, Axial, Horizontal, pin pitch=5.08mm, 0.167W, length*diameter=3.6*1.6mm^2, http://cdn-reichelt.de/documents/datenblatt/B400/1_4W%23YAG.pdf")
     (tags "Resistor Axial_DIN0204 series Axial Horizontal pin pitch 5.08mm 0.167W length 3.6mm diameter 1.6mm")
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
@@ -1258,7 +1258,7 @@
 
   (footprint "maticas:electrolitic_capacitor_470uF" (layer "F.Cu")
     (tedit 0) (tstamp 48cf5133-ed61-405a-9da5-b01252f78af1)
-    (at 68.955 58.3)
+    (at 63.94 49.285)
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
     (property "Sheetname" "")
     (path "/dc5a274d-1237-4e8a-86ec-8675eeb21a91")
@@ -1283,15 +1283,15 @@
       (effects (font (size 1 1) (thickness 0.15)))
       (tstamp eb1989bc-10bd-4090-b30d-f3a785c4fe32)
     )
-    (pad "1" thru_hole circle (at 0 -2.5) (size 2.286 2.286) (drill 0.7) (layers *.Cu *.Mask)
+    (pad "1" thru_hole circle (at 0 -2.5) (size 3 3) (drill 0.7) (layers *.Cu *.Mask)
       (net 4 "5.0VDC") (pintype "passive") (tstamp 23eb1448-bad9-4c8c-8102-d0aef5343b1d))
-    (pad "2" thru_hole circle (at 0 2.5) (size 2.286 2.286) (drill 0.7) (layers *.Cu *.Mask)
+    (pad "2" thru_hole circle (at 0 2.5) (size 3 3) (drill 0.7) (layers *.Cu *.Mask)
       (net 2 "GND potencia") (pintype "passive") (tstamp 1bafeb28-1c72-4c2b-9c33-e58828ff83dd))
   )
 
   (footprint "MountingHole:MountingHole_2.5mm" (layer "F.Cu")
     (tedit 56D1B4CB) (tstamp 508ca303-b770-4b00-93e1-7dbddd79f68c)
-    (at 269.5 24.4)
+    (at 187.99 23.565)
     (descr "Mounting Hole 2.5mm, no annular")
     (tags "mounting hole 2.5mm no annular")
     (attr exclude_from_pos_files exclude_from_bom)
@@ -1314,40 +1314,40 @@
 
   (footprint "maticas:electrolitic_capacitor_470uF" (layer "F.Cu")
     (tedit 0) (tstamp 55f17fe9-cd16-4d40-bc4d-e36ce3c4cc24)
-    (at 43.555 38.02)
+    (at 36.44 28.62)
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
     (property "Sheetname" "")
     (path "/e1f42557-5091-435d-8c51-15b87c59a72a")
     (attr smd)
-    (fp_text reference "C1" (at 0 -6.35 unlocked) (layer "F.SilkS")
+    (fp_text reference "C1" (at 0 -8.89 unlocked) (layer "F.SilkS")
       (effects (font (size 1 1) (thickness 0.15)))
       (tstamp 7e96ef29-2c71-4edf-b417-035cde260777)
     )
-    (fp_text value "400 uF" (at -0.055 -8.12 unlocked) (layer "F.Fab")
+    (fp_text value "400 uF" (at 0 -10.16 unlocked) (layer "F.Fab")
       (effects (font (size 1 1) (thickness 0.15)))
       (tstamp b6ff4b88-554e-4f53-bd4d-3f33fcca9805)
-    )
-    (fp_text user "+" (at 2.54 -2.54 unlocked) (layer "F.SilkS")
-      (effects (font (size 1 1) (thickness 0.15)))
-      (tstamp 33f5bbb8-8ae6-4d1d-abd8-44dd53ebde25)
     )
     (fp_text user "-" (at 2.54 2.54 unlocked) (layer "F.SilkS")
       (effects (font (size 1 1) (thickness 0.15)))
       (tstamp 5c06a4d1-ad72-4a9b-aa3b-6b56b47f54d3)
     )
+    (fp_text user "+" (at 2.54 -2.54 unlocked) (layer "F.SilkS")
+      (effects (font (size 1 1) (thickness 0.15)))
+      (tstamp edb3e265-2c6b-4bbc-a3b7-80423faee015)
+    )
     (fp_text user "${REFERENCE}" (at 0 5.08 unlocked) (layer "F.Fab")
       (effects (font (size 1 1) (thickness 0.15)))
       (tstamp a77f4ad5-9fa9-4d13-8592-cddb7673baad)
     )
-    (pad "1" thru_hole circle (at 0 -2.5) (size 2.286 2.286) (drill 0.7) (layers *.Cu *.Mask)
+    (pad "1" thru_hole circle (at 0 -2.5) (size 3 3) (drill 0.7) (layers *.Cu *.Mask)
       (net 1 "Net-(C1-Pad1)") (pintype "passive") (tstamp 5bb455e5-3b05-4658-9157-8121b59de611))
-    (pad "2" thru_hole circle (at 0 2.5) (size 2.286 2.286) (drill 0.7) (layers *.Cu *.Mask)
+    (pad "2" thru_hole circle (at 0 2.5) (size 3 3) (drill 0.7) (layers *.Cu *.Mask)
       (net 2 "GND potencia") (pintype "passive") (tstamp e6bd521d-2f5b-4c8e-bf71-b4f885539944))
   )
 
   (footprint "Package_TO_SOT_THT:TO-220-3_Vertical" (layer "F.Cu")
     (tedit 5AC8BA0D) (tstamp 5690f413-ed71-44e3-9eba-4696f78dc2fa)
-    (at 212.465 116.865 -90)
+    (at 191.145 102.725 -90)
     (descr "TO-220-3, Vertical, RM 2.54mm, see https://www.vishay.com/docs/66542/to-220-1.pdf")
     (tags "TO-220-3 Vertical RM 2.54mm")
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
@@ -1386,9 +1386,9 @@
     (fp_line (start 4.39 -3.15) (end 4.39 -1.88) (layer "F.Fab") (width 0.1) (tstamp d9824abe-9cee-4df0-9f86-8c63fc29757c))
     (pad "1" thru_hole rect (at 0 0 270) (size 1.905 2) (drill 1.1) (layers *.Cu *.Mask)
       (net 94 "Net-(Q7-Pad1)") (pinfunction "B") (pintype "input") (tstamp b13e1fca-1e69-47d2-ad04-797a83342433))
-    (pad "2" thru_hole oval (at 2.54 0 270) (size 1.905 2) (drill 1.1) (layers *.Cu *.Mask)
+    (pad "2" thru_hole oval (at 2.54 0 270) (size 1.905 3) (drill 1.1) (layers *.Cu *.Mask)
       (net 3 "12.0VDC") (pinfunction "C") (pintype "passive") (tstamp d2b661af-70ae-45c2-9803-a7a7a34db2b2))
-    (pad "3" thru_hole oval (at 5.08 0 270) (size 1.905 2) (drill 1.1) (layers *.Cu *.Mask)
+    (pad "3" thru_hole oval (at 5.08 0 270) (size 1.905 3) (drill 1.1) (layers *.Cu *.Mask)
       (net 17 "Net-(J9-Pad1)") (pinfunction "E") (pintype "passive") (tstamp 8e71fdba-2708-4363-8805-0aa74ff37e46))
     (model "${KICAD6_3DMODEL_DIR}/Package_TO_SOT_THT.3dshapes/TO-220-3_Vertical.wrl"
       (offset (xyz 0 0 0))
@@ -1399,7 +1399,7 @@
 
   (footprint "maticas:actuators_screws_01x02_low_pot" (layer "F.Cu")
     (tedit 0) (tstamp 58aa10d4-bd28-47a0-8845-79aab31a85c9)
-    (at 164.9 144.5)
+    (at 160.99 123.53)
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
     (property "Sheetname" "")
     (path "/34da478a-cb4e-48c4-b566-139df81aab02")
@@ -1416,15 +1416,15 @@
       (effects (font (size 1 1) (thickness 0.15)))
       (tstamp e96e7c7c-8aaf-4a27-9e24-c43b6a4b433f)
     )
-    (pad "1" thru_hole rect (at -2.5 0) (size 2.286 2.286) (drill 1) (layers *.Cu *.Mask)
+    (pad "1" thru_hole rect (at -2.5 0) (size 2.286 3) (drill 1) (layers *.Cu *.Mask)
       (net 13 "Net-(J5-Pad1)") (pinfunction "Pin_1") (pintype "passive") (tstamp 75dff056-a7ef-4e1c-ba32-6053ff8074c9))
-    (pad "2" thru_hole circle (at 2.5 0) (size 2.286 2.286) (drill 1) (layers *.Cu *.Mask)
+    (pad "2" thru_hole oval (at 2.5 0) (size 2.286 3) (drill 1) (layers *.Cu *.Mask)
       (net 2 "GND potencia") (pinfunction "Pin_2") (pintype "passive") (tstamp fff50bdb-1a5d-41f4-bbad-e35ce42aaef4))
   )
 
   (footprint "Resistor_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P5.08mm_Horizontal" (layer "F.Cu")
     (tedit 5AE5139B) (tstamp 6743c659-4ca6-47d3-8afe-47c49874bf79)
-    (at 186.365 73.2)
+    (at 164.945 64.46)
     (descr "Resistor, Axial_DIN0204 series, Axial, Horizontal, pin pitch=5.08mm, 0.167W, length*diameter=3.6*1.6mm^2, http://cdn-reichelt.de/documents/datenblatt/B400/1_4W%23YAG.pdf")
     (tags "Resistor Axial_DIN0204 series Axial Horizontal pin pitch 5.08mm 0.167W length 3.6mm diameter 1.6mm")
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
@@ -1468,7 +1468,7 @@
 
   (footprint "Resistor_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P5.08mm_Horizontal" (layer "F.Cu")
     (tedit 5AE5139B) (tstamp 68c73d1d-c10c-40d5-8519-1902edcd6f37)
-    (at 79.115 35.48)
+    (at 73.7 26)
     (descr "Resistor, Axial_DIN0204 series, Axial, Horizontal, pin pitch=5.08mm, 0.167W, length*diameter=3.6*1.6mm^2, http://cdn-reichelt.de/documents/datenblatt/B400/1_4W%23YAG.pdf")
     (tags "Resistor Axial_DIN0204 series Axial Horizontal pin pitch 5.08mm 0.167W length 3.6mm diameter 1.6mm")
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
@@ -1499,9 +1499,9 @@
     (fp_line (start 0.74 -0.8) (end 0.74 0.8) (layer "F.Fab") (width 0.1) (tstamp 31a512e9-6e34-4271-a034-5466ced3300f))
     (fp_line (start 4.34 -0.8) (end 0.74 -0.8) (layer "F.Fab") (width 0.1) (tstamp 3a00e0a6-a473-44e5-a813-82c58f901a44))
     (fp_line (start 5.08 0) (end 4.34 0) (layer "F.Fab") (width 0.1) (tstamp f960bf8a-481e-416e-a363-0e8d43002127))
-    (pad "1" thru_hole circle (at 0 0) (size 1.4 1.4) (drill 0.7) (layers *.Cu *.Mask)
+    (pad "1" thru_hole rect (at -0.9 0) (size 1.4 3) (drill 0.7) (layers *.Cu *.Mask)
       (net 3 "12.0VDC") (pintype "passive") (tstamp b793c85e-9ae9-4e5c-8d27-e103fafea35e))
-    (pad "2" thru_hole oval (at 5.08 0) (size 1.4 1.4) (drill 0.7) (layers *.Cu *.Mask)
+    (pad "2" thru_hole oval (at 6 0) (size 1.4 3) (drill 0.7) (layers *.Cu *.Mask)
       (net 8 "Net-(D1-Pad2)") (pintype "passive") (tstamp 2e859761-559d-42ee-9fe3-45883302661b))
     (model "${KICAD6_3DMODEL_DIR}/Resistor_THT.3dshapes/R_Axial_DIN0204_L3.6mm_D1.6mm_P5.08mm_Horizontal.wrl"
       (offset (xyz 0 0 0))
@@ -1512,7 +1512,7 @@
 
   (footprint "Resistor_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P5.08mm_Horizontal" (layer "F.Cu")
     (tedit 5AE5139B) (tstamp 6a382ab3-cf6b-4ae5-92d9-1923646394ba)
-    (at 235.26 73.2)
+    (at 208.64 64.46)
     (descr "Resistor, Axial_DIN0204 series, Axial, Horizontal, pin pitch=5.08mm, 0.167W, length*diameter=3.6*1.6mm^2, http://cdn-reichelt.de/documents/datenblatt/B400/1_4W%23YAG.pdf")
     (tags "Resistor Axial_DIN0204 series Axial Horizontal pin pitch 5.08mm 0.167W length 3.6mm diameter 1.6mm")
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
@@ -1556,7 +1556,7 @@
 
   (footprint "Resistor_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P5.08mm_Horizontal" (layer "F.Cu")
     (tedit 5AE5139B) (tstamp 6eb69de2-01fa-4c5a-9ed7-518df18a1ab2)
-    (at 63.79 132)
+    (at 59.88 111.03)
     (descr "Resistor, Axial_DIN0204 series, Axial, Horizontal, pin pitch=5.08mm, 0.167W, length*diameter=3.6*1.6mm^2, http://cdn-reichelt.de/documents/datenblatt/B400/1_4W%23YAG.pdf")
     (tags "Resistor Axial_DIN0204 series Axial Horizontal pin pitch 5.08mm 0.167W length 3.6mm diameter 1.6mm")
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
@@ -1600,7 +1600,7 @@
 
   (footprint "Resistor_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P5.08mm_Horizontal" (layer "F.Cu")
     (tedit 5AE5139B) (tstamp 77bd65a0-fa3d-4bc8-a69b-90b0c09ce251)
-    (at 235.23 116.805)
+    (at 213.91 102.665)
     (descr "Resistor, Axial_DIN0204 series, Axial, Horizontal, pin pitch=5.08mm, 0.167W, length*diameter=3.6*1.6mm^2, http://cdn-reichelt.de/documents/datenblatt/B400/1_4W%23YAG.pdf")
     (tags "Resistor Axial_DIN0204 series Axial Horizontal pin pitch 5.08mm 0.167W length 3.6mm diameter 1.6mm")
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
@@ -1631,9 +1631,9 @@
     (fp_line (start 5.08 0) (end 4.34 0) (layer "F.Fab") (width 0.1) (tstamp 4c8f008e-984d-4b91-8679-bd385be90af5))
     (fp_line (start 4.34 -0.8) (end 0.74 -0.8) (layer "F.Fab") (width 0.1) (tstamp 5ee99f50-059d-467d-b530-a5c3e7b22e15))
     (fp_line (start 4.34 0.8) (end 4.34 -0.8) (layer "F.Fab") (width 0.1) (tstamp ad588cea-dc1e-49c6-84dd-805cfdaa0485))
-    (pad "1" thru_hole circle (at 0 0) (size 1.4 1.4) (drill 0.7) (layers *.Cu *.Mask)
+    (pad "1" thru_hole circle (at -1.7 0) (size 1.4 1.4) (drill 0.7) (layers *.Cu *.Mask)
       (net 38 "lights") (pintype "passive") (tstamp 86bc7771-04e2-4828-a3b8-019b2e44830d))
-    (pad "2" thru_hole oval (at 5.08 0) (size 1.4 1.4) (drill 0.7) (layers *.Cu *.Mask)
+    (pad "2" thru_hole oval (at 6.8 0) (size 1.4 1.4) (drill 0.7) (layers *.Cu *.Mask)
       (net 84 "Net-(Opto8-Pad1)") (pintype "passive") (tstamp d206fae3-5f84-4856-a73e-6bed82c8e02d))
     (model "${KICAD6_3DMODEL_DIR}/Resistor_THT.3dshapes/R_Axial_DIN0204_L3.6mm_D1.6mm_P5.08mm_Horizontal.wrl"
       (offset (xyz 0 0 0))
@@ -1644,7 +1644,7 @@
 
   (footprint "maticas:actuators_screws_01x02_low_pot" (layer "F.Cu")
     (tedit 0) (tstamp 80578842-3b95-4418-a569-bbbc17141eec)
-    (at 177.5 144.5)
+    (at 173.59 123.53)
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
     (property "Sheetname" "")
     (path "/f71b3ac4-5fec-4e83-a2ed-cf821f1562cc")
@@ -1661,15 +1661,15 @@
       (effects (font (size 1 1) (thickness 0.15)))
       (tstamp 17b702c7-dfa0-40cf-bbbd-f03da3936150)
     )
-    (pad "1" thru_hole rect (at -2.5 0) (size 2.286 2.286) (drill 1) (layers *.Cu *.Mask)
+    (pad "1" thru_hole rect (at -2.5 0) (size 2.286 3) (drill 1) (layers *.Cu *.Mask)
       (net 14 "Net-(J6-Pad1)") (pinfunction "Pin_1") (pintype "passive") (tstamp c51de7c2-f3a4-4921-9138-7c94212115d4))
-    (pad "2" thru_hole circle (at 2.5 0) (size 2.286 2.286) (drill 1) (layers *.Cu *.Mask)
+    (pad "2" thru_hole oval (at 2.5 0) (size 2.286 3) (drill 1) (layers *.Cu *.Mask)
       (net 2 "GND potencia") (pinfunction "Pin_2") (pintype "passive") (tstamp 1f3e32d3-b1fa-4f37-91db-c22672eff9d8))
   )
 
   (footprint "Package_DIP:DIP-6_W7.62mm" (layer "F.Cu")
     (tedit 5A02E8C5) (tstamp 8682dac3-9cc6-4977-9b62-d086884f14bd)
-    (at 155.895 73.215)
+    (at 139.385 64.44)
     (descr "6-lead though-hole mounted DIP package, row spacing 7.62 mm (300 mils)")
     (tags "THT DIP DIL PDIP 2.54mm 7.62mm 300mil")
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
@@ -1724,7 +1724,7 @@
 
   (footprint "Package_DIP:DIP-6_W7.62mm" (layer "F.Cu")
     (tedit 5A02E8C5) (tstamp 87452e2c-f0c5-48a2-87bc-4b4ea6374aaa)
-    (at 246.675 30.67)
+    (at 219.995 21.93)
     (descr "6-lead though-hole mounted DIP package, row spacing 7.62 mm (300 mils)")
     (tags "THT DIP DIL PDIP 2.54mm 7.62mm 300mil")
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
@@ -1779,7 +1779,7 @@
 
   (footprint "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical" (layer "F.Cu")
     (tedit 5AE5139B) (tstamp 877727ec-1b17-4946-bafb-da3d38c28116)
-    (at 163.555 42.405 180)
+    (at 147.045 33.63 180)
     (descr "Resistor, Axial_DIN0207 series, Axial, Vertical, pin pitch=2.54mm, 0.25W = 1/4W, length*diameter=6.3*2.5mm^2, http://cdn-reichelt.de/documents/datenblatt/B400/1_4W%23YAG.pdf")
     (tags "Resistor Axial_DIN0207 series Axial Vertical pin pitch 2.54mm 0.25W = 1/4W length 6.3mm diameter 2.5mm")
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
@@ -1819,7 +1819,7 @@
 
   (footprint "maticas:electrolitic_capacitor_470uF" (layer "F.Cu")
     (tedit 0) (tstamp 896a1d4b-eb0c-4dee-9c95-445af2e06aa2)
-    (at 43.555 84.335)
+    (at 36.14 75.3)
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
     (property "Sheetname" "")
     (path "/40636bd2-d1b7-4be0-99c5-2029618bf764")
@@ -1844,48 +1844,48 @@
       (effects (font (size 1 1) (thickness 0.15)))
       (tstamp 6021d556-1f0d-4d90-92c1-4b0a0a2177f6)
     )
-    (pad "1" thru_hole circle (at 0 -2.5) (size 2.286 2.286) (drill 0.7) (layers *.Cu *.Mask)
+    (pad "1" thru_hole circle (at 0 -2.5) (size 3 3) (drill 0.7) (layers *.Cu *.Mask)
       (net 5 "Net-(C4-Pad1)") (pintype "passive") (tstamp 27afed8c-4164-4dac-b431-14bb58d5fccc))
-    (pad "2" thru_hole circle (at 0 2.5) (size 2.286 2.286) (drill 0.7) (layers *.Cu *.Mask)
+    (pad "2" thru_hole circle (at 0 2.5) (size 3 3) (drill 0.7) (layers *.Cu *.Mask)
       (net 6 "GND 3.3V") (pintype "passive") (tstamp 08be050e-ac31-4aea-aacb-fc6971389838))
   )
 
   (footprint "maticas:electrolitic_capacitor_470uF" (layer "F.Cu")
     (tedit 0) (tstamp 8a15c72d-003a-4712-b51a-1f870fa66cfd)
-    (at 68.955 37.98)
+    (at 63.54 28.5)
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
     (property "Sheetname" "")
     (path "/86aeaa2a-c13f-46ba-812b-f909ee975576")
     (attr smd)
-    (fp_text reference "C2" (at 0 -5.04 unlocked) (layer "F.SilkS")
+    (fp_text reference "C2" (at 0 -6.35 unlocked) (layer "F.SilkS")
       (effects (font (size 1 1) (thickness 0.15)))
-      (tstamp a3a096a8-9471-40ad-b87c-ca6f225161d9)
+      (tstamp f2876bd5-241b-4e59-a922-4bb45a65ff04)
     )
-    (fp_text value "1 uF" (at 0 -7.58 unlocked) (layer "F.Fab")
+    (fp_text value "1 uF" (at 0 -8.89 unlocked) (layer "F.Fab")
       (effects (font (size 1 1) (thickness 0.15)))
-      (tstamp 7dc541bd-72a3-4141-a613-8f501026dffe)
+      (tstamp d1c55a61-c334-46bb-b535-b415c36a350a)
     )
     (fp_text user "+" (at 2.54 -2.54 unlocked) (layer "F.SilkS")
       (effects (font (size 1 1) (thickness 0.15)))
-      (tstamp 8b98fe7c-cce4-4ec7-8585-5ec2b4fdbcdc)
+      (tstamp 1371af06-8359-464f-8367-9bea2d122462)
     )
     (fp_text user "-" (at 2.54 2.54 unlocked) (layer "F.SilkS")
       (effects (font (size 1 1) (thickness 0.15)))
-      (tstamp 9b7c8724-281e-49f4-823e-12e2f6b2b1cd)
+      (tstamp e8ecb31c-a1cb-44b2-9d96-25461cbf54bd)
     )
     (fp_text user "${REFERENCE}" (at 0 5.08 unlocked) (layer "F.Fab")
       (effects (font (size 1 1) (thickness 0.15)))
-      (tstamp 01c3f199-8b1b-457f-a609-6510414c2b03)
+      (tstamp f1f65421-0ab6-4372-b09d-082e41250a20)
     )
-    (pad "1" thru_hole circle (at 0 -2.5) (size 2.286 2.286) (drill 0.7) (layers *.Cu *.Mask)
-      (net 3 "12.0VDC") (pintype "passive") (tstamp 5927cbd1-321b-4bd4-a343-558c2550aa22))
-    (pad "2" thru_hole circle (at 0 2.5) (size 2.286 2.286) (drill 0.7) (layers *.Cu *.Mask)
-      (net 2 "GND potencia") (pintype "passive") (tstamp bf08aeb8-9bb7-48a3-9f01-619e90d6ab04))
+    (pad "1" thru_hole circle (at 0 -2.5) (size 3 3) (drill 0.7) (layers *.Cu *.Mask)
+      (net 3 "12.0VDC") (pintype "passive") (tstamp a763c76e-45b3-4023-b832-099cca2bcf96))
+    (pad "2" thru_hole circle (at 0 2.5) (size 3 3) (drill 0.7) (layers *.Cu *.Mask)
+      (net 2 "GND potencia") (pintype "passive") (tstamp 8a4ed516-994a-4bf8-bf1d-c4aff66ed24c))
   )
 
   (footprint "Package_DIP:DIP-6_W7.62mm" (layer "F.Cu")
     (tedit 5A02E8C5) (tstamp 8b30a338-49ae-4cdc-8798-0a36ab6fe36e)
-    (at 246.51 116.705)
+    (at 225.19 102.565)
     (descr "6-lead though-hole mounted DIP package, row spacing 7.62 mm (300 mils)")
     (tags "THT DIP DIL PDIP 2.54mm 7.62mm 300mil")
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
@@ -1940,7 +1940,7 @@
 
   (footprint "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical" (layer "F.Cu")
     (tedit 5AE5139B) (tstamp 8c90e88f-777c-4481-82f4-7b3bdbdc79f3)
-    (at 261.91 106.905 -90)
+    (at 240.59 92.765 -90)
     (descr "Resistor, Axial_DIN0207 series, Axial, Vertical, pin pitch=2.54mm, 0.25W = 1/4W, length*diameter=6.3*2.5mm^2, http://cdn-reichelt.de/documents/datenblatt/B400/1_4W%23YAG.pdf")
     (tags "Resistor Axial_DIN0207 series Axial Vertical pin pitch 2.54mm 0.25W = 1/4W length 6.3mm diameter 2.5mm")
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
@@ -1980,7 +1980,7 @@
 
   (footprint "maticas:actuators_screws_01x02_low_pot" (layer "F.Cu")
     (tedit 0) (tstamp 8f312bcb-779a-4565-8442-6ce4a61ef15b)
-    (at 139.75 144.47)
+    (at 135.84 123.5)
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
     (property "Sheetname" "")
     (path "/e192b0c0-9f02-4aed-a7bd-d6b3b78b6b0b")
@@ -1997,15 +1997,15 @@
       (effects (font (size 1 1) (thickness 0.15)))
       (tstamp 5ec7e27b-803c-48da-908f-307462e593df)
     )
-    (pad "1" thru_hole rect (at -2.5 0) (size 2.286 2.286) (drill 1) (layers *.Cu *.Mask)
+    (pad "1" thru_hole rect (at -2.5 0) (size 2.286 3) (drill 1) (layers *.Cu *.Mask)
       (net 11 "Net-(J3-Pad1)") (pinfunction "Pin_1") (pintype "passive") (tstamp aa142091-3f46-4543-93ac-57b80ed075be))
-    (pad "2" thru_hole circle (at 2.5 0) (size 2.286 2.286) (drill 1) (layers *.Cu *.Mask)
+    (pad "2" thru_hole oval (at 2.5 0) (size 2.286 3) (drill 1) (layers *.Cu *.Mask)
       (net 2 "GND potencia") (pinfunction "Pin_2") (pintype "passive") (tstamp 2232b4c7-4ff4-4df5-821f-f686169d76ba))
   )
 
   (footprint "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical" (layer "F.Cu")
     (tedit 5AE5139B) (tstamp 90e78f14-829e-4eae-95ef-875608cf0ce2)
-    (at 263.81 43.99 90)
+    (at 237.13 35.25 90)
     (descr "Resistor, Axial_DIN0207 series, Axial, Vertical, pin pitch=2.54mm, 0.25W = 1/4W, length*diameter=6.3*2.5mm^2, http://cdn-reichelt.de/documents/datenblatt/B400/1_4W%23YAG.pdf")
     (tags "Resistor Axial_DIN0207 series Axial Vertical pin pitch 2.54mm 0.25W = 1/4W length 6.3mm diameter 2.5mm")
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
@@ -2045,7 +2045,7 @@
 
   (footprint "MountingHole:MountingHole_2.5mm" (layer "F.Cu")
     (tedit 56D1B4CB) (tstamp 96b1119a-9c87-4624-85e0-30a3ada93f1a)
-    (at 265.6 150.6)
+    (at 238.24 124)
     (descr "Mounting Hole 2.5mm, no annular")
     (tags "mounting hole 2.5mm no annular")
     (attr exclude_from_pos_files exclude_from_bom)
@@ -2068,7 +2068,7 @@
 
   (footprint "LED_THT:LED_D3.0mm" (layer "F.Cu")
     (tedit 587A3A7B) (tstamp a176b8bc-262a-4fbc-9631-00f3134e317a)
-    (at 81.655 63.095)
+    (at 76.38 54.1)
     (descr "LED, diameter 3.0mm, 2 pins")
     (tags "LED diameter 3.0mm 2 pins")
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
@@ -2096,9 +2096,9 @@
     (fp_line (start -0.23 -1.16619) (end -0.23 1.16619) (layer "F.Fab") (width 0.1) (tstamp f56e704b-9e1e-4b16-9d65-077fb21a086b))
     (fp_arc (start -0.23 -1.16619) (mid 3.17 0.000452) (end -0.230555 1.165476) (layer "F.Fab") (width 0.1) (tstamp b0ab7a15-0de2-448d-ac74-b647c40be178))
     (fp_circle (center 1.27 0) (end 2.77 0) (layer "F.Fab") (width 0.1) (fill none) (tstamp 2a986e44-a9e4-4708-b1cf-9ea8ee115870))
-    (pad "1" thru_hole rect (at 0 0) (size 1.8 1.8) (drill 0.9) (layers *.Cu *.Mask)
+    (pad "1" thru_hole rect (at -1.1 0) (size 1.8 3) (drill 0.9) (layers *.Cu *.Mask)
       (net 2 "GND potencia") (pinfunction "K") (pintype "passive") (tstamp 50f47a8c-6547-45ce-a6cd-4bff83f86b25))
-    (pad "2" thru_hole circle (at 2.54 0) (size 1.8 1.8) (drill 0.9) (layers *.Cu *.Mask)
+    (pad "2" thru_hole oval (at 3.7 0) (size 1.8 3) (drill 0.9) (layers *.Cu *.Mask)
       (net 9 "Net-(D2-Pad2)") (pinfunction "A") (pintype "passive") (tstamp ebd4d03e-f431-4e92-ae69-0744519bb308))
     (model "${KICAD6_3DMODEL_DIR}/LED_THT.3dshapes/LED_D3.0mm.wrl"
       (offset (xyz 0 0 0))
@@ -2109,7 +2109,7 @@
 
   (footprint "Connector_PinSocket_1.27mm:PinSocket_1x15_P1.27mm_Vertical" (layer "F.Cu")
     (tedit 5A19A427) (tstamp a4fdedce-3244-4825-b6fe-fc80592a1a90)
-    (at 129.1 70)
+    (at 90.1 61.5)
     (descr "Through hole straight socket strip, 1x15, 1.27mm pitch, single row (from Kicad 4.0.7), script generated")
     (tags "Through hole socket strip THT 1x15 1.27mm single row")
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
@@ -2184,7 +2184,7 @@
 
   (footprint "Package_DIP:DIP-6_W7.62mm" (layer "F.Cu")
     (tedit 5A02E8C5) (tstamp a59a41d2-9459-4498-bab0-1c38bbc10326)
-    (at 197.16 73.215)
+    (at 175.74 64.475)
     (descr "6-lead though-hole mounted DIP package, row spacing 7.62 mm (300 mils)")
     (tags "THT DIP DIL PDIP 2.54mm 7.62mm 300mil")
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
@@ -2239,7 +2239,7 @@
 
   (footprint "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical" (layer "F.Cu")
     (tedit 5AE5139B) (tstamp a69bd7ed-3812-4ce7-a860-4e72d275b4ed)
-    (at 250.61 67.485 180)
+    (at 223.99 58.745 180)
     (descr "Resistor, Axial_DIN0207 series, Axial, Vertical, pin pitch=2.54mm, 0.25W = 1/4W, length*diameter=6.3*2.5mm^2, http://cdn-reichelt.de/documents/datenblatt/B400/1_4W%23YAG.pdf")
     (tags "Resistor Axial_DIN0207 series Axial Vertical pin pitch 2.54mm 0.25W = 1/4W length 6.3mm diameter 2.5mm")
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
@@ -2279,7 +2279,7 @@
 
   (footprint "Connector_PinSocket_1.27mm:PinSocket_1x15_P1.27mm_Vertical" (layer "F.Cu")
     (tedit 5A19A427) (tstamp a714fca8-68ba-4b8e-ba59-bec61d8e44c5)
-    (at 103.4 70)
+    (at 115.625 61.525)
     (descr "Through hole straight socket strip, 1x15, 1.27mm pitch, single row (from Kicad 4.0.7), script generated")
     (tags "Through hole socket strip THT 1x15 1.27mm single row")
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
@@ -2354,7 +2354,7 @@
 
   (footprint "Package_TO_SOT_THT:TO-220-3_Vertical" (layer "F.Cu")
     (tedit 5AC8BA0D) (tstamp a904126b-2f96-4724-948b-04cae2124831)
-    (at 169.22 73.2 -90)
+    (at 152.71 64.425 -90)
     (descr "TO-220-3, Vertical, RM 2.54mm, see https://www.vishay.com/docs/66542/to-220-1.pdf")
     (tags "TO-220-3 Vertical RM 2.54mm")
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
@@ -2393,9 +2393,9 @@
     (fp_line (start -2.46 -1.88) (end 7.54 -1.88) (layer "F.Fab") (width 0.1) (tstamp f914d901-f9ac-4e21-80fe-119c22078679))
     (pad "1" thru_hole rect (at 0 0 270) (size 1.905 2) (drill 1.1) (layers *.Cu *.Mask)
       (net 90 "Net-(Q3-Pad1)") (pinfunction "B") (pintype "input") (tstamp 840cdcfc-4fbb-4e23-b7d3-af48a4ca66ab))
-    (pad "2" thru_hole oval (at 2.54 0 270) (size 1.905 2) (drill 1.1) (layers *.Cu *.Mask)
+    (pad "2" thru_hole oval (at 2.54 0 270) (size 1.905 3) (drill 1.1) (layers *.Cu *.Mask)
       (net 4 "5.0VDC") (pinfunction "C") (pintype "passive") (tstamp d7d2758c-8e66-4eae-bba2-6c92caad654e))
-    (pad "3" thru_hole oval (at 5.08 0 270) (size 1.905 2) (drill 1.1) (layers *.Cu *.Mask)
+    (pad "3" thru_hole oval (at 5.08 0 270) (size 1.905 3) (drill 1.1) (layers *.Cu *.Mask)
       (net 13 "Net-(J5-Pad1)") (pinfunction "E") (pintype "passive") (tstamp 1a90ed9d-e190-4aaf-ac51-2f552778be65))
     (model "${KICAD6_3DMODEL_DIR}/Package_TO_SOT_THT.3dshapes/TO-220-3_Vertical.wrl"
       (offset (xyz 0 0 0))
@@ -2406,7 +2406,7 @@
 
   (footprint "Package_TO_SOT_THT:TO-220-3_Vertical" (layer "F.Cu")
     (tedit 5AC8BA0D) (tstamp b2ae9e95-5789-4805-b6aa-4800f3a359b2)
-    (at 169.965 116.565 -90)
+    (at 148.645 102.425 -90)
     (descr "TO-220-3, Vertical, RM 2.54mm, see https://www.vishay.com/docs/66542/to-220-1.pdf")
     (tags "TO-220-3 Vertical RM 2.54mm")
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
@@ -2445,9 +2445,9 @@
     (fp_line (start 7.54 1.25) (end 7.54 -3.15) (layer "F.Fab") (width 0.1) (tstamp f52235d0-cfc5-4952-876d-0023e364eb31))
     (pad "1" thru_hole rect (at 0 0 270) (size 1.905 2) (drill 1.1) (layers *.Cu *.Mask)
       (net 93 "Net-(Q6-Pad1)") (pinfunction "B") (pintype "input") (tstamp 8e8e8146-58b6-4863-9946-e00991134025))
-    (pad "2" thru_hole oval (at 2.54 0 270) (size 1.905 2) (drill 1.1) (layers *.Cu *.Mask)
+    (pad "2" thru_hole oval (at 2.54 0 270) (size 1.905 3) (drill 1.1) (layers *.Cu *.Mask)
       (net 3 "12.0VDC") (pinfunction "C") (pintype "passive") (tstamp 5acb690a-a244-4030-88bd-05f629696cd1))
-    (pad "3" thru_hole oval (at 5.08 0 270) (size 1.905 2) (drill 1.1) (layers *.Cu *.Mask)
+    (pad "3" thru_hole oval (at 5.08 0 270) (size 1.905 3) (drill 1.1) (layers *.Cu *.Mask)
       (net 16 "Net-(J8-Pad1)") (pinfunction "E") (pintype "passive") (tstamp bca5d711-8b21-4648-a70d-e347b93de74c))
     (model "${KICAD6_3DMODEL_DIR}/Package_TO_SOT_THT.3dshapes/TO-220-3_Vertical.wrl"
       (offset (xyz 0 0 0))
@@ -2458,7 +2458,7 @@
 
   (footprint "Package_DIP:DIP-6_W7.62mm" (layer "F.Cu")
     (tedit 5A02E8C5) (tstamp b352b198-c9b3-49f2-8ac9-282b306e8290)
-    (at 155.81 116.605)
+    (at 134.49 102.465)
     (descr "6-lead though-hole mounted DIP package, row spacing 7.62 mm (300 mils)")
     (tags "THT DIP DIL PDIP 2.54mm 7.62mm 300mil")
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
@@ -2513,7 +2513,7 @@
 
   (footprint "Package_DIP:DIP-6_W7.62mm" (layer "F.Cu")
     (tedit 5A02E8C5) (tstamp b5346c89-99f6-433d-8e94-df5a0d34a2a8)
-    (at 246.7 73.215)
+    (at 220.08 64.475)
     (descr "6-lead though-hole mounted DIP package, row spacing 7.62 mm (300 mils)")
     (tags "THT DIP DIL PDIP 2.54mm 7.62mm 300mil")
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
@@ -2568,7 +2568,7 @@
 
   (footprint "Resistor_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P5.08mm_Horizontal" (layer "F.Cu")
     (tedit 5AE5139B) (tstamp b58f3a4f-6583-4edd-8add-3e7ee14524a9)
-    (at 150.17 31.29)
+    (at 133.66 22.515)
     (descr "Resistor, Axial_DIN0204 series, Axial, Horizontal, pin pitch=5.08mm, 0.167W, length*diameter=3.6*1.6mm^2, http://cdn-reichelt.de/documents/datenblatt/B400/1_4W%23YAG.pdf")
     (tags "Resistor Axial_DIN0204 series Axial Horizontal pin pitch 5.08mm 0.167W length 3.6mm diameter 1.6mm")
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
@@ -2612,7 +2612,7 @@
 
   (footprint "Package_TO_SOT_THT:TO-220-3_Vertical" (layer "F.Cu")
     (tedit 5AC8BA0D) (tstamp baea64e2-41cf-4417-98d2-272a7e77aa66)
-    (at 53.715 58.015)
+    (at 47.4 49)
     (descr "TO-220-3, Vertical, RM 2.54mm, see https://www.vishay.com/docs/66542/to-220-1.pdf")
     (tags "TO-220-3 Vertical RM 2.54mm")
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
@@ -2649,11 +2649,11 @@
     (fp_line (start -2.46 -3.15) (end -2.46 1.25) (layer "F.Fab") (width 0.1) (tstamp 6babc89a-43ec-4c2a-a84f-9da6b23ba61e))
     (fp_line (start 0.69 -3.15) (end 0.69 -1.88) (layer "F.Fab") (width 0.1) (tstamp b369d340-3403-47cb-86b4-b575a72397ee))
     (fp_line (start 4.39 -3.15) (end 4.39 -1.88) (layer "F.Fab") (width 0.1) (tstamp c85dc739-f05d-440e-813e-5158cbcf2203))
-    (pad "1" thru_hole rect (at 0 0) (size 1.905 2) (drill 1.1) (layers *.Cu *.Mask)
+    (pad "1" thru_hole rect (at 0 0) (size 1.905 3) (drill 1.1) (layers *.Cu *.Mask)
       (net 1 "Net-(C1-Pad1)") (pinfunction "VI") (pintype "power_in") (tstamp 1629f1dc-0b23-44d6-a162-fe2df512db81))
-    (pad "2" thru_hole oval (at 2.54 0) (size 1.905 2) (drill 1.1) (layers *.Cu *.Mask)
+    (pad "2" thru_hole oval (at 2.54 0) (size 1.905 3) (drill 1.1) (layers *.Cu *.Mask)
       (net 2 "GND potencia") (pinfunction "GND") (pintype "power_in") (tstamp 5cd8aa49-3a5e-41cd-a8ce-a67b031cacae))
-    (pad "3" thru_hole oval (at 5.08 0) (size 1.905 2) (drill 1.1) (layers *.Cu *.Mask)
+    (pad "3" thru_hole oval (at 5.08 0) (size 1.905 3) (drill 1.1) (layers *.Cu *.Mask)
       (net 4 "5.0VDC") (pinfunction "VO") (pintype "power_out") (tstamp 9223293e-6868-41ae-b4d2-e70738014e9f))
     (model "${KICAD6_3DMODEL_DIR}/Package_TO_SOT_THT.3dshapes/TO-220-3_Vertical.wrl"
       (offset (xyz 0 0 0))
@@ -2664,7 +2664,7 @@
 
   (footprint "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical" (layer "F.Cu")
     (tedit 5AE5139B) (tstamp bbcc69a2-9e34-408e-9137-91763bd90576)
-    (at 200.855 109.105 180)
+    (at 179.535 94.965 180)
     (descr "Resistor, Axial_DIN0207 series, Axial, Vertical, pin pitch=2.54mm, 0.25W = 1/4W, length*diameter=6.3*2.5mm^2, http://cdn-reichelt.de/documents/datenblatt/B400/1_4W%23YAG.pdf")
     (tags "Resistor Axial_DIN0207 series Axial Vertical pin pitch 2.54mm 0.25W = 1/4W length 6.3mm diameter 2.5mm")
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
@@ -2704,7 +2704,7 @@
 
   (footprint "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical" (layer "F.Cu")
     (tedit 5AE5139B) (tstamp c331cbbf-c8d3-458d-9f43-3a80c3a479d2)
-    (at 262.41 64.665 -90)
+    (at 235.79 55.925 -90)
     (descr "Resistor, Axial_DIN0207 series, Axial, Vertical, pin pitch=2.54mm, 0.25W = 1/4W, length*diameter=6.3*2.5mm^2, http://cdn-reichelt.de/documents/datenblatt/B400/1_4W%23YAG.pdf")
     (tags "Resistor Axial_DIN0207 series Axial Vertical pin pitch 2.54mm 0.25W = 1/4W length 6.3mm diameter 2.5mm")
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
@@ -2744,7 +2744,7 @@
 
   (footprint "Package_TO_SOT_THT:TO-220-3_Vertical" (layer "F.Cu")
     (tedit 5AC8BA0D) (tstamp c4b823c8-98c9-4291-aceb-0a75b23b5c6f)
-    (at 174.3 37.005 90)
+    (at 157.79 28.23 90)
     (descr "TO-220-3, Vertical, RM 2.54mm, see https://www.vishay.com/docs/66542/to-220-1.pdf")
     (tags "TO-220-3 Vertical RM 2.54mm")
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
@@ -2783,9 +2783,9 @@
     (fp_line (start -2.46 1.25) (end 7.54 1.25) (layer "F.Fab") (width 0.1) (tstamp f32eb37f-a795-4d82-b2c4-d729a687dd29))
     (pad "1" thru_hole rect (at 0 0 90) (size 1.905 2) (drill 1.1) (layers *.Cu *.Mask)
       (net 88 "Net-(Q1-Pad1)") (pinfunction "B") (pintype "input") (tstamp 6533b710-1cd3-4829-bbec-293b066fc0ea))
-    (pad "2" thru_hole oval (at 2.54 0 90) (size 1.905 2) (drill 1.1) (layers *.Cu *.Mask)
+    (pad "2" thru_hole oval (at 2.54 0 90) (size 1.905 3) (drill 1.1) (layers *.Cu *.Mask)
       (net 4 "5.0VDC") (pinfunction "C") (pintype "passive") (tstamp f6352b2c-0560-4568-abab-7ac9e62ad785))
-    (pad "3" thru_hole oval (at 5.08 0 90) (size 1.905 2) (drill 1.1) (layers *.Cu *.Mask)
+    (pad "3" thru_hole oval (at 5.08 0 90) (size 1.905 3) (drill 1.1) (layers *.Cu *.Mask)
       (net 11 "Net-(J3-Pad1)") (pinfunction "E") (pintype "passive") (tstamp 4749c8ee-0893-4ad4-aa9b-9de9fb8ab5bb))
     (model "${KICAD6_3DMODEL_DIR}/Package_TO_SOT_THT.3dshapes/TO-220-3_Vertical.wrl"
       (offset (xyz 0 0 0))
@@ -2796,7 +2796,7 @@
 
   (footprint "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical" (layer "F.Cu")
     (tedit 5AE5139B) (tstamp c91a283d-d655-4548-a5fa-3965eef5eb7d)
-    (at 170.01 108.405 -90)
+    (at 148.69 94.265 -90)
     (descr "Resistor, Axial_DIN0207 series, Axial, Vertical, pin pitch=2.54mm, 0.25W = 1/4W, length*diameter=6.3*2.5mm^2, http://cdn-reichelt.de/documents/datenblatt/B400/1_4W%23YAG.pdf")
     (tags "Resistor Axial_DIN0207 series Axial Vertical pin pitch 2.54mm 0.25W = 1/4W length 6.3mm diameter 2.5mm")
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
@@ -2836,7 +2836,7 @@
 
   (footprint "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical" (layer "F.Cu")
     (tedit 5AE5139B) (tstamp cb077d90-f72d-47e3-a7e8-70817582ac4a)
-    (at 214.31 64.505 -90)
+    (at 192.89 55.765 -90)
     (descr "Resistor, Axial_DIN0207 series, Axial, Vertical, pin pitch=2.54mm, 0.25W = 1/4W, length*diameter=6.3*2.5mm^2, http://cdn-reichelt.de/documents/datenblatt/B400/1_4W%23YAG.pdf")
     (tags "Resistor Axial_DIN0207 series Axial Vertical pin pitch 2.54mm 0.25W = 1/4W length 6.3mm diameter 2.5mm")
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
@@ -2876,7 +2876,7 @@
 
   (footprint "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical" (layer "F.Cu")
     (tedit 5AE5139B) (tstamp cc505ee4-d243-4551-be3b-85614f3c6099)
-    (at 201.11 66.215 180)
+    (at 179.69 57.475 180)
     (descr "Resistor, Axial_DIN0207 series, Axial, Vertical, pin pitch=2.54mm, 0.25W = 1/4W, length*diameter=6.3*2.5mm^2, http://cdn-reichelt.de/documents/datenblatt/B400/1_4W%23YAG.pdf")
     (tags "Resistor Axial_DIN0207 series Axial Vertical pin pitch 2.54mm 0.25W = 1/4W length 6.3mm diameter 2.5mm")
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
@@ -2916,7 +2916,7 @@
 
   (footprint "MountingHole:MountingHole_2.5mm" (layer "F.Cu")
     (tedit 56D1B4CB) (tstamp d4fc5af2-f207-4a68-8144-b210f51c5e09)
-    (at 28.7 147.7)
+    (at 23.44 100.5)
     (descr "Mounting Hole 2.5mm, no annular")
     (tags "mounting hole 2.5mm no annular")
     (attr exclude_from_pos_files exclude_from_bom)
@@ -2924,7 +2924,7 @@
       (effects (font (size 1 1) (thickness 0.15)))
       (tstamp d4eb4a2c-58bc-4725-b4b5-1615a4857bac)
     )
-    (fp_text value "MountingHole_2.5mm" (at 0 3.5) (layer "F.Fab")
+    (fp_text value "MountingHole_2.5mm" (at 3.65 -7.97) (layer "F.Fab")
       (effects (font (size 1 1) (thickness 0.15)))
       (tstamp c79280a4-4a7c-4380-badf-ac177f657ebb)
     )
@@ -2939,7 +2939,7 @@
 
   (footprint "maticas:electrolitic_capacitor_470uF" (layer "F.Cu")
     (tedit 0) (tstamp d936ac5e-eb03-4d44-b0a8-0efc03ca4f42)
-    (at 68.955 85.01)
+    (at 61.395 75.51)
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
     (property "Sheetname" "")
     (path "/0bb60dba-79ea-4776-a127-87c2449d5626")
@@ -2964,15 +2964,15 @@
       (effects (font (size 1 1) (thickness 0.15)))
       (tstamp 076a8646-fb0f-4e48-af8b-66fff6907c2f)
     )
-    (pad "1" thru_hole circle (at 0 -2.5) (size 2.286 2.286) (drill 0.7) (layers *.Cu *.Mask)
+    (pad "1" thru_hole circle (at 0 -2.5) (size 3 3) (drill 0.7) (layers *.Cu *.Mask)
       (net 7 "3.3VDC") (pintype "passive") (tstamp f99631e5-9337-46fd-a13c-92c630c82d88))
-    (pad "2" thru_hole circle (at 0 2.5) (size 2.286 2.286) (drill 0.7) (layers *.Cu *.Mask)
+    (pad "2" thru_hole circle (at 0 2.5) (size 3 3) (drill 0.7) (layers *.Cu *.Mask)
       (net 6 "GND 3.3V") (pintype "passive") (tstamp 93cb226f-545a-4e31-aea8-e2625e922291))
   )
 
   (footprint "Package_DIP:DIP-6_W7.62mm" (layer "F.Cu")
     (tedit 5A02E8C5) (tstamp d98d5b41-06eb-445e-b5ec-72be3d40e7ab)
-    (at 197.01 116.78)
+    (at 175.69 102.64)
     (descr "6-lead though-hole mounted DIP package, row spacing 7.62 mm (300 mils)")
     (tags "THT DIP DIL PDIP 2.54mm 7.62mm 300mil")
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
@@ -3027,7 +3027,7 @@
 
   (footprint "Resistor_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P5.08mm_Horizontal" (layer "F.Cu")
     (tedit 5AE5139B) (tstamp da756b2e-64f6-41a1-98e1-dd8f25898d92)
-    (at 79.115 55.475)
+    (at 74.1 46.46)
     (descr "Resistor, Axial_DIN0204 series, Axial, Horizontal, pin pitch=5.08mm, 0.167W, length*diameter=3.6*1.6mm^2, http://cdn-reichelt.de/documents/datenblatt/B400/1_4W%23YAG.pdf")
     (tags "Resistor Axial_DIN0204 series Axial Horizontal pin pitch 5.08mm 0.167W length 3.6mm diameter 1.6mm")
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
@@ -3058,9 +3058,9 @@
     (fp_line (start 5.08 0) (end 4.34 0) (layer "F.Fab") (width 0.1) (tstamp 5bc45f49-3843-4cbd-be24-a97050b76e87))
     (fp_line (start 0 0) (end 0.74 0) (layer "F.Fab") (width 0.1) (tstamp a2d35fe1-be42-49f6-a2bc-d9bc66132b69))
     (fp_line (start 4.34 -0.8) (end 0.74 -0.8) (layer "F.Fab") (width 0.1) (tstamp fcd119a9-a9f2-4e0e-9564-1c6f4c6b7f95))
-    (pad "1" thru_hole circle (at 0 0) (size 1.4 1.4) (drill 0.7) (layers *.Cu *.Mask)
+    (pad "1" thru_hole rect (at -0.9 0) (size 1.4 3) (drill 0.7) (layers *.Cu *.Mask)
       (net 4 "5.0VDC") (pintype "passive") (tstamp 8cc24936-4819-4562-9fb0-2fc085efe9cd))
-    (pad "2" thru_hole oval (at 5.08 0) (size 1.4 1.4) (drill 0.7) (layers *.Cu *.Mask)
+    (pad "2" thru_hole oval (at 6 0 90) (size 3 1.4) (drill 0.7) (layers *.Cu *.Mask)
       (net 9 "Net-(D2-Pad2)") (pintype "passive") (tstamp 2d1fccfa-503b-4491-86a4-3cf7fd1d4707))
     (model "${KICAD6_3DMODEL_DIR}/Resistor_THT.3dshapes/R_Axial_DIN0204_L3.6mm_D1.6mm_P5.08mm_Horizontal.wrl"
       (offset (xyz 0 0 0))
@@ -3071,7 +3071,7 @@
 
   (footprint "Resistor_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P5.08mm_Horizontal" (layer "F.Cu")
     (tedit 5AE5139B) (tstamp daccabfe-9adc-4de1-91bc-a809a64d9f78)
-    (at 79.75 82.47)
+    (at 72.19 72.97)
     (descr "Resistor, Axial_DIN0204 series, Axial, Horizontal, pin pitch=5.08mm, 0.167W, length*diameter=3.6*1.6mm^2, http://cdn-reichelt.de/documents/datenblatt/B400/1_4W%23YAG.pdf")
     (tags "Resistor Axial_DIN0204 series Axial Horizontal pin pitch 5.08mm 0.167W length 3.6mm diameter 1.6mm")
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
@@ -3102,9 +3102,9 @@
     (fp_line (start 5.08 0) (end 4.34 0) (layer "F.Fab") (width 0.1) (tstamp 2a61124a-6bea-45f9-a2b7-30b0aa0b6314))
     (fp_line (start 4.34 0.8) (end 4.34 -0.8) (layer "F.Fab") (width 0.1) (tstamp 6fd24264-9e7d-40f5-9591-2d1b1b7ef205))
     (fp_line (start 0.74 -0.8) (end 0.74 0.8) (layer "F.Fab") (width 0.1) (tstamp f33b28f5-f61d-4858-af99-0023540d131c))
-    (pad "1" thru_hole circle (at 0 0) (size 1.4 1.4) (drill 0.7) (layers *.Cu *.Mask)
+    (pad "1" thru_hole rect (at -0.9 0) (size 1.4 3) (drill 0.7) (layers *.Cu *.Mask)
       (net 7 "3.3VDC") (pintype "passive") (tstamp 76f2a669-4649-46ff-92ef-468afb5f49b1))
-    (pad "2" thru_hole oval (at 5.08 0) (size 1.4 1.4) (drill 0.7) (layers *.Cu *.Mask)
+    (pad "2" thru_hole oval (at 6 0) (size 1.4 3) (drill 0.7) (layers *.Cu *.Mask)
       (net 10 "Net-(D3-Pad2)") (pintype "passive") (tstamp 72d27cad-0b45-4e60-b434-99b0cc637bfc))
     (model "${KICAD6_3DMODEL_DIR}/Resistor_THT.3dshapes/R_Axial_DIN0204_L3.6mm_D1.6mm_P5.08mm_Horizontal.wrl"
       (offset (xyz 0 0 0))
@@ -3115,7 +3115,7 @@
 
   (footprint "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical" (layer "F.Cu")
     (tedit 5AE5139B) (tstamp db4c4546-194b-4d32-bc47-07b641bf093d)
-    (at 169.2 61.455 -90)
+    (at 152.69 52.68 -90)
     (descr "Resistor, Axial_DIN0207 series, Axial, Vertical, pin pitch=2.54mm, 0.25W = 1/4W, length*diameter=6.3*2.5mm^2, http://cdn-reichelt.de/documents/datenblatt/B400/1_4W%23YAG.pdf")
     (tags "Resistor Axial_DIN0207 series Axial Vertical pin pitch 2.54mm 0.25W = 1/4W length 6.3mm diameter 2.5mm")
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
@@ -3155,7 +3155,7 @@
 
   (footprint "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical" (layer "F.Cu")
     (tedit 5AE5139B) (tstamp e197d718-2edf-4543-b5bd-326d60f28e20)
-    (at 212.51 107.505 -90)
+    (at 191.19 93.365 -90)
     (descr "Resistor, Axial_DIN0207 series, Axial, Vertical, pin pitch=2.54mm, 0.25W = 1/4W, length*diameter=6.3*2.5mm^2, http://cdn-reichelt.de/documents/datenblatt/B400/1_4W%23YAG.pdf")
     (tags "Resistor Axial_DIN0207 series Axial Vertical pin pitch 2.54mm 0.25W = 1/4W length 6.3mm diameter 2.5mm")
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
@@ -3195,7 +3195,7 @@
 
   (footprint "Resistor_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P5.08mm_Horizontal" (layer "F.Cu")
     (tedit 5AE5139B) (tstamp e5920592-9bee-465e-8131-7081530f4488)
-    (at 186.97 116.805)
+    (at 164.1 102.665)
     (descr "Resistor, Axial_DIN0204 series, Axial, Horizontal, pin pitch=5.08mm, 0.167W, length*diameter=3.6*1.6mm^2, http://cdn-reichelt.de/documents/datenblatt/B400/1_4W%23YAG.pdf")
     (tags "Resistor Axial_DIN0204 series Axial Horizontal pin pitch 5.08mm 0.167W length 3.6mm diameter 1.6mm")
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
@@ -3226,9 +3226,9 @@
     (fp_line (start 0.74 0.8) (end 4.34 0.8) (layer "F.Fab") (width 0.1) (tstamp 79adb3a9-77c5-4cc9-9b2a-971fa922d954))
     (fp_line (start 4.34 -0.8) (end 0.74 -0.8) (layer "F.Fab") (width 0.1) (tstamp 85819f09-2750-413b-b188-ff5aeaa241da))
     (fp_line (start 5.08 0) (end 4.34 0) (layer "F.Fab") (width 0.1) (tstamp d01b0dca-ba8c-444d-bb76-82456133cad3))
-    (pad "1" thru_hole circle (at 0 0) (size 1.4 1.4) (drill 0.7) (layers *.Cu *.Mask)
+    (pad "1" thru_hole circle (at -1.7 0) (size 1.4 1.4) (drill 0.7) (layers *.Cu *.Mask)
       (net 39 "mainWaterPump") (pintype "passive") (tstamp 08eebbb2-4128-498e-a71e-15bbfe2b5d8b))
-    (pad "2" thru_hole oval (at 5.08 0) (size 1.4 1.4) (drill 0.7) (layers *.Cu *.Mask)
+    (pad "2" thru_hole oval (at 6.9 0) (size 1.4 1.4) (drill 0.7) (layers *.Cu *.Mask)
       (net 80 "Net-(Opto7-Pad1)") (pintype "passive") (tstamp f1a68faa-8d63-4b4b-989f-ed1d95430e73))
     (model "${KICAD6_3DMODEL_DIR}/Resistor_THT.3dshapes/R_Axial_DIN0204_L3.6mm_D1.6mm_P5.08mm_Horizontal.wrl"
       (offset (xyz 0 0 0))
@@ -3239,7 +3239,7 @@
 
   (footprint "Package_TO_SOT_THT:TO-220-3_Vertical" (layer "F.Cu")
     (tedit 5AC8BA0D) (tstamp e88892cf-6209-4c4a-9504-afeda4543a0d)
-    (at 262.255 74.47 -90)
+    (at 235.635 65.73 -90)
     (descr "TO-220-3, Vertical, RM 2.54mm, see https://www.vishay.com/docs/66542/to-220-1.pdf")
     (tags "TO-220-3 Vertical RM 2.54mm")
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
@@ -3278,9 +3278,9 @@
     (fp_line (start -2.46 1.25) (end 7.54 1.25) (layer "F.Fab") (width 0.1) (tstamp 953a8ccc-9f60-4df1-91bc-e677f6c2553f))
     (pad "1" thru_hole rect (at 0 0 270) (size 1.905 2) (drill 1.1) (layers *.Cu *.Mask)
       (net 92 "Net-(Q5-Pad1)") (pinfunction "B") (pintype "input") (tstamp 02cdaccb-cb08-4e67-a5a2-cb54c1b90e3a))
-    (pad "2" thru_hole oval (at 2.54 0 270) (size 1.905 2) (drill 1.1) (layers *.Cu *.Mask)
+    (pad "2" thru_hole oval (at 2.54 0 270) (size 1.905 3) (drill 1.1) (layers *.Cu *.Mask)
       (net 4 "5.0VDC") (pinfunction "C") (pintype "passive") (tstamp c6133432-a97c-4536-8ca4-410b3d0ea8c3))
-    (pad "3" thru_hole oval (at 5.08 0 270) (size 1.905 2) (drill 1.1) (layers *.Cu *.Mask)
+    (pad "3" thru_hole oval (at 5.08 0 270) (size 1.905 3) (drill 1.1) (layers *.Cu *.Mask)
       (net 15 "Net-(J7-Pad1)") (pinfunction "E") (pintype "passive") (tstamp 323615f0-ab34-456d-ada1-ff1f61133e62))
     (model "${KICAD6_3DMODEL_DIR}/Package_TO_SOT_THT.3dshapes/TO-220-3_Vertical.wrl"
       (offset (xyz 0 0 0))
@@ -3291,7 +3291,7 @@
 
   (footprint "maticas:actuators_screws_01x02_low_pot" (layer "F.Cu")
     (tedit 0) (tstamp e8d773b5-0437-4869-b514-db99eb29cf67)
-    (at 32.125 84.685 90)
+    (at 24.565 75.185 90)
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
     (property "Sheetname" "")
     (path "/0104ab81-27ac-458c-9e6e-e40783b8c913")
@@ -3316,7 +3316,7 @@
 
   (footprint "Package_DIP:DIP-6_W7.62mm" (layer "F.Cu")
     (tedit 5A02E8C5) (tstamp ec17ab75-56b5-41fb-8e98-ba42e1fff48e)
-    (at 159.705 31.305)
+    (at 143.195 22.53)
     (descr "6-lead though-hole mounted DIP package, row spacing 7.62 mm (300 mils)")
     (tags "THT DIP DIL PDIP 2.54mm 7.62mm 300mil")
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
@@ -3371,7 +3371,7 @@
 
   (footprint "Package_TO_SOT_THT:TO-220-3_Vertical" (layer "F.Cu")
     (tedit 5AC8BA0D) (tstamp f1b56486-2b60-463c-970d-73cffaee19de)
-    (at 214.305 73.835 -90)
+    (at 192.885 65.095 -90)
     (descr "TO-220-3, Vertical, RM 2.54mm, see https://www.vishay.com/docs/66542/to-220-1.pdf")
     (tags "TO-220-3 Vertical RM 2.54mm")
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
@@ -3410,9 +3410,9 @@
     (fp_line (start 4.39 -3.15) (end 4.39 -1.88) (layer "F.Fab") (width 0.1) (tstamp cab5cdcc-e4c4-4a6e-8e46-d8bc1f5afac0))
     (pad "1" thru_hole rect (at 0 0 270) (size 1.905 2) (drill 1.1) (layers *.Cu *.Mask)
       (net 91 "Net-(Q4-Pad1)") (pinfunction "B") (pintype "input") (tstamp fb85b7a2-c347-497b-9b1f-ed0ff61a7710))
-    (pad "2" thru_hole oval (at 2.54 0 270) (size 1.905 2) (drill 1.1) (layers *.Cu *.Mask)
+    (pad "2" thru_hole oval (at 2.54 0 270) (size 1.905 3) (drill 1.1) (layers *.Cu *.Mask)
       (net 4 "5.0VDC") (pinfunction "C") (pintype "passive") (tstamp 0197f733-a463-4564-b25e-fe2bc35f9455))
-    (pad "3" thru_hole oval (at 5.08 0 270) (size 1.905 2) (drill 1.1) (layers *.Cu *.Mask)
+    (pad "3" thru_hole oval (at 5.08 0 270) (size 1.905 3) (drill 1.1) (layers *.Cu *.Mask)
       (net 14 "Net-(J6-Pad1)") (pinfunction "E") (pintype "passive") (tstamp ff986304-1491-4b95-be95-36a47daf5cc7))
     (model "${KICAD6_3DMODEL_DIR}/Package_TO_SOT_THT.3dshapes/TO-220-3_Vertical.wrl"
       (offset (xyz 0 0 0))
@@ -3423,7 +3423,7 @@
 
   (footprint "Package_TO_SOT_THT:TO-220-3_Vertical" (layer "F.Cu")
     (tedit 5AC8BA0D) (tstamp f7e87d7d-0687-43ea-b083-954ced0beeac)
-    (at 53.715 35.48)
+    (at 47.4 26.2)
     (descr "TO-220-3, Vertical, RM 2.54mm, see https://www.vishay.com/docs/66542/to-220-1.pdf")
     (tags "TO-220-3 Vertical RM 2.54mm")
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
@@ -3434,7 +3434,7 @@
       (effects (font (size 1 1) (thickness 0.15)))
       (tstamp 04c97703-3ed6-4647-bfc0-80daf6dd8326)
     )
-    (fp_text value "LM7812_TO220" (at 2.54 2.5) (layer "F.Fab")
+    (fp_text value "LM7812_TO220" (at 2.14 -6.345) (layer "F.Fab")
       (effects (font (size 1 1) (thickness 0.15)))
       (tstamp b61777a0-5d9e-45a6-9cb8-590a82e0eecc)
     )
@@ -3460,11 +3460,11 @@
     (fp_line (start -2.46 -1.88) (end 7.54 -1.88) (layer "F.Fab") (width 0.1) (tstamp bee21497-fc2b-4eb9-bb3a-3804492300f6))
     (fp_line (start -2.46 -3.15) (end -2.46 1.25) (layer "F.Fab") (width 0.1) (tstamp dadd0164-623a-4b30-88c9-c9aadcbb00aa))
     (fp_line (start 4.39 -3.15) (end 4.39 -1.88) (layer "F.Fab") (width 0.1) (tstamp e918b98b-78b2-40f6-8250-4f751e217039))
-    (pad "1" thru_hole rect (at 0 0) (size 1.905 2) (drill 1.1) (layers *.Cu *.Mask)
+    (pad "1" thru_hole rect (at -0.4 0) (size 1.905 3) (drill 1.1) (layers *.Cu *.Mask)
       (net 1 "Net-(C1-Pad1)") (pinfunction "VI") (pintype "power_in") (tstamp 339e7745-8b59-47af-ab36-fd2a6cb70148))
-    (pad "2" thru_hole oval (at 2.54 0) (size 1.905 2) (drill 1.1) (layers *.Cu *.Mask)
+    (pad "2" thru_hole oval (at 2.54 0) (size 1.905 3) (drill 1.1) (layers *.Cu *.Mask)
       (net 2 "GND potencia") (pinfunction "GND") (pintype "power_in") (tstamp 2b832a74-5395-410d-9640-d44ef130ec5b))
-    (pad "3" thru_hole oval (at 5.08 0) (size 1.905 2) (drill 1.1) (layers *.Cu *.Mask)
+    (pad "3" thru_hole oval (at 5.5 0) (size 1.905 3) (drill 1.1) (layers *.Cu *.Mask)
       (net 3 "12.0VDC") (pinfunction "VO") (pintype "power_out") (tstamp d4f90921-2011-4775-ba29-9ca52e3c262e))
     (model "${KICAD6_3DMODEL_DIR}/Package_TO_SOT_THT.3dshapes/TO-220-3_Vertical.wrl"
       (offset (xyz 0 0 0))
@@ -3475,7 +3475,7 @@
 
   (footprint "Connector_USB:USB_A_Molex_67643_Horizontal" (layer "F.Cu")
     (tedit 5EA03975) (tstamp fb9e9316-867f-4467-bc12-79a316356983)
-    (at 64.1 139.34)
+    (at 60.19 118.37)
     (descr "USB type A, Horizontal, https://www.molex.com/pdm_docs/sd/676433910_sd.pdf")
     (tags "USB_A Female Connector receptacle")
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
@@ -3549,7 +3549,7 @@
 
   (footprint "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical" (layer "F.Cu")
     (tedit 5AE5139B) (tstamp fdfbecc4-b4b4-4caa-9598-9b4b72ae8cef)
-    (at 250.355 109.305 180)
+    (at 229.035 95.165 180)
     (descr "Resistor, Axial_DIN0207 series, Axial, Vertical, pin pitch=2.54mm, 0.25W = 1/4W, length*diameter=6.3*2.5mm^2, http://cdn-reichelt.de/documents/datenblatt/B400/1_4W%23YAG.pdf")
     (tags "Resistor Axial_DIN0207 series Axial Vertical pin pitch 2.54mm 0.25W = 1/4W length 6.3mm diameter 2.5mm")
     (property "Sheetfile" "fuente_principal_controlador_actuadores.kicad_sch")
@@ -3587,6 +3587,95 @@
     )
   )
 
-  (gr_rect (start 21.6 18.3) (end 275.8 160.4) (layer "B.Cu") (width 0.2) (fill none) (tstamp f3e2bb37-48f6-4651-bf9c-d9b4a50ef0a2))
+  (gr_rect (start 14.93 15.035) (end 246.83 136.135) (layer "B.Cu") (width 0.2) (fill none) (tstamp f3e2bb37-48f6-4651-bf9c-d9b4a50ef0a2))
 
+  (segment (start 36.36 26.2) (end 36.46 26.1) (width 0.25) (layer "F.Cu") (net 1) (tstamp 15b9dd8d-1bda-4f01-884f-948aa7d93b0c))
+  (segment (start 47.3 26.1) (end 47.4 26.2) (width 0.25) (layer "F.Cu") (net 1) (tstamp 8437a5e0-18ad-431f-bdd5-2cd025fac4e0))
+  (segment (start 36.36 26.2) (end 36.44 26.12) (width 0.25) (layer "F.Cu") (net 1) (tstamp dbfd66b7-318f-41d9-83bd-c23ce2c8c93f))
+  (segment (start 47 26.2) (end 46.74 26.2) (width 0.25) (layer "B.Cu") (net 1) (tstamp 939cbf6d-ee84-40ca-bc21-aaa0203d79f5))
+  (segment (start 47.54 48.86) (end 47.4 49) (width 0.25) (layer "B.Cu") (net 1) (tstamp e65d15c2-8517-410d-ab1b-db08348f9ab8))
+  (segment (start 25.42 31.12) (end 25.34 31.2) (width 0.25) (layer "F.Cu") (net 2) (tstamp ab7625de-c48f-4efb-a6c8-bf6797893d78))
+  (segment (start 36.36 31.2) (end 36.44 31.12) (width 0.25) (layer "F.Cu") (net 2) (tstamp b4045d47-f588-45c1-99df-187a1575b6e5))
+  (segment (start 63.34 26.2) (end 63.54 26) (width 0.25) (layer "B.Cu") (net 3) (tstamp 80752cf0-3845-4341-b726-543818d9320e))
+  (segment (start 79.7 32.84) (end 79.64 32.9) (width 0.25) (layer "F.Cu") (net 8) (tstamp 152374ec-a447-4e06-844c-8e285596813f))
+  (segment (start 80.08 46.48) (end 80.1 46.46) (width 0.25) (layer "F.Cu") (net 9) (tstamp c655ba43-ea8e-451f-8acf-c59b55ec00a8))
+
+  (group "" (id 1b12f9b9-49e0-4374-b44e-b210ee9fa398)
+    (members
+      6a382ab3-cf6b-4ae5-92d9-1923646394ba
+      a69bd7ed-3812-4ce7-a860-4e72d275b4ed
+      b5346c89-99f6-433d-8e94-df5a0d34a2a8
+      c331cbbf-c8d3-458d-9f43-3a80c3a479d2
+      e88892cf-6209-4c4a-9504-afeda4543a0d
+    )
+  )
+  (group "" (id 279257a2-43c4-43ff-9b41-ce023c871b4e)
+    (members
+      2708f488-1e34-4ba1-a206-a3a3df6dc0fc
+      77bd65a0-fa3d-4bc8-a69b-90b0c09ce251
+      8b30a338-49ae-4cdc-8798-0a36ab6fe36e
+      8c90e88f-777c-4481-82f4-7b3bdbdc79f3
+      fdfbecc4-b4b4-4caa-9598-9b4b72ae8cef
+    )
+  )
+  (group "" (id 340c562b-b467-41b3-8329-4b9c87ee00d1)
+    (members
+      29c1f894-e3d0-4b94-810a-f8d6ed017411
+      364b7235-c58f-4d87-9339-d4275e178bbc
+      b2ae9e95-5789-4805-b6aa-4800f3a359b2
+      b352b198-c9b3-49f2-8ac9-282b306e8290
+      c91a283d-d655-4548-a5fa-3965eef5eb7d
+    )
+  )
+  (group "" (id 3be1e906-c5a4-4862-94d0-ebc29555cedd)
+    (members
+      6743c659-4ca6-47d3-8afe-47c49874bf79
+      a59a41d2-9459-4498-bab0-1c38bbc10326
+      cb077d90-f72d-47e3-a7e8-70817582ac4a
+      cc505ee4-d243-4551-be3b-85614f3c6099
+      f1b56486-2b60-463c-970d-73cffaee19de
+    )
+  )
+  (group "" (id 3e7c0ae3-8c4c-4ce5-b21c-1f69889f7eda)
+    (members
+      07f07e0f-fd6d-4f88-89aa-754cd6c972d7
+      32db2178-ca7b-4f6f-8595-4cf6a5ea4537
+      4309d677-910d-4a25-8504-d0575b465900
+      87452e2c-f0c5-48a2-87bc-4b4ea6374aaa
+      90e78f14-829e-4eae-95ef-875608cf0ce2
+    )
+  )
+  (group "" (id 546110d3-8bd2-4d65-9022-fca8770d75fb)
+    (members
+      5690f413-ed71-44e3-9eba-4696f78dc2fa
+      bbcc69a2-9e34-408e-9137-91763bd90576
+      d98d5b41-06eb-445e-b5ec-72be3d40e7ab
+      e197d718-2edf-4543-b5bd-326d60f28e20
+      e5920592-9bee-465e-8131-7081530f4488
+    )
+  )
+  (group "" (id 8e316017-cf97-436d-aa3d-84f3b0e294c6)
+    (members
+      a4fdedce-3244-4825-b6fe-fc80592a1a90
+      a714fca8-68ba-4b8e-ba59-bec61d8e44c5
+    )
+  )
+  (group "" (id dbec6122-d009-4360-9680-0317e3c33441)
+    (members
+      02180095-8075-44ba-8eb2-c7cc7684cde3
+      40334c87-3c23-475a-a083-92e4d4865a19
+      8682dac3-9cc6-4977-9b62-d086884f14bd
+      a904126b-2f96-4724-948b-04cae2124831
+      db4c4546-194b-4d32-bc47-07b641bf093d
+    )
+  )
+  (group "" (id e06ae73e-2765-4287-a1de-19b051ef590c)
+    (members
+      0b8e6b50-7254-47c1-9483-2f708898622a
+      877727ec-1b17-4946-bafb-da3d38c28116
+      b58f3a4f-6583-4edd-8add-3e7ee14524a9
+      c4b823c8-98c9-4291-aceb-0a75b23b5c6f
+      ec17ab75-56b5-41fb-8e98-ba42e1fff48e
+    )
+  )
 )

@@ -33,9 +33,9 @@
         "other_text_thickness": 0.15,
         "other_text_upright": false,
         "pads": {
-          "drill": 1.0,
-          "height": 2.286,
-          "width": 3.0
+          "drill": 1.1,
+          "height": 3.0,
+          "width": 1.905
         },
         "silk_line_width": 0.15,
         "silk_text_italic": false,
@@ -368,7 +368,7 @@
       "gencad": "",
       "idf": "",
       "netlist": "",
-      "specctra_dsn": "fuente_principal_controlador_actuadores.dsn",
+      "specctra_dsn": "fuente_principal_controlador_actuadores_og.dsn",
       "step": "",
       "vrml": ""
     },
