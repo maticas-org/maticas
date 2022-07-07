@@ -45,7 +45,7 @@ class MqttConnection():
         self.clean_session      = clean_session
 
         # starts internet connection in order to connect to the mqtt server
-        self.start_internet_connection()
+        #self.start_internet_connection()
 
         # creates the mqtt client
         self.client = MQTTClient(client_id, mqtt_server, port, user, client_password, keepalive, ssl, ssl_params)
@@ -65,7 +65,7 @@ class MqttConnection():
         self.last_recieved_message  = None
 
         # starts mqtt connection 
-        self.mqtt_connect()
+        # self.mqtt_connect()
     
 
     def start_internet_connection(self):
