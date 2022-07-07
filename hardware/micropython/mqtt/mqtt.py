@@ -30,22 +30,25 @@ class MqttConnection():
                  sub_topics =       {}      ): 
 
         # stores parameters inside class
+        self.wifi_ssid          = wifi_ssid 
+        self.wifi_password      = wifi_password
         self.client_id          = client_id
         self.mqtt_server        = mqtt_server 
         self.port               = port 
         self.user               = user 
-        self.client_password    = password
+        self.client_password    = client_password
         self.keepalive          = keepalive
         self.ssl                = ssl
         self.ssl_params         = ssl_params
         self.pub_topics         = pub_topics
         self.sub_topics         = sub_topics
+        self.clean_session      = clean_session
 
         # starts internet connection in order to connect to the mqtt server
         self.start_internet_connection()
 
         # creates the mqtt client
-        self.client = MQTTClient(client_id, mqtt_server, port, user, password, keepalive, ssl, ssl_params)
+        self.client = MQTTClient(client_id, mqtt_server, port, user, client_password, keepalive, ssl, ssl_params)
 
         # configures the mqtt client
 
@@ -79,6 +82,7 @@ class MqttConnection():
 
     def mqtt_connect(self):
         self.client.connect(clean_session = self.clean_session)
+        print('Successfull connection to MQTT broker!')
 
 
     def _callback(self, topic, msg):
@@ -88,7 +92,7 @@ class MqttConnection():
         print('Received message {1} on topic: {0}'.format(topic, msg))
     
     
-    def publish(self, topic, msg, retain=False, qos=0):
+    def publish(self, topic, msg, retain=False, qos=1):
         self.client.publish(topic, msg, retain, qos)
 
     def subscribe(self):
@@ -99,7 +103,6 @@ class MqttConnection():
             self.client.subscribe(topic = topic, 
                                   qos   = self.sub_topics[topic][qos])
 
-        
     
     def set_last_will(self, topic, msg, retain=False, qos=0):
         self.client.set_last_will(topic, msg, retain, qos)
@@ -108,53 +111,3 @@ class MqttConnection():
         self.client.set_callback(callback)
         print("Successfull connection to broker!")
     
-        
-
-
-
-#client_id = ubinascii.hexlify(machine.unique_id())
-
-
-
-#############################################################################
-sslp = {'keyfile':"/client.key", 'ca_certs':"ca.crt", 'certfile':"client.crt"}
-def sub_cb(topic, msg):
-  print((topic, msg))
-  if topic == b'notification' and msg == b'received':
-    print('ESP received hello message')
-
-def connect_and_subscribe():
-  global client_id, mqtt_server, topic_sub
-  client = MQTTClient(client_id = client_id, server = mqtt_server,port = 1883, user = "esp1",password = "password", keepalive=30, ssl = True, ssl_params = sslp)
-  client.set_callback(sub_cb)
-  client.connect()
-  client.subscribe(topic_sub)
-  print('Connected to %s MQTT broker, subscribed to %s topic' % (mqtt_server, topic_sub))
-  return client
-
-def restart_and_reconnect():
-  print('Failed to connect to MQTT broker. Reconnecting...')
-  time.sleep(10)
-  machine.reset()
-
-try:
-  client = connect_and_subscribe()
-except OSError as e:
-  restart_and_reconnect()
-
-while True:
-  try:
-    client.check_msg()
-    if (time.time() - last_message) > message_interval:
-      msg = b'Hello #%d' % counter
-      client.publish(topic_pub, msg, qos=1)
-      last_message = time.time()
-      counter += 1
-  except OSError as e:
-    restart_and_reconnect()
-
-
-
-
-
-
