@@ -60,6 +60,7 @@ class db_connection:
         self.user = db_user 
         self.password = db_password 
         self.sslmode = db_sslmode
+        self.default_data_path =  './database_backup_data/'
 
         # Crea el string de conexión
         self.conn_string = "host={0} user={1} dbname={2} password={3} sslmode={4}".format(self.host,
@@ -91,8 +92,8 @@ class db_connection:
 
         self.conn.set_session(autocommit=False)
 
-        # mete valores por defecto en la tabla
-        self.default_table_initialization()
+
+
 
     ###################################################################################
     #        Lectura y escritura en tablas de configuración de las condiciones
@@ -480,12 +481,50 @@ class db_connection:
                                                 10)
                                       )
 
+        print("Setting tables initialized.")
+
+        # importa utilidad para descomprimir archivos
+        from zipfile import ZipFile
+
+        # usa el hecho de que los alias guardados en las
+        # llaves del diccionario son los mismos nombres de los archivos .zip 
+        # y de los .csv que contienen, para descomprimir los archivos 
+        # y dejarlos en su carpeta correspondiente
+
+        for file in self.types_dict.keys():
+
+            with ZipFile(self.default_data_path + file + '.zip', 'r') as zip_object:
+                zip_object.extractall(path = self.default_data_path)
+
+            with open(self.default_data_path + file + '.csv') as csv_file:
+
+                # omite la primera linea que es el encabezado
+                csv_file.readline()
+                self.cursor.copy_from(  file = csv_file,                  # archivo del cual se va importar a la base 
+                                        table = self.types_dict[file][0], # indica el nombre de la tabla
+                                        sep=',',
+                                        columns = ('time', self.types_dict[file][1]) # especifica el nombre de las columnas
+                                      )  
+            self.conn.commit()
+
+        print("Data talbles filled with default data.")
 
 
+    def drop_all_data_tables(self):
 
+        """
+            Elimina todas las tablas de datos de variables ambientales 
+            de la base de datos. Podría ser útil en casos en que se hayan contaminado
+            los datos, o de que se sepa que han sido mal tomados, y se desee hacer
+            un reinicio.
 
+            INPUT: None
+            OUTPUT: None
+        """
 
-
+        for table in self.types_dict.keys():
+            self.cursor.execute("drop table {}".format(self.types_dict[table][0]))
+            self.conn.commit()
 
 
 

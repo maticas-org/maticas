@@ -12,6 +12,9 @@ conn = db_connection(db_host =  db_host,
                     )
 
 conn.create_tables()
+#conn.default_table_initialization()
+#conn.drop_all_data_tables()
+
 
 #######################################################
 print(
@@ -51,6 +54,7 @@ print('\n\n\n')
 ##########################################################
 #                   Escribiendo settings
 ##########################################################
+
 
 
 conn.write_ambiental_settings(value_min = 60,
@@ -102,5 +106,4 @@ print( conn.read_actuators_settings(config_ = 'pump') )
 print( conn.read_actuators_settings(config_ = 'lights') )
 
 conn.end_connection()
-
 
