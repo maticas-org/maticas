@@ -1,4 +1,5 @@
 from ds18b20 import ds18b20
+from ph import Ph
 from mqtt import MqttConnection
 from json import load
 
@@ -7,6 +8,7 @@ class integrated_module1():
 
     def __init__(self, 
                  ds18b20_pin_number:    int,
+                 ph_pin_number:         int,
                  mqtt_config_file:      str):
 
         # reads the configuration file and stores it in a dictionary
@@ -20,7 +22,10 @@ class integrated_module1():
         self.mqtt_client.mqtt_connect()
 
         # creates the ds18b20 object with the given pin_number 
-        self.ds18b20 = ds18b20(pin_number = ds18b20_pin_number)
+        #self.ds18b20 = ds18b20(pin_number = ds18b20_pin_number)
+
+        # creates the ph sensor object with the given pin_number
+        self.ph      = Ph(pin_number = ph_pin_number)
 
 
     def configure_send_data(self):
@@ -35,8 +40,8 @@ class integrated_module1():
             from the sensor.
         """
 
-        self.mqtt_client.pub_topics["wtemp"]["exec"] = self.ds18b20.read_temperature 
-        self.mqtt_client.pub_topics["ec"]["exec"]    = self.ds18b20.read_temperature 
+        #self.mqtt_client.pub_topics["wtemp"]["exec"] = self.ds18b20.read_temperature 
+        self.mqtt_client.pub_topics["ph"]["exec"]    = self.ph.read_ph 
 
 
     def send_data(self):
@@ -71,8 +76,12 @@ class integrated_module1():
 
             if "exec" in self.mqtt_client.pub_topics[alias].keys():
 
+                # executes the function that returns the data from the sensor
+                data = self.mqtt_client.pub_topics[alias]["exec"]()
+                print("sending data from {0}, value: {1}".format(alias, data))
+
                 self.mqtt_client.publish( topic = self.mqtt_client.pub_topics[alias]["topic"],
-                                          msg   = self.mqtt_client.pub_topics[alias]["exec"](),
+                                          msg   = str(data),
                                           qos   = self.mqtt_client.pub_topics[alias]["qos"]     )
 
 

@@ -10,6 +10,9 @@ ampy --port /dev/ttyUSB0 put ./main.py
 anounce_file_upload "./integrated_sensors_mod1.py"
 ampy --port /dev/ttyUSB0 put ./integrated_sensors_mod1.py
 
+anounce_file_upload "./ph/ph.py"
+ampy --port /dev/ttyUSB0 put ./ph/ph.py
+
 anounce_file_upload "./ds18b20/ds18b20.py"
 ampy --port /dev/ttyUSB0 put ./ds18b20/ds18b20.py
 
@@ -17,7 +20,6 @@ ampy --port /dev/ttyUSB0 put ./ds18b20/ds18b20.py
 ##########################################
 # Uploads mqtt boot to esp32
 ##########################################
-
 anounce_file_upload "./mqtt/boot.py"
 ampy --port /dev/ttyUSB0 put ./mqtt/boot.py
 
