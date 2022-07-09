@@ -1,21 +1,23 @@
 {
-    "wifi_ssid":          "ArchLinux",
-    "wifi_password":      "nuncaheusadoarch",
-    "client_id":          "esp8266client1",
-    "mqtt_server":        "69.164.197.184",
-    "user":               "dio",
-    "client_password":    "123",
+    "wifi_ssid":          "WIFI_SSID",
+    "wifi_password":      "WIFI_PASSWORD",
+    "client_id":          "CLIENT_ID",
+    "mqtt_server":        "SERVER_IP_OR_SERVER_LINK",
+    "user":               "USER",
+    "client_password":    "PASSWORD",
     "port":               1883,
     "keepalive":          30,
     "clean_session":      true, 
     "ssl":                false,
     "ssl_params":          {},
     "sub_topics":   {
-                        "ph":       {"topic": "esp32data/control/ph",     "qos": 1},
-                        "ec":       {"topic": "esp32data/control/ec",     "qos": 1},
-                        "wtemp":    {"topic": "esp32data/control/wtemp",  "qos": 1}
+                        "alias":    {"topic": "topic/subtopic/subtopic",     "qos": 1},
+                        "ph":       {"topic": "esp32data/control/ph",        "qos": 1},
+                        "ec":       {"topic": "esp32data/control/ec",        "qos": 1},
+                        "wtemp":    {"topic": "esp32data/control/wtemp",     "qos": 1}
                     },
     "pub_topics":  {
+                        "alias":    {"topic": "topic/subtopic/subtopic",     "qos": 1},
                         "ph":       {"topic": "esp32data/measure/ph",     "qos": 1},
                         "ec":       {"topic": "esp32data/measure/ec",     "qos": 1},
                         "wtemp":    {"topic": "esp32data/measure/wtemp",  "qos": 1}
