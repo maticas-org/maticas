@@ -99,9 +99,9 @@ class MqttConnection():
 
         # subscribes to all topics in the sub_topics dictionary
         # getting also the specified qos
-        for topic in self.sub_topics.values():
-            self.client.subscribe(topic = topic, 
-                                  qos   = self.sub_topics[topic][qos])
+        for alias in self.sub_topics.values():
+            self.client.subscribe(topic = self.sub_topics[alias]["topic"],
+                                  qos   = self.sub_topics[alias]["qos"])
 
     
     def set_last_will(self, topic, msg, retain=False, qos=0):

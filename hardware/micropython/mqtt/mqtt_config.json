@@ -11,13 +11,13 @@
     "ssl":                false,
     "ssl_params":          {},
     "sub_topics":   {
-                        "esp32data/control/ph":     {"qos": 1},
-                        "esp32data/control/ec":     {"qos": 1},
-                        "esp32data/control/wtemp":  {"qos": 1}
+                        "ph":       {"topic": "esp32data/control/ph",     "qos": 1},
+                        "ec":       {"topic": "esp32data/control/ec",     "qos": 1},
+                        "wtemp":    {"topic": "esp32data/control/wtemp",  "qos": 1}
                     },
     "pub_topics":  {
-                        "esp32data/measure/ph":     {"qos": 1},
-                        "esp32data/measure/ec":     {"qos": 1},
-                        "esp32data/measure/wtemp":  {"qos": 1}
+                        "ph":       {"topic": "esp32data/measure/ph",     "qos": 1},
+                        "ec":       {"topic": "esp32data/measure/ec",     "qos": 1},
+                        "wtemp":    {"topic": "esp32data/measure/wtemp",  "qos": 1}
                     }
 }

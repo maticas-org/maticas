@@ -1,0 +1,43 @@
+#!/usr/bin/bash
+
+anounce_file_upload(){
+    echo "Uploading file $1 to esp32..."
+}
+
+anounce_file_upload "./main.py"
+ampy --port /dev/ttyUSB0 put ./main.py
+
+anounce_file_upload "./integrated_sensors_mod1.py"
+ampy --port /dev/ttyUSB0 put ./integrated_sensors_mod1.py
+
+anounce_file_upload "./ds18b20/ds18b20.py"
+ampy --port /dev/ttyUSB0 put ./ds18b20/ds18b20.py
+
+
+##########################################
+# Uploads mqtt boot to esp32
+##########################################
+
+anounce_file_upload "./mqtt/boot.py"
+ampy --port /dev/ttyUSB0 put ./mqtt/boot.py
+
+##########################################
+# Uploads mqtt class definition to esp32
+##########################################
+anounce_file_upload "./mqtt/mqtt.py"
+ampy --port /dev/ttyUSB0 put ./mqtt/mqtt.py
+
+#############################################
+# Uploads mqtt root class definition to esp32
+#############################################
+anounce_file_upload "./mqtt/umqttsimple.py"
+ampy --port /dev/ttyUSB0 put ./mqtt/umqttsimple.py
+
+#############################################
+# Uploads mqtt settings to esp32
+#############################################
+anounce_file_upload "./mqtt/mqtt_config.json"
+ampy --port /dev/ttyUSB0 put ./mqtt/mqtt_config.json
+
+
+
