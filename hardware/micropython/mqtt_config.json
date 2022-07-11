@@ -1,0 +1,71 @@
+{
+    "wifi_ssid":          "ArchLinux",
+    "wifi_password":      "nuncaheusadoarch",
+    "client_id":          "esp8266client1",
+    "mqtt_server":        "192.168.1.104",
+    "user":               "dio",
+    "client_password":    "123",
+    "port":               3000,
+    "keepalive":          30,
+    "clean_session":      true, 
+    "ssl":                false,
+    "ssl_params":          {},
+    "pub_topics":  {
+                        "ph":       {"topic": "esp32data/measure/ph",     "qos": 1},
+                        "ec":       {"topic": "esp32data/measure/ec",     "qos": 1},
+                        "wtemp":    {"topic": "esp32data/measure/wtemp",  "qos": 1}
+                    },
+
+    "sub_topics":   {
+                        "extra12v": {
+                                         "topic":   "esp32data/control/extra12v", 
+                                         "qos":     1,  
+                                         "exec":    {
+                                                        "1" :      {"pin_number": 23}
+                                                    }
+                                    },
+
+                        "extra5v":  {
+                                         "topic":   "esp32data/control/extra5v", 
+                                         "qos":     1,  
+                                         "exec":    {
+                                                         "1" :      {"pin_number": 22}
+                                                    }
+                                    },
+
+                        "ph":       {
+                                        "topic":    "esp32data/control/ph",
+                                        "qos":      1,
+                                        "exec":    {
+                                                        "1" :       {"pin_number": 18},
+                                                        "-1":       {"pin_number": 5}
+                                                    }
+                                    },
+
+                        "ec":       {
+                                        "topic":    "esp32data/control/ec",
+                                        "qos":      1,
+                                        "exec":    {
+                                                        "1" :       {"pin_number": 4},
+                                                        "-1":       {"pin_number": 15}
+                                                    }
+                                    },
+
+
+                        "water":    {
+                                        "topic":    "esp32data/control/water",
+                                        "qos":      1,
+                                        "exec":    {
+                                                        "1" :       {"pin_number": 21}
+                                                    }
+                                    },
+
+                        "lights":   {
+                                        "topic":    "esp32data/control/lights",
+                                        "qos":      1,
+                                        "exec":    {
+                                                        "1" :       {"pin_number": 19}
+                                                    }
+                                    }
+                    }
+}

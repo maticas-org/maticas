@@ -59,6 +59,7 @@ class MqttConnection():
                                   qos    = 1,
                                   retain = True)
 
+        # sets a default callback
         self.client.set_callback(self._callback)
 
         self.last_arrive_topic      = None
@@ -84,10 +85,12 @@ class MqttConnection():
         self.client.connect(clean_session = self.clean_session)
         print('Successfull connection to MQTT broker!')
 
+        self.subscribe()
+
 
     def _callback(self, topic, msg):
-        self.last_arrive_topic      = topic
-        self.last_recieved_message  = msg
+        self.last_arrive_topic      = topic.decode('utf-8')
+        self.last_recieved_message  = msg.decode('utf-8')
 
         print('Received message {1} on topic: {0}'.format(topic, msg))
     
@@ -99,10 +102,17 @@ class MqttConnection():
 
         # subscribes to all topics in the sub_topics dictionary
         # getting also the specified qos
-        for alias in self.sub_topics.values():
+        for alias in self.sub_topics.keys():
+            print("Subscribed to topic: {0} with qos = {1}".format(self.sub_topics[alias]["topic"],
+                                                                   self.sub_topics[alias]["qos"]))
             self.client.subscribe(topic = self.sub_topics[alias]["topic"],
                                   qos   = self.sub_topics[alias]["qos"])
 
+
+    def restart_and_reconnect(self):
+          print('Failed to connect to MQTT broker. Reconnecting...')
+          time.sleep(10)
+          machine.reset()
     
     def set_last_will(self, topic, msg, retain=False, qos=0):
         self.client.set_last_will(topic, msg, retain, qos)

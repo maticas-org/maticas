@@ -1,0 +1,22 @@
+{
+    "sub_topics":   {
+                        "extra12v": {"exec":    { "1" :     {"pin_number": 23} }},
+                        "extra5v":  {"exec":    { "1" :     {"pin_number": 22} }},
+                        "water":    {"exec":    { "1" :     {"pin_number": 21} }},
+
+                        "lights":   {"exec":    { "1" :     {"pin_number": 19} }},
+
+                        "ph":       {"exec":    { 
+                                                  "1" :     {"pin_number": 18}, 
+                                                  "-1":     {"pin_number": 5} 
+                                                }
+                                    },
+
+                        "ec":       {"exec":    {
+                                                  "1" :     {"pin_number": 4},  
+                                                  "-1":     {"pin_number": 15} 
+                                                }
+                                    }
+
+                    }
+}

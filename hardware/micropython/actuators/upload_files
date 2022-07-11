@@ -1,0 +1,26 @@
+#!/usr/bin/bash
+
+anounce_file_upload(){
+    echo "Uploading file $1 to esp32..."
+}
+
+
+#############################################
+# Uploads actuators settings to esp32
+#############################################
+anounce_file_upload "./actuators_config.json"
+ampy --port /dev/ttyUSB0 put ./actuators_config.json
+
+
+#############################################
+# Uploads actuator controller class to esp32
+#############################################
+anounce_file_upload "./actuators_controller.py"
+ampy --port /dev/ttyUSB0 put ./actuators_controller.py
+
+
+#############################################
+# Uploads actuator controller class to esp32
+#############################################
+anounce_file_upload "./main.py"
+ampy --port /dev/ttyUSB0 put ./main.py
