@@ -1,4 +1,5 @@
 venv
+.env
 
 software/db_mqtt_inteface/__pycache__
 
