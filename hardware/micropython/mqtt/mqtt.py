@@ -29,6 +29,9 @@ class MqttConnection():
                  pub_topics =       {}, 
                  sub_topics =       {}      ): 
 
+        print('-'*60)
+        print("Starting MQTTConnection...")
+
         # stores parameters inside class
         self.wifi_ssid          = wifi_ssid 
         self.wifi_password      = wifi_password
@@ -65,9 +68,15 @@ class MqttConnection():
         self.last_arrive_topic      = None
         self.last_recieved_message  = None
 
+        print("Mqtt client created!")
+
         # starts mqtt connection 
         # self.mqtt_connect()
     
+
+    ##############################################
+    #           Connection Section
+    #############################################
 
     def start_internet_connection(self):
 
@@ -85,6 +94,8 @@ class MqttConnection():
         self.client.connect(clean_session = self.clean_session)
         print('Successfull connection to MQTT broker!')
 
+        # once it's connected
+        # subscribes to all topics in the sub_topics dictionary
         self.subscribe()
 
 
@@ -94,6 +105,14 @@ class MqttConnection():
 
         print('Received message {1} on topic: {0}'.format(topic, msg))
     
+    def restart_and_reconnect(self):
+          print('Failed to connect to MQTT broker. Reconnecting...')
+          time.sleep(10)
+          machine.reset()
+
+    ##############################################
+    #          Communication Section
+    ##############################################
     
     def publish(self, topic, msg, retain=False, qos=1):
         self.client.publish(topic, msg, retain, qos)
@@ -108,16 +127,11 @@ class MqttConnection():
             self.client.subscribe(topic = self.sub_topics[alias]["topic"],
                                   qos   = self.sub_topics[alias]["qos"])
 
-
-    def restart_and_reconnect(self):
-          print('Failed to connect to MQTT broker. Reconnecting...')
-          time.sleep(10)
-          machine.reset()
     
     def set_last_will(self, topic, msg, retain=False, qos=0):
         self.client.set_last_will(topic, msg, retain, qos)
     
     def set_callback(self, callback):
         self.client.set_callback(callback)
-        print("Successfull connection to broker!")
+        print("Callback updated.")
     

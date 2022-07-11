@@ -1,5 +1,6 @@
 from ds18b20 import ds18b20
 from ph import Ph
+from ec import Ec
 from mqtt import MqttConnection
 from json import load
 
@@ -9,6 +10,9 @@ class integrated_module1():
     def __init__(self, 
                  ds18b20_pin_number:    int,
                  ph_pin_number:         int,
+                 ec_signal_pin_number:  int,
+                 ec_power_pin_number:   int,
+                 ec_ground_pin_number:  int,
                  mqtt_config_file:      str):
 
         # reads the configuration file and stores it in a dictionary
@@ -22,11 +26,30 @@ class integrated_module1():
         self.mqtt_client.mqtt_connect()
 
         # creates the ds18b20 object with the given pin_number 
-        #self.ds18b20 = ds18b20(pin_number = ds18b20_pin_number)
+        self.ds18b20 = ds18b20(pin_number = ds18b20_pin_number)
 
         # creates the ph sensor object with the given pin_number
-        self.ph      = Ph(pin_number = ph_pin_number)
+        self.ph     = Ph(pin_number = ph_pin_number)
 
+        # creates the ec sensor object with the given pins numbers
+        self.ec     = Ec(  ec_signal_pin_number     = 35,
+                           ec_power_pin_number      = 32,
+                           ec_ground_pin_number     = 33)
+
+
+    def read_ec_wrapper(self):
+
+        """
+            This function is a wrapper for the ec sensor object.
+            It returns the data from the ec sensor.
+        """
+
+        # gets the water temperature from the ds18b20 sensor
+        temp = self.mqtt_client.pub_topics["wtemp"]["exec"]
+
+        # provides the water temperature to the ec sensor
+        # to return the measurement
+        return self.ec.read_ec(wtemperature = temp)
 
     def configure_send_data(self):
 
@@ -40,7 +63,8 @@ class integrated_module1():
             from the sensor.
         """
 
-        #self.mqtt_client.pub_topics["wtemp"]["exec"] = self.ds18b20.read_temperature 
+        self.mqtt_client.pub_topics["wtemp"]["exec"] = self.ds18b20.read_temperature 
+        self.mqtt_client.pub_topics["ec"]["exec"]    = self.read_ec_wrapper
         self.mqtt_client.pub_topics["ph"]["exec"]    = self.ph.read_ph 
 
 

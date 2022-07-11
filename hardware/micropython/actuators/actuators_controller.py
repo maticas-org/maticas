@@ -13,12 +13,15 @@ class ActuatorsController():
     def __init__(self, 
                  config: dict):
 
+        print('-'*60)
+        print("Starting actuators controller...")
+
         self.config = config["sub_topics"]
 
         # sets the pins specified in the config as output
         print("Setting pins as output...")
         self.set_pins()
-        print("ActuatorsController initialized.")
+        print("ActuatorsController initialized!")
 
     def set_pins(self):
 

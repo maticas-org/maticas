@@ -6,16 +6,23 @@ class Ph():
 
     def __init__(self, 
                  pin_number: int):
+
+        print('-'*60)
+        print("Starting Ph sensor...")
         
         self.ph_sensor = ADC(Pin(pin_number))
         self.ph_sensor.atten(ADC.ATTN_11DB)         #Full range: 3.3v
         self.ph_sensor.width(ADC.WIDTH_12BIT)       #12-bit resolution, range 0 to 4095 
 
+        test = self.read_ph()
+
+        if (test > 0) and (test < 14):
+            print("Ph sensor ready!")
 
     def read_ph(self,
                 nsamples  = 5,
                 max_iters = 10,
-                rest_time = 1) -> float:
+                rest_time = 0.75) -> float:
 
         """
             Read the pH sensor and return the average value.

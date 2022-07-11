@@ -1,0 +1,11 @@
+#!/usr/bin/bash
+
+anounce_file_upload(){
+    echo "Uploading file $1 to esp32..."
+}
+
+anounce_file_upload "./main.py"
+ampy --port /dev/ttyUSB0 put ./main.py
+
+anounce_file_upload "./ec.py"
+ampy --port /dev/ttyUSB0 put ./ec.py

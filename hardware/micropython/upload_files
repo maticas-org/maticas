@@ -4,30 +4,21 @@ anounce_file_upload(){
     echo "Uploading file $1 to esp32..."
 }
 
-anounce_file_upload "./main.py"
-ampy --port /dev/ttyUSB0 put ./main.py
-
-anounce_file_upload "./integrated_actuators_mod1.py"
-ampy --port /dev/ttyUSB0 put ./integrated_actuators_mod1.py
+#-----------------------------------------------------#
+#              Uploads dependencies                   #
+#-----------------------------------------------------#
 
 anounce_file_upload "./actuators/actuators_controller.py"
 ampy --port /dev/ttyUSB0 put ./actuators/actuators_controller.py
 
-#anounce_file_upload "./integrated_sensors_mod1.py"
-#ampy --port /dev/ttyUSB0 put ./integrated_sensors_mod1.py
+anounce_file_upload "./ph/ph.py"
+ampy --port /dev/ttyUSB0 put ./ph/ph.py
 
-#anounce_file_upload "./ph/ph.py"
-#ampy --port /dev/ttyUSB0 put ./ph/ph.py
+anounce_file_upload "./ds18b20/ds18b20.py"
+ampy --port /dev/ttyUSB0 put ./ds18b20/ds18b20.py
 
-#anounce_file_upload "./ds18b20/ds18b20.py"
-#ampy --port /dev/ttyUSB0 put ./ds18b20/ds18b20.py
-
-
-##########################################
-# Uploads mqtt boot to esp32
-##########################################
-anounce_file_upload "./mqtt/boot.py"
-ampy --port /dev/ttyUSB0 put ./mqtt/boot.py
+anounce_file_upload "./ec/ec.py"
+ampy --port /dev/ttyUSB0 put ./ec/ec.py
 
 ##########################################
 # Uploads mqtt class definition to esp32
@@ -46,6 +37,30 @@ ampy --port /dev/ttyUSB0 put ./mqtt/umqttsimple.py
 #############################################
 anounce_file_upload "./mqtt_config.json"
 ampy --port /dev/ttyUSB0 put ./mqtt_config.json
+
+#-----------------------------------------------------#
+#              Uploads integration class              #
+#-----------------------------------------------------#
+anounce_file_upload "./maticas_module1.py"
+ampy --port /dev/ttyUSB0 put ./maticas_module1.py
+
+
+#-----------------------------------------------------#
+#              Uploads boot and main                  #
+#-----------------------------------------------------#
+
+##########################################
+# Uploads mqtt boot to esp32
+##########################################
+anounce_file_upload "./mqtt/boot.py"
+ampy --port /dev/ttyUSB0 put ./mqtt/boot.py
+
+##########################################
+# Uploads main to esp32
+##########################################
+anounce_file_upload "./main.py"
+ampy --port /dev/ttyUSB0 put ./main.py
+
 
 
 

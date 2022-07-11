@@ -1,33 +1,31 @@
-from integrated_actuators_mod1 import integrated_module2
-from time import sleep
+from maticas_module1 import Maticas_module1
+from time import sleep, ticks_ms
 
-mod = integrated_module2(mqtt_config_file = "./mqtt_config.json")
+mod = Maticas_module1( ds18b20_pin_number       = 25,
+                       ph_pin_number            = 34,
+                       ec_signal_pin_number     = 35,
+                       ec_power_pin_number      = 32,
+                       ec_ground_pin_number     = 33,
+                       config_file              = "./mqtt_config.json" )
 
-while True:
-
-    try:
-        mod.mqtt_client.client.check_msg()
-
-    except OSError:
-        print("MQTT connection lost. Reconnecting...")
-        mod.mqtt_client.restart_and_reconnect()
-        
-
-"""
-from integrated_sensors_mod1 import integrated_module1
-from time import sleep
+start_time = ticks_ms()
+send_everyn_seconds = 1
 
 
-mod = integrated_module1(   ds18b20_pin_number  = 32,
-                            ph_pin_number       = 33,
-                            mqtt_config_file    = "mqtt_config.json" )
-mod.configure_send_data()
+send_everyn_mseconds = send_everyn_seconds*1000
 
 while True:
 
-    mod.send_data()
-    sleep(1)
-"""
+    # once every 10 seconds, it sends the data from the sensors
+    if  (ticks_ms() - start_time) > send_everyn_mseconds:
+
+        mod.send_data()
+        start_time = ticks_ms()
+
+    mod.mqtt_client.client.check_msg()
+    sleep(0.350)
+    mod.mqtt_client.client.check_msg()
+
 
 
 
