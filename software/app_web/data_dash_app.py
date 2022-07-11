@@ -23,14 +23,18 @@ from dash import html
 import plotly.express as px 
 import plotly.graph_objects as go
 import pandas as pd
+from dotenv import load_dotenv
+import os
 
-from db_mqtt_interface.db.dirty7w7 import *
+# from db_mqtt_interface.db.dirty7w7 import *
 from db_mqtt_interface.db.db_connection import db_connection
-conn = db_connection(db_host =  db_host,
-                     db_name =  db_name,
-                     db_user = db_user,
-                     db_password =  db_password,
-                     db_sslmode = db_sslmode
+load_dotenv()
+
+conn = db_connection(db_host =  os.getenv('DB_HOST'),
+                     db_name =  os.getenv('DB_NAME'),
+                     db_user = os.getenv('DB_USER'),
+                     db_password =  os.getenv('DB_PASSWORD'),
+                     db_sslmode = os.getenv('DB_SSLMODE')
                     )
 
 ur="/data/"

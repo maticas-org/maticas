@@ -1,0 +1,27 @@
+#!/bin/bash
+echo "Me da puta pereza revisar si eres root, entonces si no lo estas corriendo como root no te va a funcionar"
+echo "olvidalo copilot getiono, pero me parece gracioso dejar esto"
+
+# Check if user is root
+if [ $(id -u) != "0" ]; then
+    echo "You must run this script as root"
+    exit 1
+fi
+
+echo "################"
+echo "# Comandos"
+echo "################"
+
+echo "Crear el contenedor de docker (Inicia automaticamente)"
+echo "sudo docker run -d -t -p 3000:1883 --name maticas dleyvacastro/maticas:$(sudo docker images | grep maticas | awk 'FNR == 2 {print $2}')"
+echo "sudo docker run -d -t -p 3000:1883 --name maticas dleyvacastro/maticas:$(sudo docker images | grep maticas | awk 'FNR == 2 {print $2}')" | kitty +kitten clipboard
+
+echo "Entrar al contenedor"
+echo "sudo docker exec -it maticas bash"
+
+echo "Detener el contenedor"
+echo "sudo docker stop maticas"
+
+echo "Iniciar el contenedor"
+echo "sudo docker start maticas"
+

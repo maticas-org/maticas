@@ -47,7 +47,7 @@ class mqtt_broker_and_db_connection():
         self.client.on_connect = self.on_connect
 
         # habilita conexión segura con tls
-        self.client.tls_set(tls_version=mqtt.client.ssl.PROTOCOL_TLS)
+        # self.client.tls_set(tls_version=mqtt.client.ssl.PROTOCOL_TLS)
 
         self.client.username_pw_set(username = mqtt_username,
                                     password = mqtt_password)

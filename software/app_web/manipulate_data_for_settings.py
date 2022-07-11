@@ -18,14 +18,18 @@ path.insert(1, cwd)
 
 
 from flask import request
-from db_mqtt_interface.db.dirty7w7 import *
+# from db_mqtt_interface.db.dirty7w7 import *
 from db_mqtt_interface.db.db_connection import db_connection
+from dotenv import load_dotenv
+import os
 #CONEXIÓN A LA BASE DE DATOS
-conn = db_connection(db_host =  db_host,
-                     db_name =  db_name,
-                     db_user = db_user,
-                     db_password =  db_password,
-                     db_sslmode = db_sslmode
+
+load_dotenv()
+conn = db_connection(db_host =  os.getenv('DB_HOST'),
+                     db_name =  os.getenv('DB_NAME'),
+                     db_user = os.getenv('DB_USER'),
+                     db_password =  os.getenv('DB_PASSWORD'),
+                     db_sslmode = os.getenv('DB_SSLMODE')
                     )
 
 

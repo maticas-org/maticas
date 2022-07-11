@@ -5,11 +5,11 @@ import pandas as pd
 from manipulate_data_for_settings import get_data_from_all_actuators_settings, get_data_from_all_ambiental_settings, get_info_from_html_form, write_all_actuators_settings, write_all_ambiental_settings
 
 #MODULOS REQUERIDOS PARA ESTABLECER LA CONEXIÓN CON LA BASE DE DATOS
-from db_mqtt_interface.db.dirty7w7 import *
 from db_mqtt_interface.db.db_connection import db_connection
 
 #MODULOS PARA ESTABLECER LA CONEXIÓN CON EL BROKER
-from db_mqtt_interface.mqtt_python.dirty8w8 import *
+from dotenv import load_dotenv
+import os
 from db_mqtt_interface.mqtt_python.writeFromMqtt import *
 
 #MODULO PARA PODER CREAR EL DASHBOARD DENTRO DE LA APLICACIÓN FLASK
@@ -19,7 +19,7 @@ from detailed_data_dash_app import create_dash_app_2
 #MODULO QUE CONTIENE LAS FUNCIONES USADAS EN LAS RUTAS
 from manipulate_data_for_settings import *
 
-
+load_dotenv()
 
 #CREACIÓN DE LA APLICACIÓN
 app = Flask(__name__)
@@ -30,20 +30,20 @@ create_dash_app_2(app)
 app.secret_key = 'APP#%&**twyt34+%'
 
 #CONEXIÓN A LA BASE DE DATOS
-conn = db_connection(db_host =  db_host,
-                     db_name =  db_name,
-                     db_user = db_user,
-                     db_password =  db_password,
-                     db_sslmode = db_sslmode
+
+conn = db_connection(db_host =  os.getenv('DB_HOST'),
+                     db_name =  os.getenv('DB_NAME'),
+                     db_user = os.getenv('DB_USER'),
+                     db_password =  os.getenv('DB_PASSWORD'),
+                     db_sslmode = os.getenv('DB_SSLMODE')
                     )
 
-
 #CONEXIÓN AL BROKER
-send_conn = mqtt_broker_connection_write( mqtt_broker = mqtt_broker,
-                                          mqtt_port = mqtt_port,
-                                          mqtt_username = mqtt_username,
-                                          mqtt_password = mqtt_password,
-                                          mqtt_client_id = mqtt_client_id 
+send_conn = mqtt_broker_connection_write( mqtt_broker = os.getenv('MQTT_BROKER'),
+                                          mqtt_port = int(os.getenv('MQTT_PORT')),
+                                          mqtt_username = os.getenv('MQTT_USERNAME'),
+                                          mqtt_password = os.getenv('MQTT_PASSWORD'),
+                                          mqtt_client_id = os.getenv('MQTT_CLIENT_ID'),
                                           )
 
 
@@ -142,4 +142,4 @@ def light_off():
 
 #VERIFICACIÓN PARA CORRER LA APP
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0')

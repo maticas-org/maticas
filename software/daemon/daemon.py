@@ -6,6 +6,7 @@ from sys import path
 # para añadir dicha clase necesitamos saber primero 
 # donde estámos parados
 from os import getcwd
+from os import environ
  
 # hago cd .. , para añadir ese path completico
 cwd = getcwd()
@@ -18,10 +19,11 @@ print("current working directory: cd .. -> ",  cwd)
 
 # Importa la clase para hacer operaciones sobre la base de datos
 from db_mqtt_interface.db.db_connection import *
-from db_mqtt_interface.db.dirty7w7 import *
+# from db_mqtt_interface.db.dirty7w7 import *
 
 from db_mqtt_interface.mqtt_python.writeFromMqtt import *
-from dirty9w9 import *
+# from dirty9w9 import *
+from dotenv import load_dotenv
 
 # librerías para manejar el tiempo
 import datetime
@@ -32,6 +34,8 @@ import schedule
 # para procesamiento de unos daticos 
 import numpy as np 
 
+# Get the enviment variables
+load_dotenv()
 
 class daemon:
 
@@ -52,11 +56,11 @@ class daemon:
         print("Ahora las cosas funcionarán mágicamente bien.\n")
         
         print("Conexión a la base de datos...")
-        self.db_conn   = db_connection( db_host =  db_host,
-                                        db_name =  db_name,
-                                        db_user = db_user,
-                                        db_password =  db_password,
-                                        db_sslmode = db_sslmode)
+        self.db_conn   = db_connection( db_host =  environ['DB_HOST'],
+                                        db_name =  environ['DB_NAME'],
+                                        db_user =  environ['DB_USER'],
+                                        db_password =  environ['DB_PASSWORD'],
+                                        db_sslmode = environ['DB_SSLMODE'])
         print("Correcta.\n")
 
 
@@ -83,11 +87,11 @@ class daemon:
 
 
         print("Conexión al broker MQTT...")
-        self.send_conn = mqtt_broker_connection_write( mqtt_broker = mqtt_broker,
-                                                       mqtt_port = mqtt_port,
-                                                       mqtt_username = mqtt_username,
-                                                       mqtt_password = mqtt_password,
-                                                       mqtt_client_id = mqtt_client_id 
+        self.send_conn = mqtt_broker_connection_write( mqtt_broker = environ['MQTT_BROKER'],
+                                                       mqtt_port = int(environ['MQTT_PORT']),
+                                                       mqtt_username = environ['MQTT_USERNAME'],
+                                                       mqtt_password = environ['MQTT_PASSWORD'],
+                                                       mqtt_client_id = environ['MQTT_CLIENT_ID']
                                                       )
         print("Correcta.\n")
 
