@@ -1,6 +1,3 @@
-# dirty7w7 contiene las credenciales
-# ni por el putas suban al git 'dirty7w7.py'
-# from dirty7w7 import *
 from  db_connection import db_connection
 from dotenv import load_dotenv
 import os

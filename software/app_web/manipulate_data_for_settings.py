@@ -18,7 +18,6 @@ path.insert(1, cwd)
 
 
 from flask import request
-# from db_mqtt_interface.db.dirty7w7 import *
 from db_mqtt_interface.db.db_connection import db_connection
 from dotenv import load_dotenv
 import os

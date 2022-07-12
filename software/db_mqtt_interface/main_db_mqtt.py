@@ -1,6 +1,4 @@
 # se trae las sucias credenciales
-from db import dirty7w7 
-from mqtt_python import dirty8w8 
 from dotenv import load_dotenv
 from db_mqtt import mqtt_broker_and_db_connection
 import os

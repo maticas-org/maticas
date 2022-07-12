@@ -19,10 +19,8 @@ print("current working directory: cd .. -> ",  cwd)
 
 # Importa la clase para hacer operaciones sobre la base de datos
 from db_mqtt_interface.db.db_connection import *
-# from db_mqtt_interface.db.dirty7w7 import *
 
 from db_mqtt_interface.mqtt_python.writeFromMqtt import *
-# from dirty9w9 import *
 from dotenv import load_dotenv
 
 # librerías para manejar el tiempo

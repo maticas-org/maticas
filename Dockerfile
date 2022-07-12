@@ -4,6 +4,7 @@ WORKDIR /app
 # Copy the application source code to the container
 # ------------------------------
 ADD ./docker/runinit.sh runinit.sh
+ADD .env .env
 ADD software software
 # ------------------------------
 # Installing main apps and dependencies
@@ -34,6 +35,7 @@ RUN apt update && apt upgrade -y \
 # ------------------------------
 ADD docker/mosquitto.conf /etc/mosquitto/mosquitto.conf
 ADD docker/passfile /etc/mosquitto/passfile
+ADD docker/passcript.py passcript.py
 # RUN ip=$(ip a | grep -w "inet" | awk -F' ' 'FNR == 2 {print $2}' | awk -F'/' '{print $1}') \
 #     && echo "listener 1883 $ip" >> /etc/mosquitto/mosquitto.conf \
 #     && echo "mqtt_broker = \"$ip\"" >> /app/software/db_mqtt_interface/mqtt_python/dirty8w8.py \
@@ -52,7 +54,7 @@ RUN /etc/init.d/postgresql start && \
     cd /app/software/db_mqtt_interface/db && \
     python ./main.py
 EXPOSE 1883 5000
-#CMD ["/usr/sbin/mosquitto", "-c", "/etc/mosquitto/mosquitto.conf"]
+# CMD ["/usr/sbin/mosquitto", "-c", "/etc/mosquitto/mosquitto.conf"]
 # -------------------------------
 # Setting up the application server
 # -------------------------------

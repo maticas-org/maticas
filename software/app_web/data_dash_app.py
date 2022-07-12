@@ -26,7 +26,6 @@ import pandas as pd
 from dotenv import load_dotenv
 import os
 
-# from db_mqtt_interface.db.dirty7w7 import *
 from db_mqtt_interface.db.db_connection import db_connection
 load_dotenv()
 

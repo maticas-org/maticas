@@ -1,6 +1,3 @@
-# importa dirty8w8 que tiene las credenciales
-# ni por el putas vayan a subir 'dirty8w8.py'
-from dirty8w8 import *
 from dotenv import load_dotenv
 from writeFromMqtt import mqtt_broker_connection_write
 
