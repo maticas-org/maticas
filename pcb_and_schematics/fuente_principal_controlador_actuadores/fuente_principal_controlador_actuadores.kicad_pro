@@ -33,8 +33,8 @@
         "other_text_thickness": 0.15,
         "other_text_upright": false,
         "pads": {
-          "drill": 0.762,
-          "height": 2.032,
+          "drill": 1.143,
+          "height": 3.429,
           "width": 2.032
         },
         "silk_line_width": 0.15,
@@ -511,6 +511,8 @@
           "unconnected-(JUSB3-Pad5)",
           "unconnected-(JUSB5-Pad2)",
           "unconnected-(JUSB5-Pad5)",
+          "unconnected-(Opto1-Pad3)",
+          "unconnected-(Opto1-Pad6)",
           "unconnected-(Opto2-Pad3)",
           "unconnected-(Opto2-Pad6)",
           "unconnected-(Opto3-Pad3)",
