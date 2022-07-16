@@ -14,6 +14,9 @@ esta clase entre otras cosas cuenta con funcionalidades como:
 
 * ***'./dirty7w7.py'*** es un archivo que guarda las credenciales para conectase a la base de datos.
 
+* ***'./database\_backup\_data/'*** esta carpeta contiene los comprimidos de los datos que fueron recolectados durante el tiempo 
+en que mantuvimos en funcionamiento nuestro sistema de cultivos hidropónico vertical.
+
 * ***'./main.py'*** hace algunas operaciones de lectura y escritura usando la clase definida en ***'./db\_connection.py***, 
 su finalidad es principalmente servir como herramienta de chequeos y comprensión de como se interactua con la clase.
 
