@@ -4,12 +4,25 @@ import psycopg2
 from sqlalchemy import create_engine
 import pandas as pd
 
-from define_db.ambiental_variables import *
-from define_db.acceptable_values_intervals import *
-from define_db.optimal_values_intervals import *
-from define_db.actuators_settings import *
+from sys import path
+from os.path import abspath, dirname
+
+# the directory where the database is defined to the path
+current_file_directory = dirname(abspath(__file__))
+database_definition_directory = "/define_db"
+path.append(current_file_directory + database_definition_directory )
+
+# imports database tables definitions 
+from ambiental_variables import *
+from acceptable_values_intervals import *
+from optimal_values_intervals import *
+from actuators_settings import *
 
 class DbConnection():
+
+    #-----------------------------------------------#
+    # Initialization and configuration of the class #
+    #-----------------------------------------------#
 
     def __init__(self, 
                  db_host: str,
@@ -30,9 +43,8 @@ class DbConnection():
         self.engine = create_engine(conn_string)
         self.configure_connection()
             
-        pass
 
-    def configure_connection(self):
+    def configure_connection(self) -> None:
 
         """
             This function is intended to be easily modified by the user if desired, 
@@ -42,6 +54,7 @@ class DbConnection():
 
         self.tables = {"ec":        Ec(engine = self.engine), 
                        "ph":        Ph(engine = self.engine), 
+                       "hum":       Humidity(engine = self.engine),
                        "temp":      Temperature_(engine = self.engine),
                        "wtemp":     Water_temperature(engine = self.engine),
                        "lux":       Lux(engine = self.engine),
@@ -49,12 +62,14 @@ class DbConnection():
 
         self.tables_ok = {"hum_ok":     Humidity_ok(engine = self.engine),
                           "temp_ok":    Temperature_ok(engine = self.engine),
+                          "wtemp_ok":   Water_temperature_ok(engine = self.engine),
                           "ec_ok":      Ec_ok(engine = self.engine),
                           "ph_ok":      Ph_ok(engine = self.engine),
                           "lux_ok":     Lux_ok(engine = self.engine)}
  
         self.tables_optimal = {"hum_optimal":     Humidity_optimal(engine = self.engine),
                                "temp_optimal":    Temperature_optimal(engine = self.engine),
+                               "wtemp_optimal":   Water_temperature_optimal(engine = self.engine),
                                "ec_optimal":      Ec_optimal(engine = self.engine),
                                "ph_optimal":      Ph_optimal(engine = self.engine),
                                "lux_optimal":     Lux_optimal(engine = self.engine)}
@@ -62,21 +77,66 @@ class DbConnection():
         self.tables_actuators = {"pump": Water_pump(engine = self.engine),
                                  "lights": Lights(engine = self.engine)}
 
+        print("Done setting up the configuration.")
 
-    def create_tables(self):
+    def create_tables(self) -> None:
+
         """
         Create the tables in the database.
         """
 
         for table in self.tables.values():
             table.create_table()
+        print("Done creating ambiental variable tables.")
 
         for table_ok in self.tables_ok.values():
             table_ok.create_table()
+        print("Done creating acceptable values tables.")
+
+        for table_optimal in self.tables_optimal.values():
+            table_optimal.create_table()
+        print("Done creating optimal values tables.")
+
+        for table_actuator in self.tables_actuators.values():
+            table_actuator.create_table()
+        print("Done creating actuators settings tables.")
+
+        print("-"*60)
 
 
-    ######################################################################
-    ######################################################################
+    def insert_default_data(self) -> None:
+
+        """
+        This function inserts the default values for the acceptable and optimal values.
+        """
+
+        for table_ok in self.tables_ok.values():
+            table_ok.insert_default_data()
+        print("Done inserting default values in acceptable values tables.")
+
+
+        for table_optimal in self.tables_optimal.values():
+            table_optimal.insert_default_data()
+        print("Done inserting default values in optimal values tables.")
+
+
+        for table_actuator in self.tables_actuators.values():
+            table_actuator.insert_default_data()
+        print("Done inserting default values in actuators settings tables.")
+
+
+        # uses the fact that the default zipped data has the pattern in their names:
+        # default_alias.zip and inside the zip the file is called default_alias.csv
+        for alias, table in self.tables.items():
+            table.insert_default_data(data_file_name = alias)
+
+        print("Done inserting default values in ambiental variable tables.")
+        print("-"*60)
+
+    ############################################################# 
+    #-----------------------------------------------------------#
+    # Functions to read and write the ambiental variable tables #
+    #-----------------------------------------------------------#
 
 
     def write_data(self, value: float, alias: str, verbose = False) -> None:
@@ -85,7 +145,7 @@ class DbConnection():
         INPUTS:
                 value:      float to be written in the database.
 
-                alias:      nickname to indicate the table where the data will be written.
+                alias:      nickname to indicate the table where the data will be written. and inside the zip the file is called wq
                             ('temp', 'hum', 'lux', 'press', 'wtemp', 'ec', 'ph') are the default options.
                             You can change that inside the function 'self.configure_connection'.
 
@@ -105,25 +165,27 @@ class DbConnection():
             print("Inserted data in table {0}, with exit code: {1}".format(alias, result))
 
 
-
-    def read_data(self, timestamp_start: str, timestamp_end: str, alias: str, verbose = False) -> pd.DataFrame:
+    def read_data(self, timestamp_start: str, timestamp_end: str, alias: str) -> pd.DataFrame:
 
         """
         INPUTS:
-                timestamp_start:    timestamp *desde* donde se quieren seleccionar los datos 
-                                    es de la forma -> 'YYYY-MM-DD hh:mm:ss'.
-                timestamp_end:      timestamp *hasta* donde se quieren seleccionar los datos 
-                                    es de la forma -> 'YYYY-MM-DD hh:mm:ss'.
+                timestamp_start:    Start timestamp of the data to be read. It's format is 
+                                    'YYYY-MM-DD HH:MM:SS'.
+                timestamp_end:      End timestamp of the data to be read. It's format is
+                                    'YYYY-MM-DD HH:MM:SS'.
+
+                alias:              nickname to indicate the table where the data will be read.
+                                    This nickname is selected in the function 'self.configure_connection'.
+                                    the default options of aliases for ambiental variables are:
+                                    ('temp', 'hum', 'lux', 'press', 'wtemp', 'ec', 'ph').
+                                    
+                                    If you need to make any changes to the aliases, refer to that function.
                 
-                alias:              llave del diccionario 'self.tables' que indica el 
-                                    alias de la variable que se quiere consultar.
-                                    ('temp', 'hum', 'lux', 'press', 'wtemp', 'ec', 'ph')
-                                    son una opción.
-                verbose:            Modo para printear la consulta que se le hace a la base de
-                                    datos. Principalmente con fines de debugging.
         OUTPUT:
-                Retorna un dataframe de pandas con los datos en el intervalo de tiempo seleccionado
-                con dos columnas, 'time' y 'variable', donde 'time' es el timestamp del dato.
+                Returns a pandas dataframe with two columns, 'time' and 'variable', where 'time' is the
+                timestamp of the data, and 'variable' contains the data associated to the alias in the
+                timestamp. (Notice 'variable' won't be the name of the column, it's just a general name format, 
+                to explain the output data).
         """
 
         if alias not in self.tables.keys():
@@ -133,6 +195,12 @@ class DbConnection():
         return self.tables[alias].read_data(timestamp_start = timestamp_start,
                                             timestamp_end = timestamp_end)
 
+    ############################################################# 
+    #-----------------------------------------------------------#
+    # Functions to read and write the ambiental settings, it is #
+    # the acceptable and optimal intervals definition for each  #
+    # ambiental variable where it is important to know.         #
+    #-----------------------------------------------------------#
 
     def write_ambiental_settings(self, 
                                  min_value: float,
@@ -142,25 +210,21 @@ class DbConnection():
 
         """
         INPUTS:
-                value_min: float a ser escrito en la base de datos.
-                value_max: float a ser escrito en la base de datos.
-                           (Son los valores inferior y superior para las condiciones 
-                           optimas o aceptables para la variable).
-
-                alias: string que indica en qué tabla guardar los datos, en otras palabras
-                         qué configuración sea de 'optimal' o 'ok' va a ser modificada 
-                         y para qué variable en particular.
+                alias:  nickname to indicate the table where the data will be written.
+                        It could be an optimal value table or an acceptable value table.
+                        Options for the default aliases are:
 
                          ('temp_optimal',   'temp_ok',      'hum_optimal',  'hum_ok', 
                           'lux_optimal',    'lux_ok',       'ec_optimal',   'ec_ok', 
-                          'ph_optimal',     'ph_ok') son una opción.
+                          'ph_optimal',     'ph_ok',        'wtemp_ok',     'wtemp_optimal').
+                
 
-                verbose:    Modo para printear la consulta que se le hace a la base de
-                            datos. Principalmente con fines de debugging.
+                value_min: minimum acceptable or optimal value for the variable.
+                value_max: maximum acceptable or optimal value for the variable.
+
+                verbose:   Mainly for debugging purposes.
         OUTPUT:
-                None. Esta función escribe los datos en la tabla correspondiente, indicada 
-                por la variable 'config_' y su diccionario 'self.ambiental_settings'.
-
+                None. This function writes the data in the table corresponding to the alias.
         """
 
         if alias  in self.tables_ok.keys():
@@ -178,23 +242,21 @@ class DbConnection():
             print("Inserted data in table {0}, with exit code: {1}".format(alias, result))
 
 
-    def read_ambiental_settings(self, alias: str,
-                                      verbose = False) -> pd.DataFrame:
+    def read_ambiental_settings(self, alias: str) -> pd.DataFrame:
 
         """
         INPUTS:
 
-                alias: string que indica en qué tabla va a leer los datos.
+                alias: Indicates the table where the data will be read. Default aliases are:
 
                          ('temp_optimal',   'temp_ok',      'hum_optimal',  'hum_ok', 
                           'lux_optimal',    'lux_ok',       'ec_optimal',   'ec_ok', 
-                          'ph_optimal',     'ph_ok') son una opción.
+                          'ph_optimal',     'ph_ok',        'wtemp_ok',     'wtemp_optimal').
 
-                verbose: Modo para printear la consulta que se le hace a la base de
-                         datos. Principalmente con fines de debugging.
         OUTPUT:
-                Retorna un dataframe de pandas con los datos en el intervalo de tiempo seleccionado
-                con dos columnas, 'time' y 'variable', donde 'time' es el timestamp del dato.
+                Returns a pandas dataframe with three columns, 'min', 'max' and 'time', where 'min' is the
+                minimum acceptable or optimal value for the variable, and 'max' is the maximum acceptable or
+                optimal value for the variable. 'time' is the timestamp of when that setting was set.
         """
 
         if alias  in self.tables_ok.keys():
@@ -207,33 +269,43 @@ class DbConnection():
             print("Not existent table: {}".format(alias))
             return
 
-        if verbose:
-            print("Read data from table {0}".format(alias))
 
         return data
 
-    ######################################################################
-    ######################################################################
+    ############################################################# 
+    #-----------------------------------------------------------#
+    # Functions to read and write the actuators settings, it is #
+    # the definition of when an actuator starts working and     #
+    # when it stops working. And if necessary the time it rests,#
+    # and the time it works.                                    #
+    #-----------------------------------------------------------#
 
-    def write_actuators_settings(self, alias: str, params: tuple, verbose = False):
+
+    def write_actuators_settings(self, alias: str, params: dict, verbose = False):
 
         """
             INPUT:
-                    alias:      alias para indicar la tabla sobre la que se va a trabajar.
-                                Recuerde que los alias se definen en 'self.actuators_settings'.
-                                Las opciones son -> ('pump', 'lights').
-                    params:     tupla que contiene todos los parámetros que se van a escribir.
-                                deben ser en el orden en que especifica el valor correspondiente
-                                a la llave 'config_' del diccionario 'self.actuators_settings'.
-                                Observe como el nombre de la tabla no se debe incluir dentro de 
-                                params.
-                                
-                                Es decir params deben ser:
-                                ('start_time', 'end_time', 'frequency', 'duration') ó 
-                                ('start_time', 'end_time')
-                    verbose:    Modo para printear la consulta que se le hace a la base de
-                                datos. Principalmente con fines de debugging.
+                    alias:      nickname to indicate the table where the data will be written.
+                                Remember that the default options for the aliases are:
+                                ('pump', 'lights'), these are defined in the function 'self.configure_connection'.
+
+                                If you need to make any changes to the aliases, refer to that function.
+
+                    params:     dictionary with the parameters to be written in the table.
+                                params could be a dictionary with this structure if you want to write to the water_pump:
+                                {'start_time':  'HH:MM:SS', 
+                                 'end_time':    'HH:MM:SS', 
+                                 'frequency':    float (indicating minutes),
+                                 'duration':     float (indicating minutes)}
+
+                                if you want to write to the lights:
+                                {'start_time':  'HH:MM:SS',
+                                 'end_time':    'HH:MM:SS'}
+
+                    verbose:    Mainly for debugging purposes.
+
             OUTPUT:
+                    None. This function writes the data in the table corresponding to the alias.
         """
 
         if alias in self.tables_actuators.keys():
@@ -247,16 +319,31 @@ class DbConnection():
             print("Inserted data in table {0}, with exit code: {1}".format(alias, result))
         
 
-    def read_actuators_settings(self,
-                                alias: str,
-                                verbose = False):
+    def read_actuators_settings(self, alias: str) -> pd.DataFrame:
+
+        """
+            INPUT:
+                    alias:      nickname to indicate the table where the data will be written.
+                                Remember that the default options for the aliases are:
+                                ('pump', 'lights'), these are defined in the function 'self.configure_connection'.
+
+                                If you need to make any changes to the aliases, refer to that function.
+
+            OUTPUT:
+                    Returns a pandas dataframe with five columns, 'start_time', 'end_time', 'frequency', 'duration' and 'time',
+                    where 'start_time' is the time when the actuator will start, 'end_time' is the time when the actuator will stop,
+                    'frequency' is the time in minutes that the actuator "rests", and 'duration' is the time in minutes that 
+                    the actuator will be active. 'time' is the timestamp of when that setting was set. (this is the output when 
+                    alias is 'pump'). 
+
+                    When the alias is 'lights', the output is a dataframe with three columns, 'start_time', 'end_time' and 'time'.
+                    With same meaning as in the previous case.
+        """
 
         if alias not in self.tables_actuators.keys():
             return
 
-
-        data = self.tables_actuators[alias].read_data()
-        return data
+        return self.tables_actuators[alias].read_data()
 
 
 

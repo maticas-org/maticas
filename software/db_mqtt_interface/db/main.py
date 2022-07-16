@@ -16,20 +16,8 @@ conn = DbConnection( db_host =  os.getenv("DB_HOST"),
                      db_password = os.getenv("DB_PASSWORD"),
                      db_sslmode = os.getenv("DB_SSLMODE") )
 
-conn.write_actuators_settings(alias = "pump", 
-                              params = {'start_time':   '07:00:00',
-                                        'end_time':     '20:00:00',
-                                        'frequency':    45,
-                                        'duration': 5})
-
-conn.write_actuators_settings(alias = "lights", 
-                              params = {'start_time':   '07:00:00',
-                                        'end_time':     '20:00:00'})
-
-for alias in conn.tables_actuators.keys():
-
-    data = conn.read_actuators_settings(alias = alias)
-    print(data.head())
+conn.create_tables()
+conn.insert_default_data()
 
 
 

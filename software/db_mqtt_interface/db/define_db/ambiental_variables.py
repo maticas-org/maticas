@@ -3,6 +3,18 @@ from datetime import datetime
 import pandas as pd
 from sqlalchemy.dialects import postgresql
 
+from os.path import abspath, dirname
+
+# the directory where some data that can be used as default data
+# is stored
+current_file_dir = dirname(dirname(abspath(__file__)))
+database_defult_data_dir = "database_backup_data"
+
+default_data_path = current_file_dir + "/" + database_defult_data_dir
+
+# utilite for unziping 
+from zipfile import ZipFile
+
 
 # -------------------------------------------
 #   base class to inherit repetitive methods
@@ -17,7 +29,7 @@ class Variable():
         self.metadata_obj = MetaData()
         self.table = Table()
 
-    def read_data(self, timestamp_start, timestamp_end)-> pd.DataFrame:
+    def read_data(self, timestamp_start, timestamp_end) -> pd.DataFrame:
 
         """
         Reads data from the ec table, between the 
@@ -36,14 +48,36 @@ class Variable():
 
         return result
 
-    def create_table() -> None:
+    def create_table(self) -> None:
             
         """
         Create the table in the database.
         """
-        metadata_obj.create_all(self.engine)
+        self.metadata_obj.create_all(self.engine)
 
 
+    def insert_default_data(self, data_file_name: str) -> None:
+
+        """
+        inserts default data into the table.
+        Mainly for Initialization.
+        """
+
+        file_path = default_data_path + "/" + data_file_name 
+
+        # unzip the data
+
+        with ZipFile(file_path + ".zip", 'r') as zip_object:
+            zip_object.extractall(path = default_data_path)
+
+        # read the data
+        data = pd.read_csv(file_path + ".csv")
+
+        # insert the data
+        data.to_sql(self.table.name,
+                    self.engine,
+                    if_exists = "replace",
+                    index = False)
 
 #---------------------------------------------------------#
 #         Declaring classes for tables                    #
@@ -78,6 +112,7 @@ class Ec(Variable):
 
         with self.engine.connect().execution_options(isolation_level="AUTOCOMMIT") as connection:
             connection.execute(statement)
+
 
 
 

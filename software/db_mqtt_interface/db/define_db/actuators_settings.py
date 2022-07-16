@@ -12,7 +12,7 @@ class Actuator():
         self.metadata_obj = MetaData()
         self.table  = Table()
 
-    def insert_data(self, start_time: str, end_time:str):
+    def insert_data(self, start_time: str, end_time:str) -> int:
 
         """
         Inserts data into the variable_ok table.
@@ -38,7 +38,7 @@ class Actuator():
         return 0
 
 
-    def read_data(self):
+    def read_data(self) -> pd.DataFrame:
 
         """
         Reads data from the humidity_ok table.
@@ -54,7 +54,7 @@ class Actuator():
         return result
 
 
-    def insert_data_watchdog(self, start_time: str, end_time: str):
+    def insert_data_watchdog(self, start_time: str, end_time: str) -> int:
             
         """
         Function for checking correctness of the data that wants to be inserted.
@@ -69,6 +69,25 @@ class Actuator():
             return -1
 
         return 0
+
+
+    def create_table(self) -> None:
+            
+        """
+        Create the table in the database.
+        """
+        self.metadata_obj.create_all(self.engine)
+
+
+    def insert_default_data(self) -> None:
+
+        """
+        Inserts default data into the table.
+        Mainly used for initialization
+        """
+
+        self.insert_data(start_time = '06:00:00',
+                         end_time   = '19:30:00')
 
 
 #--------------------------------------------------#
@@ -157,7 +176,7 @@ class Water_pump(Actuator):
                              start_time: str,
                              end_time: str,
                              frequency: float,
-                             duration: float):
+                             duration: float) -> int:
             
         """
         Function for checking correctness of the data that wants to be inserted.
@@ -177,3 +196,17 @@ class Water_pump(Actuator):
             return -1
 
         return 0
+
+    def insert_default_data(self) -> None:
+
+        """
+        Inserts default data into the table.
+        Mainly used for initialization.
+        """
+
+        self.insert_data(start_time = '06:00:00',
+                         end_time   = '20:00:00',
+                         frequency  = 40,
+                         duration   =  4)
+        
+

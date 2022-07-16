@@ -52,13 +52,6 @@ class Acceptable_interval():
         result = pd.read_sql(statement, self.engine)
         return result
 
-    def create_table() -> None:
-            
-        """
-        Create the table in the database.
-        """
-        metadata_obj.create_all(self.engine)
-
 
     def insert_data_watchdog(self, min_value: float, max_value: float) -> int:
 
@@ -74,6 +67,24 @@ class Acceptable_interval():
             return -1
 
         return 0 
+
+
+    def create_table(self) -> None:
+            
+        """
+        Create the table in the database.
+        """
+        self.metadata_obj.create_all(self.engine)
+
+    
+    def insert_default_data(self) -> None:
+
+        """
+        Inserts default data into the table.
+        Mainly used for initialization.
+        """
+
+        self.insert_data(min_value = 0, max_value = 100)
 
 
 #----------------------------------------------
@@ -101,6 +112,14 @@ class Ec_ok(Acceptable_interval):
                              Column("min", Float(precision = 3), nullable = False),
                              Column("max", Float(precision = 3), nullable = False))
 
+    def insert_default_data(self) -> None:
+
+        """
+        Inserts default data into the table.
+        Mainly used for initialization.
+        """
+
+        self.insert_data(min_value = 1.8, max_value = 2.5)
 
 
 #--- Acceptable interval for Ph values ---#
@@ -138,6 +157,14 @@ class Ph_ok(Acceptable_interval):
 
         return 0 
 
+    def insert_default_data(self) -> None:
+
+        """
+        Inserts default data into the table.
+        Mainly used for initialization.
+        """
+
+        self.insert_data(min_value = 6.3, max_value = 6.9)
 
 
 #--- Acceptable interval for the Humidity values ---#
@@ -175,6 +202,14 @@ class Humidity_ok(Acceptable_interval):
 
         return 0 
 
+    def insert_default_data(self) -> None:
+
+        """
+        Inserts default data into the table.
+        Mainly used for initialization.
+        """
+
+        self.insert_data(min_value = 55, max_value = 79)
 
 
 
@@ -215,6 +250,61 @@ class Temperature_ok(Acceptable_interval):
 
         return 0 
 
+    def insert_default_data(self) -> None:
+
+        """
+        Inserts default data into the table.
+        Mainly used for initialization.
+        """
+
+        self.insert_data(min_value = 17, max_value = 26)
+
+
+
+#--- Acceptable interval for the Temperature values ---#
+class Water_temperature_ok(Acceptable_interval):
+
+    def __init__(self, engine):
+
+        # inherit methods from Acceptable_interval class
+        super().__init__(engine)
+
+        #This class is used to map the ec table in the database.
+        self.engine = engine
+        self.metadata_obj = MetaData()
+        self.table  = Table( 'water_temperature_ok',
+                             self.metadata_obj,
+                             Column("time", DateTime, primary_key = True, default = datetime.utcnow),
+                             Column("min", Float(precision = 2), nullable = False),
+                             Column("max", Float(precision = 2), nullable = False))
+
+    def insert_data_watchdog(self, min_value: float, max_value: float) -> int:
+        """
+        Function for checking correctness of the data that wants to be inserted.
+        """
+        if min_value > max_value:
+            return -1 
+
+        # in this case, given the variables we are controlling 
+        # it makes sense not to add negative values to the database.
+        if (min_value < 0) or (max_value < 0):
+            return -1
+
+        # how the heck will the temperature be more than 100 degrees?
+        # indeed forsure more than 60 degrees would kill the plant.
+        if (min_value > 100) or (max_value > 100):
+            return -1
+
+        return 0 
+
+    def insert_default_data(self) -> None:
+        """
+        Inserts default data into the table.
+        Mainly used for initialization.
+        """
+
+        self.insert_data(min_value = 14, max_value = 20)
+
 
 
 #--- Acceptable interval for the Lux values ---#
@@ -233,5 +323,13 @@ class Lux_ok(Acceptable_interval):
                              Column("time", DateTime, primary_key = True, default = datetime.utcnow),
                              Column("min", Float(precision = 2), nullable = False),
                              Column("max", Float(precision = 2), nullable = False))
+
+    def insert_default_data(self) -> None:
+        """
+        Inserts default data into the table.
+        Mainly used for initialization.
+        """
+
+        self.insert_data(min_value = 32000, max_value = 100000)
 
 
