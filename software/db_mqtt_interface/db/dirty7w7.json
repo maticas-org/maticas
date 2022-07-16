@@ -1,7 +1,0 @@
-{
-	"db_host": 	"maticas.postgres.database.azure.com", 
-	"db_name": 	"maticas_data",
-	"db_user": 	"dave",
-	"db_password":  "l4Propi4Cl4v3P4p4!#",
-	"db_sslmode": 	"require"
-}
