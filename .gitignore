@@ -13,3 +13,6 @@ software/db_mqtt_inteface/__pycache__
 ./software/db_mqtt_inteface/__pycache__
 ./software/db_mqtt_interface/db/__pycache__/
 db_mqtt_interface/db/__pycache__/
+
+*.csv
+*.backup
