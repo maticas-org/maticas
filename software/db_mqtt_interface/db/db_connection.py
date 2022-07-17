@@ -31,6 +31,8 @@ class DbConnection():
                  db_password: str,
                  db_sslmode: str ):
 
+        print("Starting database connection...")
+
         self.db_host = db_host
         self.db_name = db_name
         self.db_user = db_user
@@ -42,6 +44,9 @@ class DbConnection():
 
         self.engine = create_engine(conn_string)
         self.configure_connection()
+
+        print("Done creating database connection.")
+        print("-"*60)
             
 
     def configure_connection(self) -> None:

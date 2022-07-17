@@ -107,11 +107,16 @@ class Ec(Variable):
         """
         Inserts data into the ec table.
         """
+        
+        if (value < 0):
+            return -1
 
         statement = insert(self.table).values(ec_level = value)
 
         with self.engine.connect().execution_options(isolation_level="AUTOCOMMIT") as connection:
             connection.execute(statement)
+
+        return 0
 
 
 
@@ -180,7 +185,7 @@ class Temperature_(Variable):
         if a successfully inserted data it returns 0.
         """
 
-        if value < 0:
+        if (value < 0) or (value > 100):
             return -1
 
         statement = insert(self.table).values(temp_level = value)
@@ -218,7 +223,7 @@ class Water_temperature(Variable):
         if a successfully inserted data it returns 0.
         """
 
-        if value < 0:
+        if (value < 0) or (value > 100):
             return -1
 
         statement = insert(self.table).values(wtemp_level = value)
@@ -255,7 +260,7 @@ class Humidity(Variable):
         if a successfully inserted data it returns 0.
         """
 
-        if value < 0:
+        if (value < 0) or (value > 100):
             return -1
 
         statement = insert(self.table).values(hum_level = value)
