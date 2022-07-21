@@ -50,6 +50,19 @@ Próximas mejoras:
 * Mejorar organización de código.
 
 
+Nota sobre uso:
+-----------------------------------------------------------------------------------------------------
+
+Por favor ejecuta el script ./generate.env.sh para que todo pueda funcionar, este script se encarga de crear un archivo 
+que guarda las credenciales para conectarse a la base de datos, y al broker mosquitto, así como otra serie de parámetros 
+importantes para el funcionamiento del código. Recomendamos modificar este script antes de correrse para no utilizar las
+credenciales por defecto. 
+
+Pronto proveeremos un script que se encargue de ayudarte en la tarea de cambiar estos valores por defecto automáticamente.
+
+se ejecuta así: 
+
+        ./generate.env.sh
 
 Donar:
 -----------------------------------------------------------------------------------------------------
