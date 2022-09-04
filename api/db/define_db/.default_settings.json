@@ -1,0 +1,47 @@
+{
+    "variables": {
+
+                    "electroconductivity_var"   : {
+                                                "column" : "ec_level", 
+                                                "acceptable_interval": [1.25, 3.2], 
+                                                "optimal_interval": [1.8, 2.5]
+                                            }, 
+                    "ph_var"                    : {
+                                                "column" : "ph_level",
+                                                "acceptable_interval": [6, 6.9],
+                                                "optimal_interval": [6.3, 6.5]
+                                            },  
+                    "lux_var"                   : {
+                                                "column" : "lux_level",
+                                                "acceptable_interval": [1.25, 3.2],
+                                                "optimal_interval": [1.8, 2.5]
+                                            },
+                    "atm_pressure_var"          : {
+                                                "column" : "atm_pressure_level",
+                                                "acceptable_interval": [1.25, 3.2],
+                                                "optimal_interval": [1.8, 2.5]
+                                            },
+                    "temperature_var"          : {
+                                                "column" : "temperature_level",
+                                                "acceptable_interval": [1.25, 3.2],
+                                                "optimal_interval": [1.8, 2.5]
+                                            },
+                    "water_temperature_var"     : {
+                                                "column" : "water_temperature_level", 
+                                                "acceptable_interval": [1.25, 3.2],
+                                                "optimal_interval": [1.8, 2.5]
+                                            },
+                    "humidity_var"              : {
+                                                "column" : "humidity_level",
+                                                "acceptable_interval": [1.25, 3.2],
+                                                "optimal_interval": [1.8, 2.5]
+                                            } 
+    }, 
+
+    "actuators": {
+
+    }
+
+}
+
+
