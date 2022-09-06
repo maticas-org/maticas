@@ -6,6 +6,9 @@ from sqlalchemy.dialects import postgresql
 
 import hashlib
 import re
+from subprocess import run
+
+
  
 email_regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
 username_regex = r'\b^[A-Za-z0-9_-]*$'
@@ -213,6 +216,17 @@ class Users():
         return hashhh
 
 
+    def generate_api_key(self, username, password):
+
+        uppercase_pass = len(re.findall(r'[A-Z]',  password))
+        uppercase_user = len(re.findall(r'[A-Z]',  username))
+        
+        #temperature = run(["free", "|", "awk '{print $3}'", "|", "sed -n '2 p'"])
+
+
+
+
+
     #---------------------------------------------------------------#
 
     def validate_username(self, username: str):
@@ -256,6 +270,9 @@ class Users():
 
     def sanitize_password(self, password: str):
         return password.strip()
+
+
+
 
 
 

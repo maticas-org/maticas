@@ -12,6 +12,12 @@ conn = DbConnection( db_host =  os.getenv("DB_HOST"),
                      db_password = os.getenv("DB_PASSWORD"),
                      db_sslmode = os.getenv("DB_SSLMODE") )
 
+usr_conn = UsrDbConnection(db_host =  os.getenv("USR_DB_HOST"),
+                           db_name =  os.getenv("USR_DB_NAME"),
+                           db_user =  os.getenv("USR_DB_USER"),
+                           db_password = os.getenv("USR_DB_PASSWORD")
+                           db_sslmode  = os.getenv("USR_DB_SSLMODE") )
+
 
 class Query(ObjectType):
 
@@ -26,14 +32,16 @@ class Query(ObjectType):
                                              mqtt_send_message_frecuency =  String(), 
                                              precision = String())
     
-    def resolve_hello(root, info,
+    def resolve_hello(root,
+                      info,
                       name: str) -> str:
         return f'Hello {name}!'
 
     def resolve_goodbye(root, info) -> str:
         return 'See ya!'
 
-    def resolve_ambient_variable(root, info, 
+    def resolve_ambient_variable(root,
+                                 info, 
                                  var: str,
                                  timestart: str,
                                  timefinish: str) -> str:
