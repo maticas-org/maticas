@@ -2,6 +2,7 @@
 from ambiental_variables            import *
 from ambiental_variables_intervals  import *
 from actuators_settings             import *
+from users_table                    import *
 
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm         import Session
@@ -118,4 +119,37 @@ def create_tables_from_file(file_name: str, engine = None) -> None:
 
 
     return all_tables
+
+#--------------------------------------------------------------------------------------------#
+#--------------------------------------------------------------------------------------------#
+#--------------------------------------------------------------------------------------------#
+
+def load_users_table(engine = None, metadata = None) -> dict:
+
+    """
+        Loads all the tables in the database.
+    """
+
+    table_name = find_existent_tables(engine)
+    print(table_name)
+
+    if table_name == []:
+        return None
+
+    table = Table(table_name[0],            
+                  metadata,
+                  autoload = True,
+                  autoload_with = engine)
+
+    table = Users_From_DB(table, engine)
+
+    return table
+
+#--------------------------------------------------------------------------------------------#
+#--------------------------------------------------------------------------------------------#
+#--------------------------------------------------------------------------------------------#
+
+
+
+
 

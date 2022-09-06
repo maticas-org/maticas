@@ -83,6 +83,36 @@ class Query(ObjectType):
         return result
 
 
+    def resolve_add_user(root,
+                         info, 
+                         username:  str,
+                         email:     str,
+                         password:  str):
+
+
+        """
+            Adds an user to the database.
+
+            INPUT:
+                    - username: The name of the user to be added.
+                    - email:    Email of the user to be added.
+                    - password: User password.
+
+            OUTPUT:
+                    dictionary with this shape: {"exit_status": "answer"}
+        """
+
+        result = conn.add_user(username = username, 
+                               email    = email,
+                               password = password)
+
+        return result
+
+
+
+
+
+
 
 
 

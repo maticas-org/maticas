@@ -1,5 +1,8 @@
-venv
-.env
+api/venv
+api/.env
+api/db_mqtt_interface/db/__pycache__
+api/db_mqtt_interface/db/define_db/__pycache__
+
 
 software/db_mqtt_inteface/__pycache__
 
@@ -9,4 +12,3 @@ software/db_mqtt_interface/db/__pycache__/
 
 software/db_mqtt_inteface/mqtt_python/dirty8w8.py
 software/db_mqtt_inteface/mqtt_python/__pycache__
-
