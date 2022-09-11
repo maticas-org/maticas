@@ -9,6 +9,8 @@ sudo -u postgres psql
 create user dave with encrypted password '0000';
 grant all privileges on database maticas to dave;
 
+create database maticas;
+create database maticas_users;
 
 
 

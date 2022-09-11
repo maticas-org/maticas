@@ -1,3 +1,4 @@
+api/__pycache__
 api/venv
 api/.env
 api/db_mqtt_interface/db/__pycache__

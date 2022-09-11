@@ -77,6 +77,7 @@ class DbConnection():
             self.all_tables = create_tables_from_file(file_name = ".default_settings.json",
                                                       engine    = self.engine)
 
+        print(self.all_tables.keys())
         self.var_tables = self.all_tables["variables"]
         self.intervals_table = self.all_tables["intervals"]
         self.actuators_table = self.all_tables["actuators"]

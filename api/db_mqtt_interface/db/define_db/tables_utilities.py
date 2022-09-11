@@ -35,6 +35,9 @@ def load_all_tables(engine = None, metadata = None) -> dict:
     
     table_names = find_existent_tables(engine)
 
+    if not table_names:
+        return {}
+
     # dictionaries to store the generated tables
     all_tables = {}
     var_tables = {}
@@ -114,7 +117,7 @@ def create_tables_from_file(file_name: str, engine = None) -> None:
     all_tables["intervals"].create_table()
 
     # creates the tables related to actuators and their functioning
-    all_tables["actuators"] = Actuator(engine)
+    all_tables["actuators"] = Actuators(engine)
     all_tables["actuators"].create_table()
 
 

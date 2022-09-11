@@ -18,7 +18,7 @@ from users_table        import *
 from tables_utilities   import *
 
 
-class DbConnectionUsers():
+class UsrDbConnection():
 
     #-----------------------------------------------#
     # Initialization and configuration of the class #
