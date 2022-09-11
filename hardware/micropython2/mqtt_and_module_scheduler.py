@@ -14,11 +14,17 @@ class MQTTModuleScheduler():
         for alias in self.pub_topics.keys():
 
             # gets the measurement
+
+            if self.pub_topics[alias]["exec"] == "":
+                print("topic \"{}\" has no candidate for answering a call".format(alias))
+                continue
+
             value = str(self.pub_topics[alias]["exec"]())
 
             # sends the measurement
             self.mqtt_conn.publish(topic = self.pub_topics[alias]["topic"], msg = value)
             sleep(0.1)
+            print("message sent on topic {}".format(self.pub_topics[alias]["topic"]))
 
     def deep_sleep(self):
 
