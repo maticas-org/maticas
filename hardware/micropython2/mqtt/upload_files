@@ -1,0 +1,23 @@
+#!/usr/bin/bash
+
+anounce_file_upload(){
+    echo "Uploading file $1 to esp32..."
+}
+
+anounce_file_upload "./boot.py"
+ampy --port /dev/ttyUSB0 put ./boot.py
+
+anounce_file_upload "./main.py"
+ampy --port /dev/ttyUSB0 put ./main.py
+
+anounce_file_upload "./mqtt.py"
+ampy --port /dev/ttyUSB0 put ./mqtt.py
+
+anounce_file_upload "./umqttsimple.py"
+ampy --port /dev/ttyUSB0 put ./umqttsimple.py
+
+anounce_file_upload "./mqtt_config.json"
+ampy --port /dev/ttyUSB0 put ./mqtt_config.json
+
+
+

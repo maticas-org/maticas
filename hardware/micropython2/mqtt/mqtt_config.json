@@ -1,0 +1,28 @@
+{
+    "wifi_ssid":          "ArchLinux",
+    "wifi_password":      "nuncaheusadoarch",
+    "client_id":          "esp8266client1",
+    "mqtt_server":        "198.58.120.188",
+    "user":               "dio",
+    "client_password":    "123",
+    "port":               1883,
+    "keepalive":          30,
+    "clean_session":      true, 
+    "ssl":                false,
+    "ssl_params":          {},
+    "sub_topics":   {
+                        "lux":           {"topic": "esp32data/control/lux",         "qos": 1},
+                        "temp":          {"topic": "esp32data/control/temp",        "qos": 1},
+                        "hum":           {"topic": "esp32data/control/hum",         "qos": 1},
+                        "pressure":      {"topic": "esp32data/control/pressure",    "qos": 1}
+                    },
+
+    "pub_topics":  {
+                        "lux":                {"topic": "esp32data/measure/lux",         "qos": 1},
+                        "temp":               {"topic": "esp32data/measure/temp",        "qos": 1},
+                        "hum":                {"topic": "esp32data/measure/hum",         "qos": 1},
+                        "pressure":           {"topic": "esp32data/measure/pressure",    "qos": 1},
+                        "panel_voltage":      {"topic": "esp32data/measure/pressure",    "qos": 1},
+                        "battery_energy":     {"topic": "esp32data/measure/pressure",    "qos": 1}
+                    }
+}

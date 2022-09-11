@@ -1,0 +1,65 @@
+#!/usr/bin/bash
+
+anounce_file_upload(){
+    echo "Uploading file $1 to esp32..."
+}
+
+
+
+##########################################
+# Uploads mqtt class definition to esp32
+##########################################
+anounce_file_upload "./mqtt/mqtt.py"
+ampy --port /dev/ttyUSB0 put ./mqtt/mqtt.py
+
+#############################################
+# Uploads mqtt root class definition to esp32
+#############################################
+anounce_file_upload "./mqtt/umqttsimple.py"
+ampy --port /dev/ttyUSB0 put ./mqtt/umqttsimple.py
+
+#############################################
+# Uploads mqtt settings to esp32
+#############################################
+anounce_file_upload "./mqtt/mqtt_config.json"
+ampy --port /dev/ttyUSB0 put ./mqtt/mqtt_config.json
+
+#-----------------------------------------------------#
+#              Uploads integration class              #
+#-----------------------------------------------------#
+anounce_file_upload "./mqtt_and_module_scheduler.py"
+ampy --port /dev/ttyUSB0 put ./mqtt_and_module_scheduler.py
+
+anounce_file_upload "./module.py"
+ampy --port /dev/ttyUSB0 put ./module.py
+
+anounce_file_upload "./initialize_sensors.py"
+ampy --port /dev/ttyUSB0 put ./initialize_sensors.py
+
+#-----------------------------------------------------#
+#              Uploads boot and main                  #
+#-----------------------------------------------------#
+
+##########################################
+# Uploads mqtt boot to esp32
+##########################################
+anounce_file_upload "./mqtt/boot.py"
+ampy --port /dev/ttyUSB0 put ./mqtt/boot.py
+
+##########################################
+# Uploads main to esp32
+##########################################
+anounce_file_upload "./main.py"
+ampy --port /dev/ttyUSB0 put ./main.py
+
+
+#-----------------------------------------------------#
+#              Uploads dependencies                   #
+#-----------------------------------------------------#
+
+anounce_file_upload "./sensors/bme280/BME280.py"
+ampy --port /dev/ttyUSB0 put ./sensors/bme280/BME280.py
+
+anounce_file_upload "./sensors/bh1750/bh1750.py"
+ampy --port /dev/ttyUSB0 put ./sensors/bh1750/bh1750.py
+
