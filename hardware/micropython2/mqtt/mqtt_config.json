@@ -5,7 +5,7 @@
     "mqtt_server":        "198.58.120.188",
     "user":               "dio",
     "client_password":    "123",
-    "port":               1883,
+    "port":               1888,
     "keepalive":          30,
     "clean_session":      true, 
     "ssl":                false,

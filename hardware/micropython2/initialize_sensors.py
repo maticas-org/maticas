@@ -8,7 +8,6 @@ from BME280 import BME280
 from bh1750 import BH1750
 
 
-mqtt_conn = None
 mod = Module(config_file = "./mqtt_config.json")
 
 scl = Pin(22)
@@ -26,9 +25,9 @@ def luminance_wrapper():
     return bh.luminance(BH1750.ONCE_HIRES_1)
 
 
-mod.add_module_function(alias = "temp",     function = bme.read_temperature)
-mod.add_module_function(alias = "hum",      function = bme.read_humidity)
-mod.add_module_function(alias = "pressure", function = bme.read_pressure)
+mod.add_module_function(alias = "temp",     function = bme.temperature_value)
+mod.add_module_function(alias = "hum",      function = bme.humidity_value)
+mod.add_module_function(alias = "pressure", function = bme.pressure_value)
 mod.add_module_function(alias = "lux",      function = luminance_wrapper)
 
 
